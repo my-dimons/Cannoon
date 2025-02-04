@@ -59,14 +59,18 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // select item slot 1
         if (Input.GetKeyDown(KeyCode.Alpha1) && !itemSlots[0].GetComponent<ItemSlot>().selected)
         {
-            selectedItemSlot.GetComponent<ItemSlot>().SelectItemSlot(itemSlots[0].GetComponent<ItemSlot>());
+            selectedItemSlot = itemSlots[0].GetComponent<ItemSlot>().SelectItemSlot(selectedItemSlot.GetComponent<ItemSlot>());
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !itemSlots[1].GetComponent<ItemSlot>().selected)
+        // select item slot 2
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && !itemSlots[1].GetComponent<ItemSlot>().selected)
         {
-            selectedItemSlot.GetComponent<ItemSlot>().SelectItemSlot(itemSlots[1].GetComponent<ItemSlot>());
+            selectedItemSlot = itemSlots[1].GetComponent<ItemSlot>().SelectItemSlot(selectedItemSlot.GetComponent<ItemSlot>());
         }
+
+
         Movement();
 
         if (Input.GetMouseButton(0) && canShoot)
