@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
+    public Sprite basePlayerSprite;
     [Header("Stats")]
     public float speed;
     public float jump;
@@ -20,22 +21,6 @@ public class Player : MonoBehaviour
     public LayerMask layerMask;
     bool facingLeft;
 
-    [Header("Weapons")]
-    public GameObject bullet;
-    public GameObject heldWeapon;
-    public Vector2 bulletSpawnPos;
-    public float bulletSpeed;
-    public float bulletCooldown;
-    private bool canShoot;
-    public float bulletDamage;
-
-    IEnumerator bulletShootingCooldown()
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(bulletCooldown);
-        canShoot = true;
-    }
-
     [Header("Death")]
     public Vector2 spawnPoint;
     public TextMeshProUGUI respawnText;
@@ -46,18 +31,31 @@ public class Player : MonoBehaviour
     [Header("Item Slots")]
     public GameObject[] itemSlots;
     public GameObject selectedItemSlot;
-
-
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
         jumpsRemaining = jumps;
-        canShoot = true;
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
     void Update()
+    {
+        SelectItemSlots();
+
+        Movement();
+
+        if (Input.GetMouseButton(0) && selectedItemSlot.GetComponent<ItemSlot>().heldItem != null && selectedItemSlot.GetComponent<ItemSlot>().heldItem.GetComponent<Item>().type == Item.ItemType.Gun && selectedItemSlot.GetComponent<ItemSlot>().heldItem.GetComponent<Gun>().canShoot)
+        {
+            ShootBullet(selectedItemSlot.GetComponent<ItemSlot>().heldItem.GetComponent<Gun>());
+        }
+        if (gameObject.transform.position.y <= -5 && !dead)
+        {
+            Death();
+        }
+    }
+
+    private void SelectItemSlots()
     {
         // select item slot 1
         if (Input.GetKeyDown(KeyCode.Alpha1) && !itemSlots[0].GetComponent<ItemSlot>().selected)
@@ -68,18 +66,6 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha2) && !itemSlots[1].GetComponent<ItemSlot>().selected)
         {
             selectedItemSlot = itemSlots[1].GetComponent<ItemSlot>().SelectItemSlot(selectedItemSlot.GetComponent<ItemSlot>());
-        }
-
-
-        Movement();
-
-        if (Input.GetMouseButton(0) && canShoot)
-        {
-            ShootBullet();
-        }
-        if (gameObject.transform.position.y <= -5 && !dead)
-        {
-            Death();
         }
     }
 
@@ -143,22 +129,22 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         rb.AddForce(new Vector2(rb.velocity.x, jump));
     }
-    void ShootBullet()
+    void ShootBullet(Gun item)
     {
         Vector2 spawnPos;
         if (facingLeft)
-            spawnPos = new Vector2(transform.position.x - bulletSpawnPos.x, transform.position.y + bulletSpawnPos.y);
+            spawnPos = new Vector2(transform.position.x - item.bulletSpawnPos.x, transform.position.y + item.bulletSpawnPos.y);
         else
-            spawnPos = new Vector2(transform.position.x + bulletSpawnPos.x, transform.position.y + bulletSpawnPos.y);
+            spawnPos = new Vector2(transform.position.x + item.bulletSpawnPos.x, transform.position.y + item.bulletSpawnPos.y);
 
-        GameObject prefab = Instantiate(bullet, spawnPos, new Quaternion(0, 0, 0, 0));
-        prefab.GetComponent<Bullet>().setStats(bulletSpeed, this.gameObject, true, bulletDamage);
+        GameObject prefab = Instantiate(item.bullet, spawnPos, new Quaternion(0, 0, 0, 0));
+        prefab.GetComponent<Bullet>().setStats(item.bulletSpeed, this.gameObject, true, item.bulletDamage);
 
         // bullet rotates towards cursor
         Vector2 mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mouseScreenPosition - spawnPos).normalized;
         prefab.transform.right = direction;
-        StartCoroutine(bulletShootingCooldown());
+        StartCoroutine(item.bulletShootingCooldown());
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

@@ -1,19 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
     public enum ItemType
     {
-        Weapon,
-        Potion,
+        Melee,
+        Gun,
+        Bow
     }
+    public ItemType type;
+    [Header("General")]
+    public Image itemSlotSprite;
+    public GameObject itemHoldingSprite;
+    public Sprite playerHoldingWeaponSprite;
+    public string itemName;
 
-    [Header("For Weapons")]
-    public float damage;
-    public float fireSpeed;
-    public float bulletSpeed;
+    public Vector3 playerHeldSpriteLocation;
+
+    [Header("For Gun")]
+    public Gun gunScript;
     // Start is called before the first frame update
     void Start()
     {
