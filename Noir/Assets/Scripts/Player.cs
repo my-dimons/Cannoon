@@ -28,9 +28,9 @@ public class Player : MonoBehaviour
     public int respawnTime;
     private bool dead;
 
-    [Header("Item Slots")]
-    public GameObject[] itemSlots;
-    public GameObject selectedItemSlot;
+    [Header("Weapon")]
+    public GameObject currentWeapon;
+
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
@@ -44,11 +44,6 @@ public class Player : MonoBehaviour
         SelectItemSlots();
 
         Movement();
-
-        if (Input.GetMouseButton(0) && selectedItemSlot.GetComponent<ItemSlot>().heldItem != null && selectedItemSlot.GetComponent<ItemSlot>().heldItem.GetComponent<Item>().type == Item.ItemType.Gun && selectedItemSlot.GetComponent<ItemSlot>().heldItem.GetComponent<Gun>().canShoot)
-        {
-            ShootBullet(selectedItemSlot.GetComponent<ItemSlot>().heldItem.GetComponent<Gun>());
-        }
         if (gameObject.transform.position.y <= -5 && !dead)
         {
             Death();
@@ -57,16 +52,6 @@ public class Player : MonoBehaviour
 
     private void SelectItemSlots()
     {
-        // select item slot 1
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !itemSlots[0].GetComponent<ItemSlot>().selected)
-        {
-            selectedItemSlot = itemSlots[0].GetComponent<ItemSlot>().SelectItemSlot(selectedItemSlot.GetComponent<ItemSlot>());
-        }
-        // select item slot 2
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && !itemSlots[1].GetComponent<ItemSlot>().selected)
-        {
-            selectedItemSlot = itemSlots[1].GetComponent<ItemSlot>().SelectItemSlot(selectedItemSlot.GetComponent<ItemSlot>());
-        }
     }
 
     void Death()
