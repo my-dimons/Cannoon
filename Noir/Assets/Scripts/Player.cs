@@ -5,11 +5,12 @@ using UnityEngine;
 using TMPro;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public Sprite basePlayerSprite;
+
     [Header("Stats")]
     public float speed;
     public float jump;
@@ -17,43 +18,74 @@ public class Player : MonoBehaviour
 
     public int jumps;
     public int jumpsRemaining;
-    public float jumpCheckDistance;
     public LayerMask layerMask;
-    bool facingLeft;
+    float jumpCheckDistance;
 
     [Header("Death")]
     public Vector2 spawnPoint;
     public TextMeshProUGUI respawnText;
     public GameObject deathScreen;
-    public int respawnTime;
     private bool dead;
+    public int respawnTime;
 
-    [Header("Weapon")]
+    [Header("Weapons")]
     public GameObject currentWeapon;
+    public GameObject itemSlot;
+    public GameObject itemSlotSprite;
+    Gun heldItemScript;
 
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
+        heldItemScript = currentWeapon.GetComponent<Gun>();
+        UpdateItemSlotSprite();
         jumpsRemaining = jumps;
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        rb = this.GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
     void Update()
     {
-        SelectItemSlots();
+        // change later to a function to be able to switch guns
+        if (currentWeapon != null)
+        {
+            heldItemScript = currentWeapon.gameObject.GetComponent<Gun>();
+        } else
+        {
+            heldItemScript = null;
+        }
+
+        //SHOOT BULLET
+        if (Input.GetMouseButton(0) && heldItemScript.canShoot)
+        {
+            heldItemScript.ShootBullet();
+        }
 
         Movement();
+
         if (gameObject.transform.position.y <= -5 && !dead)
         {
             Death();
         }
     }
 
-    private void SelectItemSlots()
+    public void SwapItems()
     {
+
     }
 
+    public void UpdateItemSlotSprite()
+    {
+        itemSlotSprite.gameObject.GetComponent<Image>().sprite = heldItemScript.itemSlotSprite;
+    }
+
+    bool HoldingWeapon()
+    {
+        if (currentWeapon == null)
+            return false;
+        else
+            return true;
+    }
     void Death()
     {
         dead = true;
@@ -77,60 +109,28 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
 
-        //flip sprite based on movement direction
-        // facing right
-        if (horizontalInput < 0 && transform.localScale.x > 0 && !facingLeft)
-        {
-            ChangePlayerFacingDirection(true);
-        }
-        // facing left
-        else if (horizontalInput > 0 && transform.localScale.x < 0 && facingLeft)
-        {
-            ChangePlayerFacingDirection(false);
-        }
-
-
         if (Input.GetKeyDown(KeyCode.Space) && CanPlayerJump())
         {
             Jump();
         }
-    }
-    void ChangePlayerFacingDirection(bool isFacingRight)
-    {
-        facingLeft = isFacingRight;
-        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-    }
-    bool CanPlayerJump()
-    {
-        if (jumpsRemaining <= jumps && jumpsRemaining != 0 )
+
+        bool CanPlayerJump()
         {
-            jumpsRemaining -= 1;
-            return true;
+            if (jumpsRemaining <= jumps && jumpsRemaining != 0)
+            {
+                jumpsRemaining -= 1;
+                return true;
+            }
+            return false;
         }
-        return false;
     }
+
     void Jump()
     {
         rb.velocity = new Vector2(0, 0);
         rb.AddForce(new Vector2(rb.velocity.x, jump));
     }
-    void ShootBullet(Gun item)
-    {
-        Vector2 spawnPos;
-        if (facingLeft)
-            spawnPos = new Vector2(transform.position.x - item.bulletSpawnPos.x, transform.position.y + item.bulletSpawnPos.y);
-        else
-            spawnPos = new Vector2(transform.position.x + item.bulletSpawnPos.x, transform.position.y + item.bulletSpawnPos.y);
 
-        GameObject prefab = Instantiate(item.bullet, spawnPos, new Quaternion(0, 0, 0, 0));
-        prefab.GetComponent<Bullet>().setStats(item.bulletSpeed, this.gameObject, true, item.bulletDamage);
-
-        // bullet rotates towards cursor
-        Vector2 mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mouseScreenPosition - spawnPos).normalized;
-        prefab.transform.right = direction;
-        StartCoroutine(item.bulletShootingCooldown());
-    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
