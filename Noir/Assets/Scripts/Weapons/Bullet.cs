@@ -7,35 +7,41 @@ public class Bullet : MonoBehaviour
 {
     public float speed;
     public float damage;
-    public GameObject parent;
-    public bool playerBullet;
-
     public float distanceFromPlayer;
+    public float bulletLife;
+
+    public GameObject sprite;
+
+    bool dying;
     // Start is called before the first frame update
     void Start()
     {
-        
+        dying = false;
+        sprite.transform.rotation = Quaternion.Euler(0 + transform.rotation.x, 0 + transform.rotation.y, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // gets destroyed if too far from player
-        distanceFromPlayer = Vector2.Distance(this.transform.position, parent.transform.position);
-        if (distanceFromPlayer >= 25)
+        // gets destroyed after a certain time
+        if (!dying)
+            StartCoroutine(BulletLife(bulletLife));
+        IEnumerator BulletLife(float life)
         {
-            Destroy(gameObject);
+            yield return new WaitForSeconds(life);
+            Destroy(this.gameObject);
+            dying = true;
         }
 
+        // moves bullet
         transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 
-    public void setStats(float newSpeed, GameObject newParent, bool isPlayerBullet, float newDamage)
+    public void setStats(float newSpeed, float newDamage, float life)
     {
         speed = newSpeed;
-        parent = newParent;
-        playerBullet = isPlayerBullet;
         damage = newDamage;
+        bulletLife = life;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

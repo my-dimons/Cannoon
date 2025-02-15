@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Gun : MonoBehaviour
+public class Cannon : MonoBehaviour
 {
     [Header("Needed Stats")]
-    public Vector2 bulletSpawnPos;
     public GameObject bullet;
+    public GameObject bulletSpawnObj;
+
     public float bulletSpeed;
     public float bulletCooldown;
     public float bulletDamage;
+    public float bulletLifetime;
 
     //[Header("Special Stats")]
     //public bool canPierce;
@@ -20,7 +22,6 @@ public class Gun : MonoBehaviour
 
     [Header("OTHER")]
     public bool canShoot;
-    public Sprite itemSlotSprite;
     public IEnumerator bulletShootingCooldown()
     {
         canShoot = false;
@@ -41,10 +42,10 @@ public class Gun : MonoBehaviour
     public void ShootBullet()
     {
         Vector2 spawnPos;
-        spawnPos = new Vector2(transform.position.x - bulletSpawnPos.x, transform.position.y + bulletSpawnPos.y);
+        spawnPos = new Vector2(bulletSpawnObj.transform.position.x, bulletSpawnObj.transform.position.y);
 
         GameObject prefab = Instantiate(bullet, spawnPos, new Quaternion(0, 0, 0, 0));
-        prefab.GetComponent<Bullet>().setStats(bulletSpeed, this.gameObject, true, bulletDamage);
+        prefab.GetComponent<Bullet>().setStats(bulletSpeed, bulletDamage, bulletLifetime);
 
         // bullet rotates towards cursor
         Vector2 mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

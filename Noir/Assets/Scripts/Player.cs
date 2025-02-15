@@ -28,38 +28,51 @@ public class Player : MonoBehaviour
     private bool dead;
     public int respawnTime;
 
-    [Header("Weapons")]
-    public GameObject currentWeapon;
-    public GameObject itemSlot;
-    public GameObject itemSlotSprite;
-    Gun heldItemScript;
+    [Header("Cannon")]
+    public GameObject cannon;
+    public GameObject cannonRotationObj;
+    bool cannonFacingRight;
+    Cannon cannonScript;
 
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
-        heldItemScript = currentWeapon.GetComponent<Gun>();
-        UpdateItemSlotSprite();
+        cannonFacingRight = true;
+        cannonScript = cannon.gameObject.GetComponent<Cannon>();
         jumpsRemaining = jumps;
         rb = this.GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
     void Update()
     {
-        // change later to a function to be able to switch guns
-        if (currentWeapon != null)
+        //FLIP CANNON SPRITE
+        if (cannonRotationObj.transform.eulerAngles.z > 90 && cannonRotationObj.transform.eulerAngles.z < 270 && cannonFacingRight)
         {
-            heldItemScript = currentWeapon.gameObject.GetComponent<Gun>();
-        } else
+            cannon.GetComponent<SpriteRenderer>().flipY = true;
+            cannonFacingRight = false;
+            Debug.Log("FLIIPING SPRITE");
+        } else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight || cannonRotationObj.transform.eulerAngles.z > 270 && !cannonFacingRight)
         {
-            heldItemScript = null;
+            cannon.GetComponent<SpriteRenderer>().flipY = false;
+            cannonFacingRight = true;
+            Debug.Log("UNFLIIPING SPRITE");
         }
+            Debug.Log(cannonRotationObj.transform.eulerAngles.z);
+
 
         //SHOOT BULLET
-        if (Input.GetMouseButton(0) && heldItemScript.canShoot)
+        if (Input.GetMouseButton(0) && cannonScript.canShoot)
         {
-            heldItemScript.ShootBullet();
+            cannonScript.ShootBullet();
         }
+
+        //CANNON ROTATE TOWARDS MOUSE
+        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        diff.Normalize();
+        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        cannonRotationObj.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+
 
         Movement();
 
@@ -72,19 +85,6 @@ public class Player : MonoBehaviour
     public void SwapItems()
     {
 
-    }
-
-    public void UpdateItemSlotSprite()
-    {
-        itemSlotSprite.gameObject.GetComponent<Image>().sprite = heldItemScript.itemSlotSprite;
-    }
-
-    bool HoldingWeapon()
-    {
-        if (currentWeapon == null)
-            return false;
-        else
-            return true;
     }
     void Death()
     {
@@ -124,13 +124,11 @@ public class Player : MonoBehaviour
             return false;
         }
     }
-
     void Jump()
     {
         rb.velocity = new Vector2(0, 0);
         rb.AddForce(new Vector2(rb.velocity.x, jump));
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
