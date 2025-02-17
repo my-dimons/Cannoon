@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
 
     public int jumps;
     public int jumpsRemaining;
+    public float jumpCheckDistance;
     public LayerMask layerMask;
-    float jumpCheckDistance;
 
     [Header("Death")]
     public Vector2 spawnPoint;
@@ -52,13 +52,13 @@ public class Player : MonoBehaviour
             cannon.GetComponent<SpriteRenderer>().flipY = true;
             cannonFacingRight = false;
             Debug.Log("FLIIPING SPRITE");
-        } else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight || cannonRotationObj.transform.eulerAngles.z > 270 && !cannonFacingRight)
+        }
+        else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight || cannonRotationObj.transform.eulerAngles.z > 270 && !cannonFacingRight)
         {
             cannon.GetComponent<SpriteRenderer>().flipY = false;
             cannonFacingRight = true;
             Debug.Log("UNFLIIPING SPRITE");
         }
-            Debug.Log(cannonRotationObj.transform.eulerAngles.z);
 
 
         //SHOOT BULLET
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         cannonRotationObj.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
 
-
+        CheckJump();
         Movement();
 
         if (gameObject.transform.position.y <= -5 && !dead)
@@ -82,10 +82,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SwapItems()
+    private void CheckJump()
     {
-
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, jumpCheckDistance, layerMask);
+        if (hit && jumpsRemaining < jumps)
+        {
+            jumpsRemaining = jumps;
+            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance);
+        }
     }
+
     void Death()
     {
         dead = true;
@@ -128,12 +134,5 @@ public class Player : MonoBehaviour
     {
         rb.velocity = new Vector2(0, 0);
         rb.AddForce(new Vector2(rb.velocity.x, jump));
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            jumpsRemaining = jumps;
-        }
     }
 }
