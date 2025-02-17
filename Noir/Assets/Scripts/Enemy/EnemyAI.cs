@@ -69,7 +69,6 @@ public class EnemyAI : MonoBehaviour
         rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
 
         //Jump
-        CheckJump();
         if (target.position.y > rb.position.y + jumpThreshold)
         {
             Jump(forceX);
@@ -106,5 +105,10 @@ public class EnemyAI : MonoBehaviour
             return true;
         } else
             return false;
+    }
+
+    public void SetTarget(Transform enemyTarget)
+    {
+        target = enemyTarget;
     }
 }

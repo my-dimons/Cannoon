@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     public float jumpCheckDistance;
     public LayerMask layerMask;
 
+    [Header("Info")]
+    public int kills;
+
     [Header("Death")]
     public Vector2 spawnPoint;
     public TextMeshProUGUI respawnText;

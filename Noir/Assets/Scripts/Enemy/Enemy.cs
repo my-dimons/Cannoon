@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            GetComponent<EnemyAI>().target.gameObject.GetComponent<Player>().kills += 1;
         }
     }
 }
