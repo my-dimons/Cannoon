@@ -14,12 +14,17 @@ public class Player : MonoBehaviour
     [Header("Stats")]
     public float speed;
     public float jump;
-    public int health;
+    public int maxHealth = 100;
+    float health;
 
     public int jumps;
     public int jumpsRemaining;
     public float jumpCheckDistance;
     public LayerMask layerMask;
+
+    [Header("Health Bar")]
+    public TextMeshProUGUI healthText;
+    public Image healthBar;
 
     [Header("Info")]
     public int kills;
@@ -41,6 +46,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = maxHealth;
+
         cannonFacingRight = true;
         cannonScript = cannon.gameObject.GetComponent<Cannon>();
         jumpsRemaining = jumps;
@@ -49,32 +56,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //FLIP CANNON SPRITE
-        if (cannonRotationObj.transform.eulerAngles.z > 90 && cannonRotationObj.transform.eulerAngles.z < 270 && cannonFacingRight)
-        {
-            cannon.GetComponent<SpriteRenderer>().flipY = true;
-            cannonFacingRight = false;
-            Debug.Log("FLIIPING SPRITE");
-        }
-        else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight || cannonRotationObj.transform.eulerAngles.z > 270 && !cannonFacingRight)
-        {
-            cannon.GetComponent<SpriteRenderer>().flipY = false;
-            cannonFacingRight = true;
-            Debug.Log("UNFLIIPING SPRITE");
-        }
-
-
-        //SHOOT BULLET
-        if (Input.GetMouseButton(0) && cannonScript.canShoot)
-        {
-            cannonScript.ShootBullet();
-        }
-
-        //CANNON ROTATE TOWARDS MOUSE
-        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        diff.Normalize();
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        cannonRotationObj.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        // HEALTH (TEMPERARY)
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+            TakeDamage(25f);
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+            Heal(25f);
 
         CheckJump();
         Movement();
@@ -83,6 +69,45 @@ public class Player : MonoBehaviour
         {
             Death();
         }
+        if (health <= 0 && !dead)
+        {
+            Death();
+        }
+
+        RotateCannonTowardsMouse();
+        FlipCannonSprite();
+
+
+        //SHOOT BULLET
+        if (Input.GetMouseButton(0) && cannonScript.canShoot)
+        {
+            cannonScript.ShootBullet();
+        }
+    }
+
+    // based on mouse position/cannon rotation
+    private void FlipCannonSprite()
+    {
+        if (cannonRotationObj.transform.eulerAngles.z > 90 && cannonRotationObj.transform.eulerAngles.z < 270 && cannonFacingRight)
+        {
+            cannon.GetComponent<SpriteRenderer>().flipY = true;
+            cannonFacingRight = false;
+            Debug.Log("FLIPING SPRITE");
+        }
+        else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight || cannonRotationObj.transform.eulerAngles.z > 270 && !cannonFacingRight)
+        {
+            cannon.GetComponent<SpriteRenderer>().flipY = false;
+            cannonFacingRight = true;
+            Debug.Log("UNFLIPING SPRITE");
+        }
+    }
+
+    private void RotateCannonTowardsMouse()
+    {
+        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        diff.Normalize();
+        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        cannonRotationObj.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
     }
 
     private void CheckJump()
@@ -111,6 +136,23 @@ public class Player : MonoBehaviour
             }
             SceneManager.LoadScene("SampleScene");
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        health = Mathf.Clamp(health, 0, 100);
+
+        healthBar.fillAmount = health / 100;
+        healthText.text = Mathf.RoundToInt(health).ToString();
+    }
+    public void Heal(float healingAmount)
+    {
+        health += healingAmount;
+        health = Mathf.Clamp(health, 0, 100);
+
+        healthBar.fillAmount = health / 100;
+        healthText.text = Mathf.RoundToInt(health).ToString();
     }
     void Movement()
     {

@@ -34,11 +34,6 @@ public class Cannon : MonoBehaviour
         canShoot = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void ShootBullet()
     {
         Vector2 spawnPos;

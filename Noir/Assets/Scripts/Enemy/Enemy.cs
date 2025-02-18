@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour
 {
     public float health;
     public float damage;
+
+    public float minDifficulty;
+    public float maxDifficulty;
     // Start is called before the first frame update
     void Start()
     {

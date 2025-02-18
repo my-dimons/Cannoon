@@ -24,17 +24,22 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         // gets destroyed after a certain time
+        DespawnBullet(bulletLife);
+
+        // moves bullet
+        transform.Translate(Vector3.right * speed * Time.deltaTime);
+    }
+
+    private void DespawnBullet(float time)
+    {
         if (!dying)
-            StartCoroutine(BulletLife(bulletLife));
+            StartCoroutine(BulletLife(time));
         IEnumerator BulletLife(float life)
         {
             yield return new WaitForSeconds(life);
             Destroy(this.gameObject);
             dying = true;
         }
-
-        // moves bullet
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 
     public void setStats(float newSpeed, float newDamage, float life)
