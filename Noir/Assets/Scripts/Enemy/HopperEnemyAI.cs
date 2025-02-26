@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class EnemyAI : MonoBehaviour
+public class HopperEnemyAI : MonoBehaviour
 {
     public Transform target;
     public Transform enemySprite;
@@ -27,10 +27,18 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
-        InvokeRepeating("UpdatePath", 0f, .5f);
+        StartCoroutine(GetTarget());
+        IEnumerator GetTarget()
+        {
+            yield return new WaitForSeconds(.01f);
+
+            target = this.gameObject.GetComponent<Enemy>().target;
+            InvokeRepeating("UpdatePath", 0f, .5f);
+        }
     }
 
     private void UpdatePath()
@@ -63,12 +71,15 @@ public class EnemyAI : MonoBehaviour
             reachedEndOfPath = false;
         }
 
+
+
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         float forceX = direction.x * speed * Time.deltaTime;
 
+        // Move enemy along the X axis, not Y
         rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
 
-        //Jump
+        // Jumping
         if (target.position.y > rb.position.y + jumpThreshold)
         {
             Jump(forceX);

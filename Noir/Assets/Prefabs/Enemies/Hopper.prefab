@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 4246941332381417244}
   - component: {fileID: 5965393267975043248}
   m_Layer: 8
-  m_Name: Gremlin
+  m_Name: Hopper
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd713f1a7a4845428a6d15293a2c435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  target: {fileID: 0}
   health: 50
-  damage: 0
   minDifficulty: 0
-  maxDifficulty: 0
+  maxDifficulty: 999
+  damage: 25
+  damageOnContact: 1
+  Ranged: 0
+  bullet: {fileID: 0}
+  bulletLifetime: 0
+  bulletSpeed: 0
+  fireRate: 0

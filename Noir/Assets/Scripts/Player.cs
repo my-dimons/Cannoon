@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     public int maxHealth = 100;
     float health;
 
+    public bool canTakeDamage;
+    public float damageInvincibilityCooldown;
+
     public int jumps;
     public int jumpsRemaining;
     public float jumpCheckDistance;
@@ -43,9 +46,17 @@ public class Player : MonoBehaviour
     Cannon cannonScript;
 
     Rigidbody2D rb;
+
+    IEnumerator DamageInvincibilityTimer()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(damageInvincibilityCooldown);
+        canTakeDamage = true;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        canTakeDamage = true;
         health = maxHealth;
 
         cannonFacingRight = true;
@@ -134,17 +145,23 @@ public class Player : MonoBehaviour
                 respawnText.text = "RESPAWNING IN " + time.ToString() + " SECONDS";
                 yield return new WaitForSeconds(1);
             }
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("EndlessMode");
         }
     }
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        health = Mathf.Clamp(health, 0, 100);
+        if (canTakeDamage)
+        {
+            Debug.Log("Taking Damage");
+            health -= damage;
+            health = Mathf.Clamp(health, 0, 100);
 
-        healthBar.fillAmount = health / 100;
-        healthText.text = Mathf.RoundToInt(health).ToString();
+            healthBar.fillAmount = health / 100;
+            healthText.text = Mathf.RoundToInt(health).ToString();
+
+            StartCoroutine(DamageInvincibilityTimer());
+        }
     }
     public void Heal(float healingAmount)
     {

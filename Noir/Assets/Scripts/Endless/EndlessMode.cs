@@ -13,22 +13,31 @@ public class EndlessMode : MonoBehaviour
     public TextMeshPro killsText;
     public TextMeshPro enemiesLeftText;
 
+    public TextMeshPro waveCountdownText;
+
     [Header("Waves")]
     public int wave;
     public int enemiesLeft;
-    public int difficultyRating;
+    public float difficultyRating;
+
+    public int timeBetweenWaves;
+    bool advancingToNextWave;
 
     public GameObject enemyParentObject;
+
     public GameObject[] enemySpawnLocations;
     public List<GameObject> possibleEnemySpawnLocations;
 
     [Header("Enemies")]
     public GameObject[] enemies;
+    public List<GameObject> possibleSpawningEnemies;
     // Start is called before the first frame update
     void Start()
     {
+        waveCountdownText.text = "";
+
         ResetPossibleEnemySpawnLocations();
-        NextWave();
+        StartCoroutine(NextWave());
     }
 
     // Update is called once per frame
@@ -39,23 +48,48 @@ public class EndlessMode : MonoBehaviour
         killsText.text = player.GetComponent<Player>().kills + "   Kills";
         enemiesLeftText.text = enemiesLeft + "   Left";
 
-        if (enemiesLeft <= 0)
-            NextWave();
+        if (enemiesLeft <= 0 && !advancingToNextWave)
+            StartCoroutine(NextWave());
     }
 
-    void NextWave()
+    IEnumerator NextWave()
     {
+        advancingToNextWave = true;
+        int secondsTillNextWave = timeBetweenWaves;
+        waveCountdownText.text = secondsTillNextWave + "s Until Next Wave";
+        secondsTillNextWave--;
+        for (int i = 0; i < timeBetweenWaves + 1; i++)
+        {
+            yield return new WaitForSeconds(1);
+            waveCountdownText.text = secondsTillNextWave + "s Until Next Wave";
+            secondsTillNextWave--;
+        }
+
+
+        waveCountdownText.text = "";
+
         wave++;
-        difficultyRating++;
+
+        difficultyRating = wave;
+
+
+
+
         SpawnEnemies();
         ResetPossibleEnemySpawnLocations();
-        //difficultyRating *= Random.Range(1.15f, 1.25f);
+
+        advancingToNextWave = false;
     }
 
     void SpawnEnemies()
     {
+        possibleSpawningEnemies.Clear();
+        for (int i = 0; i < enemies.Length; i++)
+            if (difficultyRating >= enemies[i].GetComponent<Enemy>().minDifficulty && difficultyRating <= enemies[i].GetComponent<Enemy>().maxDifficulty)
+                possibleSpawningEnemies.Add(enemies[i]);
+
         //int amount = Mathf.RoundToInt(difficultyRating);
-        int amount = difficultyRating;
+        float amount = difficultyRating/2;
         amount = Mathf.Clamp(amount, 1, enemySpawnLocations.Length);
 
         for (int i = 0; i < amount; i++)
@@ -65,7 +99,6 @@ public class EndlessMode : MonoBehaviour
 
             GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, spawningEnemy.transform.rotation);
             newEnemy.transform.parent = enemyParentObject.transform;
-            newEnemy.GetComponent<EnemyAI>().target = player.transform;
 
             // might not need at the moment
             enemiesLeft++;
@@ -74,7 +107,8 @@ public class EndlessMode : MonoBehaviour
 
     GameObject FindSpawnableEnemy()
     {
-        GameObject enemy = enemies[Random.Range(0, enemies.Length)];
+        int number = Random.Range(0, possibleSpawningEnemies.Count);
+        GameObject enemy = possibleSpawningEnemies[number];
         return enemy;
     }
 
@@ -83,7 +117,7 @@ public class EndlessMode : MonoBehaviour
         Vector3 pos;
         int randomRange = Random.Range(0, possibleEnemySpawnLocations.Count);
         pos = possibleEnemySpawnLocations[randomRange].transform.position;
-
+        possibleEnemySpawnLocations.Remove(possibleEnemySpawnLocations[randomRange]);
         return pos;
     }
 
