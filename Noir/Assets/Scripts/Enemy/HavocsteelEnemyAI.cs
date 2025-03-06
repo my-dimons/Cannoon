@@ -3,29 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class HopperEnemyAI : MonoBehaviour
+public class HavocsteelEnemyAI : MonoBehaviour
 {
     public Transform target;
     public Transform enemySprite;
 
+    [Header("Stats")]
     public float speed;
 
-    public float jumpForce;
-    public float jumpThreshold;
-    public float jumpCooldown;
-    public float jumpCheckDistance;
-    public LayerMask layerMask;
+    [Header("Shooting")]
+    public bool canShoot;
+    public GameObject bullet;
+    public GameObject shootingPoint;
+    public float bulletSpeed;
+    public float bulletLifetime;
+    public float shootingCooldown;
 
-    public float nextWaypointDistance = 3f;
+
+    [Header("Pathfinding")]
+
+    public LayerMask layerMask;
 
     Path path;
     int currentWaypoint = 0;
+    public float nextWaypointDistance = 3f;
     bool reachedEndOfPath = false;
+    bool isFacingRight = true;
 
     Seeker seeker;
     Rigidbody2D rb;
     Enemy enemyScript;
 
+    IEnumerator ShootingCooldown()
+    {
+        canShoot = false;
+        yield return new WaitForSeconds(shootingCooldown);
+        canShoot = true;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +65,7 @@ public class HopperEnemyAI : MonoBehaviour
 
     void OnPathComplete(Path p)
     {
-        if(!p.error)
+        if (!p.error)
         {
             path = p;
             currentWaypoint = 0;
@@ -68,24 +82,17 @@ public class HopperEnemyAI : MonoBehaviour
         {
             reachedEndOfPath = true;
             return;
-        } else
+        }
+        else
         {
             reachedEndOfPath = false;
         }
-
-
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         float forceX = direction.x * speed * Time.deltaTime;
 
         // Move enemy along the X axis, not Y
         rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
-
-        // Jumping
-        if (target.position.y > rb.position.y + jumpThreshold)
-        {
-            Jump(forceX);
-        }
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -95,29 +102,22 @@ public class HopperEnemyAI : MonoBehaviour
         }
 
         if (forceX >= 0.01f)
-            enemySprite.localScale = new Vector3(-1f, 1f, 1f);
-        else if (forceX <= -0.01f)
+        {
             enemySprite.localScale = new Vector3(1f, 1f, 1f);
-    }
-
-    void Jump(float xForce)
-    {
-        if (CheckJump())
-        {
-            rb.velocity = new Vector2(0, 0);
-            rb.AddForce(new Vector2(xForce, jumpForce));
+            isFacingRight = true;
         }
-    }
-    private bool CheckJump()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, jumpCheckDistance, layerMask);
 
-        if (hit)
+        else if (forceX <= -0.01f)
         {
-            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance);
-            return true;
-        } else
-            return false;
+            enemySprite.localScale = new Vector3(-1f, 1f, 1f);
+            isFacingRight = false;
+        }
+
+    }
+
+    private void Update()
+    {
+        ShootBullet();
     }
 
     public void SetTarget(Transform enemyTarget)
@@ -125,13 +125,20 @@ public class HopperEnemyAI : MonoBehaviour
         target = enemyTarget;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    void ShootBullet()
     {
-        Debug.Log("ENEMY COLLIDED");
-        if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
+        if (canShoot)
         {
-            Debug.Log("Dealing Damage");
-            target.GetComponent<Player>().TakeDamage(enemyScript.damage);
+            // shooting velocity/direction depends on which way the enemy is facing
+            float spawnBulletRotation;
+            if (isFacingRight)
+                spawnBulletRotation = 0f;
+            else
+                spawnBulletRotation = 180f;
+            
+            GameObject newBullet = Instantiate(bullet, shootingPoint.transform.position, Quaternion.Euler(0, 0, spawnBulletRotation));
+            newBullet.GetComponent<Bullet>().setStats(bulletSpeed, enemyScript.damage, bulletLifetime, false);
+            StartCoroutine(ShootingCooldown());
         }
     }
 }

@@ -15,14 +15,6 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Damage")]
     public float damage;
 
-    // Damage types (how this enemy deals damage)
-    public bool damageOnContact;
-
-    public bool Ranged;
-    public GameObject bullet;
-    public float bulletLifetime;
-    public float bulletSpeed;
-    public float fireRate;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,19 +29,6 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             player.GetComponent<Player>().kills += 1;
-        }
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Debug.Log("ENEMY COLLIDED");
-        if (damageOnContact)
-        {
-            Debug.Log("DAMAGE ON CONTACT");
-            if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
-            {
-                Debug.Log("Dealing Damage");
-                player.GetComponent<Player>().TakeDamage(damage);
-            }
         }
     }
 }

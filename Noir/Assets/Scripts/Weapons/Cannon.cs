@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Cannon : MonoBehaviour
 {
     [Header("Needed Stats")]
+    public GameObject player;
     public GameObject bullet;
     public GameObject bulletSpawnObj;
 
@@ -36,16 +37,13 @@ public class Cannon : MonoBehaviour
 
     public void ShootBullet()
     {
+        Debug.Log("Shot bullet");
         Vector2 spawnPos;
         spawnPos = new Vector2(bulletSpawnObj.transform.position.x, bulletSpawnObj.transform.position.y);
 
-        GameObject prefab = Instantiate(bullet, spawnPos, new Quaternion(0, 0, 0, 0));
-        prefab.GetComponent<Bullet>().setStats(bulletSpeed, bulletDamage, bulletLifetime);
+        GameObject prefab = Instantiate(bullet, spawnPos, player.GetComponent<Player>().cannon.transform.rotation);
 
-        // bullet rotates towards cursor
-        Vector2 mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mouseScreenPosition - spawnPos).normalized;
-        prefab.transform.right = direction;
+        prefab.GetComponent<Bullet>().setStats(bulletSpeed, bulletDamage, bulletLifetime, true);
         StartCoroutine(bulletShootingCooldown());
     }
 }

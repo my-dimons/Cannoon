@@ -65,15 +65,9 @@ public class EndlessMode : MonoBehaviour
             secondsTillNextWave--;
         }
 
-
         waveCountdownText.text = "";
-
         wave++;
-
         difficultyRating = wave;
-
-
-
 
         SpawnEnemies();
         ResetPossibleEnemySpawnLocations();

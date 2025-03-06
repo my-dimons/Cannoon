@@ -7,8 +7,9 @@ public class Bullet : MonoBehaviour
 {
     public float speed;
     public float damage;
-    public float distanceFromPlayer;
+    public float distanceFromShooter;
     public float bulletLife;
+    public bool playerBullet;
 
     public GameObject sprite;
 
@@ -17,7 +18,6 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         dying = false;
-        sprite.transform.rotation = Quaternion.Euler(0 + transform.rotation.x, 0 + transform.rotation.y, 0);
     }
 
     // Update is called once per frame
@@ -34,6 +34,7 @@ public class Bullet : MonoBehaviour
     {
         if (!dying)
             StartCoroutine(BulletLife(time));
+
         IEnumerator BulletLife(float life)
         {
             yield return new WaitForSeconds(life);
@@ -42,11 +43,12 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void setStats(float newSpeed, float newDamage, float life)
+    public void setStats(float newSpeed, float newDamage, float life, bool isPlayerBullet)
     {
         speed = newSpeed;
         damage = newDamage;
         bulletLife = life;
+        playerBullet = isPlayerBullet;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -55,13 +57,28 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
             Destroy(gameObject);
 
-        // collides with enemy
-        if (other.gameObject.CompareTag("Enemy"))
+        if (playerBullet)
         {
-            GameObject enemy = other.gameObject;
-            Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemyScript.health -= damage;
-            Destroy(gameObject);
+            // collides with enemy
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                GameObject enemy = other.gameObject;
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.health -= damage;
+                Destroy(gameObject);
+            }
+        }
+        
+        else if (!playerBullet)
+        {
+            // collides with player
+            if (other.gameObject.CompareTag("Player"))
+            {
+                GameObject player = other.gameObject;
+                Player playerScript = player.GetComponent<Player>();
+                playerScript.TakeDamage(damage);
+                Destroy(gameObject);
+            }
         }
     }
 }

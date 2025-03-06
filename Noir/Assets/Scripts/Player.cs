@@ -99,13 +99,22 @@ public class Player : MonoBehaviour
     // based on mouse position/cannon rotation
     private void FlipCannonSprite()
     {
-        if (cannonRotationObj.transform.eulerAngles.z > 90 && cannonRotationObj.transform.eulerAngles.z < 270 && cannonFacingRight)
+        if (cannonRotationObj.transform.eulerAngles.z > 90 
+            && 
+            cannonRotationObj.transform.eulerAngles.z < 270 
+            && 
+            cannonFacingRight)
         {
             cannon.GetComponent<SpriteRenderer>().flipY = true;
             cannonFacingRight = false;
             Debug.Log("FLIPING SPRITE");
         }
-        else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight || cannonRotationObj.transform.eulerAngles.z > 270 && !cannonFacingRight)
+
+        else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight 
+            || 
+            cannonRotationObj.transform.eulerAngles.z > 270 
+            && 
+            !cannonFacingRight)
         {
             cannon.GetComponent<SpriteRenderer>().flipY = false;
             cannonFacingRight = true;

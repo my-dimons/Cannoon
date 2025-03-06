@@ -18,10 +18,11 @@ public class FlierEnemyAI : MonoBehaviour
 
     Seeker seeker;
     Rigidbody2D rb;
+    Enemy enemyScript;
     // Start is called before the first frame update
     void Start()
     {
-
+        enemyScript = GetComponent<Enemy>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -81,11 +82,23 @@ public class FlierEnemyAI : MonoBehaviour
         // Rotate enemyh towards player
         Vector2 diff = target.position - enemySprite.transform.position;
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        enemySprite.rotation = Quaternion.Euler(0f, 0f, rot_z + 135);
+        enemySprite.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
     }
 
     public void SetTarget(Transform enemyTarget)
     {
         target = enemyTarget;
     }
+
+    // Deal damage to player
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log("ENEMY COLLIDED");
+        if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
+        {
+            Debug.Log("Dealing Damage");
+            target.GetComponent<Player>().TakeDamage(enemyScript.damage);
+        }
+    }
+
 }
