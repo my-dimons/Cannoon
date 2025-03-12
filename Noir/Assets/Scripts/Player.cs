@@ -27,9 +27,11 @@ public class Player : MonoBehaviour
 
     [Header("Health Bar")]
     public TextMeshProUGUI healthText;
-    public Image healthBar;
+    public Image healthBarImage;
+    public GameObject healthBar;
 
     [Header("Info")]
+    public string currentLevel;
     public int kills;
 
     [Header("Death")]
@@ -47,6 +49,9 @@ public class Player : MonoBehaviour
 
     Rigidbody2D rb;
 
+    [Header("Other")]
+    GameManager gameManager;
+
     IEnumerator DamageInvincibilityTimer()
     {
         canTakeDamage = false;
@@ -56,6 +61,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         canTakeDamage = true;
         health = maxHealth;
 
@@ -144,7 +150,9 @@ public class Player : MonoBehaviour
     {
         dead = true;
         deathScreen.SetActive(true);
+        healthBar.SetActive(false);
         StartCoroutine(respawn());
+        gameManager.globalDeaths += 1;
 
         IEnumerator respawn()
         {
@@ -154,8 +162,9 @@ public class Player : MonoBehaviour
                 respawnText.text = "RESPAWNING IN " + time.ToString() + " SECONDS";
                 yield return new WaitForSeconds(1);
             }
-            SceneManager.LoadScene("EndlessMode");
+            gameManager.LoadLevel(currentLevel);
         }
+
     }
 
     public void TakeDamage(float damage)
@@ -166,7 +175,7 @@ public class Player : MonoBehaviour
             health -= damage;
             health = Mathf.Clamp(health, 0, 100);
 
-            healthBar.fillAmount = health / 100;
+            healthBarImage.fillAmount = health / 100;
             healthText.text = Mathf.RoundToInt(health).ToString();
 
             StartCoroutine(DamageInvincibilityTimer());
@@ -177,7 +186,7 @@ public class Player : MonoBehaviour
         health += healingAmount;
         health = Mathf.Clamp(health, 0, 100);
 
-        healthBar.fillAmount = health / 100;
+        healthBarImage.fillAmount = health / 100;
         healthText.text = Mathf.RoundToInt(health).ToString();
     }
     void Movement()

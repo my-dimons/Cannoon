@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // The general script ALL enemies need, and an AI script
+    [Header("Stats")]
     public GameObject player;
     public Transform target;
     public float health;
@@ -15,9 +16,12 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Damage")]
     public float damage;
 
+    [Header("Other")]
+    GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         target = player.transform;
     }
@@ -29,6 +33,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             player.GetComponent<Player>().kills += 1;
+            gameManager.globalKills += 1;
         }
     }
 }

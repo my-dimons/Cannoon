@@ -151,16 +151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   target: {fileID: 0}
-  health: 75
+  health: 10
   minDifficulty: 0
   maxDifficulty: 999
   damage: 30
-  damageOnContact: 1
-  Ranged: 0
-  bullet: {fileID: 0}
-  bulletLifetime: 0
-  bulletSpeed: 0
-  fireRate: 0
 --- !u!61 &8222551291712940573
 BoxCollider2D:
   m_ObjectHideFlags: 0
