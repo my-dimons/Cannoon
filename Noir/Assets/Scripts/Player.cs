@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         health = maxHealth;
 
         cannonFacingRight = true;
-        cannonScript = cannon.gameObject.GetComponent<Cannon>();
+        cannonScript = cannon.GetComponent<Cannon>();
         jumpsRemaining = jumps;
         rb = this.GetComponent<Rigidbody2D>();
     }
@@ -74,10 +74,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         // HEALTH (TEMPERARY)
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-            TakeDamage(25f);
         if (Input.GetKeyDown(KeyCode.UpArrow))
-            Heal(25f);
+            Heal(100f);
 
         CheckJump();
         Movement();

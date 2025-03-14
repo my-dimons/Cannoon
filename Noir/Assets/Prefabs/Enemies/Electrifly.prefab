@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 1428097863693120508}
   - component: {fileID: 6707608492532876703}
   m_Layer: 8
-  m_Name: Flier
+  m_Name: Electrifly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,9 +152,12 @@ MonoBehaviour:
   player: {fileID: 0}
   target: {fileID: 0}
   health: 10
+  damage: 30
+  criticalChance: 0
+  criticalMultiplier: 0
   minDifficulty: 0
   maxDifficulty: 999
-  damage: 30
+  flyingEnemy: 1
 --- !u!61 &8222551291712940573
 BoxCollider2D:
   m_ObjectHideFlags: 0
