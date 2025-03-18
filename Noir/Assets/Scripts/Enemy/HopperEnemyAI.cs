@@ -8,12 +8,20 @@ public class HopperEnemyAI : MonoBehaviour
     public Transform target;
     public Transform enemySprite;
 
-    public float speed;
-
-    public float jumpForce;
+    [Header("Stats")]
+    [Tooltip("This enemys speed")]
+    public float baseSpeed;
+    public float currentSpeed;
+    [Tooltip("How high/hard this enemy will jump")]
+    public float baseJumpForce;
+    public float currentJumpForce;
+    [Tooltip("How much higher this enemys target needs to be compared to this object (Y axis)")]
     public float jumpThreshold;
+    [Tooltip("The maximum time between jumps")]
     public float jumpCooldown;
+    [Tooltip("Used in the jump raycasting, how far the ray will be cast downwards to check for ground")]
     public float jumpCheckDistance;
+    [Tooltip("What object layer is getting checked for raycast collisions")]
     public LayerMask layerMask;
 
     public float nextWaypointDistance = 3f;
@@ -22,13 +30,16 @@ public class HopperEnemyAI : MonoBehaviour
     int currentWaypoint = 0;
     bool reachedEndOfPath = false;
 
+    // OTHER: Referenced in Start()
     Seeker seeker;
     Rigidbody2D rb;
     Enemy enemyScript;
+    EndlessMode endlessModeScript;
 
     // Start is called before the first frame update
     void Start()
     {
+        endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
         enemyScript = GetComponent<Enemy>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -57,6 +68,17 @@ public class HopperEnemyAI : MonoBehaviour
             currentWaypoint = 0;
         }
     }
+    private void Update()
+    {
+        ApplyDifficultyRating();
+    }
+
+    private void ApplyDifficultyRating()
+    {
+        currentSpeed = baseSpeed * endlessModeScript.difficultyMultiplier;
+        currentJumpForce = baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.5f);
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -76,7 +98,7 @@ public class HopperEnemyAI : MonoBehaviour
 
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        float forceX = direction.x * speed * Time.deltaTime;
+        float forceX = direction.x * currentSpeed * Time.deltaTime;
 
         // Move enemy along the X axis, not Y
         rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
@@ -105,7 +127,7 @@ public class HopperEnemyAI : MonoBehaviour
         if (CheckJump())
         {
             rb.velocity = new Vector2(0, 0);
-            rb.AddForce(new Vector2(xForce, jumpForce));
+            rb.AddForce(new Vector2(xForce, currentJumpForce));
         }
     }
     private bool CheckJump()
@@ -127,11 +149,10 @@ public class HopperEnemyAI : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("ENEMY COLLIDED");
         if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
         {
-            Debug.Log("Dealing Damage");
-            target.GetComponent<Player>().TakeDamage(enemyScript.damage);
+            Debug.Log("Dealing damage to player");
+            target.GetComponent<Player>().TakeDamage(enemyScript.currentDamage);
         }
     }
 }

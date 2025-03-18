@@ -235,8 +235,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 5145556795812183489}
-  speed: 500
-  jumpForce: 600
+  baseSpeed: 400
+  currentSpeed: 0
+  baseJumpForce: 1000
+  currentJumpForce: 0
   jumpThreshold: 2
   jumpCooldown: 3
   jumpCheckDistance: 1
@@ -258,7 +260,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   target: {fileID: 0}
-  health: 50
-  minDifficulty: 0
-  maxDifficulty: 999
-  damage: 25
+  baseHealth: 40
+  currentHealth: 0
+  baseDamage: 15
+  currentDamage: 0
+  baseCriticalChance: 0
+  currentCriticalChance: 0
+  baseCriticalMultiplier: 0
+  currentCriticalMultiplier: 0
+  minWave: 0
+  maxWave: 999
+  flyingEnemy: 0

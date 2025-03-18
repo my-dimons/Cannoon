@@ -14,8 +14,13 @@ public class Player : MonoBehaviour
     [Header("Stats")]
     public float speed;
     public float jump;
-    public int maxHealth = 100;
-    float health;
+
+    [Tooltip("The base max health")]
+    public int baseHealth;
+    [Tooltip("The current max health")]
+    public int maxHealth;
+
+    public float currentHealth;
 
     public bool canTakeDamage;
     public float damageInvincibilityCooldown;
@@ -62,12 +67,15 @@ public class Player : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        canTakeDamage = true;
-        health = maxHealth;
 
+        maxHealth = baseHealth;
+        currentHealth = maxHealth;
+
+        canTakeDamage = true;
         cannonFacingRight = true;
-        cannonScript = cannon.GetComponent<Cannon>();
         jumpsRemaining = jumps;
+
+        cannonScript = cannon.GetComponent<Cannon>();
         rb = this.GetComponent<Rigidbody2D>();
     }
     // Update is called once per frame
@@ -84,7 +92,7 @@ public class Player : MonoBehaviour
         {
             Death();
         }
-        if (health <= 0 && !dead)
+        if (currentHealth <= 0 && !dead)
         {
             Death();
         }
@@ -170,22 +178,22 @@ public class Player : MonoBehaviour
         if (canTakeDamage)
         {
             Debug.Log("Taking Damage");
-            health -= damage;
-            health = Mathf.Clamp(health, 0, 100);
+            currentHealth -= damage;
+            currentHealth = Mathf.Clamp(currentHealth, 0, 100);
 
-            healthBarImage.fillAmount = health / 100;
-            healthText.text = Mathf.RoundToInt(health).ToString();
+            healthBarImage.fillAmount = currentHealth / 100;
+            healthText.text = Mathf.RoundToInt(currentHealth).ToString();
 
             StartCoroutine(DamageInvincibilityTimer());
         }
     }
     public void Heal(float healingAmount)
     {
-        health += healingAmount;
-        health = Mathf.Clamp(health, 0, 100);
+        currentHealth += healingAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, 100);
 
-        healthBarImage.fillAmount = health / 100;
-        healthText.text = Mathf.RoundToInt(health).ToString();
+        healthBarImage.fillAmount = currentHealth / 100;
+        healthText.text = Mathf.RoundToInt(currentHealth).ToString();
     }
     void Movement()
     {

@@ -8,7 +8,8 @@ public class FlierEnemyAI : MonoBehaviour
     public Transform target;
     public Transform enemySprite;
 
-    public float speed;
+    public float baseSpeed;
+    public float currentSpeed;
 
     public float nextWaypointDistance = 3f;
 
@@ -16,12 +17,15 @@ public class FlierEnemyAI : MonoBehaviour
     int currentWaypoint = 0;
     bool reachedEndOfPath = false;
 
+    // OTHER: Referenced in Start()
     Seeker seeker;
     Rigidbody2D rb;
     Enemy enemyScript;
+    EndlessMode endlessModeScript;
     // Start is called before the first frame update
     void Start()
     {
+        endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
         enemyScript = GetComponent<Enemy>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -50,6 +54,17 @@ public class FlierEnemyAI : MonoBehaviour
             currentWaypoint = 0;
         }
     }
+
+    private void Update()
+    {
+        ApplyDifficultyRating();
+    }
+
+    private void ApplyDifficultyRating()
+    {
+        currentSpeed = baseSpeed * endlessModeScript.difficultyMultiplier;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -69,8 +84,8 @@ public class FlierEnemyAI : MonoBehaviour
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
 
-        // Move towards the next waypoint (/player)
-        rb.AddForce(direction, ForceMode2D.Impulse);
+        // Move towards the next waypoint (player)
+        rb.AddForce(direction * currentSpeed, ForceMode2D.Impulse);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -93,11 +108,10 @@ public class FlierEnemyAI : MonoBehaviour
     // Deal damage to player
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("ENEMY COLLIDED");
         if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
         {
-            Debug.Log("Dealing Damage");
-            target.GetComponent<Player>().TakeDamage(enemyScript.damage);
+            Debug.Log("Dealing damage to player");
+            target.GetComponent<Player>().TakeDamage(enemyScript.currentDamage);
         }
     }
 

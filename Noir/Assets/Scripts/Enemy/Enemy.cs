@@ -1,51 +1,89 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour
 {
     // The general script ALL enemies need, and an AI script
-    [Header("Stats")]
     public GameObject player;
     public Transform target;
 
-    [Tooltip("How much HP this enemy has")]
-    public float health;
-    [Tooltip("How much damage this enemy does")]
-    public float damage;
-    [Tooltip("WIP | The chance of an enemy does a critical hit, which multiplies the base damage by the critical mutiplier")]
-    public float criticalChance;
-    [Tooltip("WIP | multiplier * damage, in effect when the enemy does a critical hit")]
-    public float criticalMultiplier;
+    [Header("Stats")]
 
-    [Tooltip("The lowest possible wave difficulty this enemy will spawn in")]
-    public float minDifficulty;
-    [Tooltip("The highest possible wave difficulty this enemy will spawn in")]
-    public float maxDifficulty;
+    [Tooltip("How much HP this enemy has")]
+    public float baseHealth;
+    public float currentHealth;
+
+    [Tooltip("How much damage this enemy does")]
+    public float baseDamage;
+    public float currentDamage;
+
+    [Tooltip("WIP | The chance of an enemy does a critical hit, which multiplies the base damage by the critical mutiplier")]
+    public float baseCriticalChance;
+    public float currentCriticalChance;
+    [Tooltip("WIP | multiplier * damage, in effect when the enemy does a critical hit")]
+    public float baseCriticalMultiplier;
+    public float currentCriticalMultiplier;
+
+    [Tooltip("The lowest possible wave this enemy will spawn in")]
+    public float minWave;
+    [Tooltip("The highest possible wave this enemy will spawn in")]
+    public float maxWave;
+
 
     [Header("Special Stats")]
-    [Tooltip("Does this enemy fly?, if so it will have different spawn locations than usual (NOTE: FLYING ENEMIES ARE SOMETIMES REFERED TO 'SKY' ENEMIES)")]
-    public bool flyingEnemy; // NOTE: sometimes flying enemies are also refered to "sky" enemies
 
-    [Header("Other")]
+    [Tooltip("Does this enemy fly?, if so it will have different spawn locations than usual (NOTE: FLYING ENEMIES ARE SOMETIMES REFERED TO AS 'SKY' ENEMIES)")]
+    public bool flyingEnemy; // NOTE: sometimes flying enemies are also refered to as "sky" enemies
+
+
+    //OTHER: Referenced in start
     GameManager gameManager;
+    EndlessMode endlessModeScript;
     // Start is called before the first frame update
     void Start()
     {
+        endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         target = player.transform;
+
+        ApplyDifficultyRating(true);
     }
 
     // Update is called once per frame
     void Update()
     {
         // if health is below 0: kill this enemy
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
-            Destroy(gameObject);
-            player.GetComponent<Player>().kills += 1;
-            gameManager.globalKills += 1;
+            KillEnemy();
         }
+
+        ApplyDifficultyRating(false);
+    }
+
+    private void KillEnemy()
+    {
+        Destroy(gameObject);
+        player.GetComponent<Player>().kills += 1;
+        gameManager.globalKills += 1;
+    }
+
+    private void ApplyDifficultyRating(bool start)
+    {
+        if (start)
+            currentHealth = baseHealth * endlessModeScript.difficultyMultiplier;
+
+        currentDamage = baseDamage * endlessModeScript.difficultyMultiplier;
+        currentCriticalChance = Mathf.Clamp(baseCriticalChance * endlessModeScript.difficultyMultiplier, 0, 100);
+        currentCriticalMultiplier = baseCriticalMultiplier * endlessModeScript.difficultyMultiplier;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+
     }
 }

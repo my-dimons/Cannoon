@@ -135,7 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 7994962712536292422}
-  speed: 1
+  baseSpeed: 1
+  currentSpeed: 0
   nextWaypointDistance: 3
 --- !u!114 &9176835692713116971
 MonoBehaviour:
@@ -151,12 +152,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   target: {fileID: 0}
-  health: 10
-  damage: 30
-  criticalChance: 0
-  criticalMultiplier: 0
-  minDifficulty: 0
-  maxDifficulty: 999
+  baseHealth: 10
+  currentHealth: 0
+  baseDamage: 15
+  currentDamage: 0
+  baseCriticalChance: 0
+  currentCriticalChance: 0
+  baseCriticalMultiplier: 0
+  currentCriticalMultiplier: 0
+  minWave: 0
+  maxWave: 0
   flyingEnemy: 1
 --- !u!61 &8222551291712940573
 BoxCollider2D:

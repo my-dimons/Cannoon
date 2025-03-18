@@ -154,10 +154,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   target: {fileID: 0}
-  health: 125
-  minDifficulty: 0
-  maxDifficulty: 999
-  damage: 35
+  baseHealth: 70
+  currentHealth: 0
+  baseDamage: 25
+  currentDamage: 0
+  baseCriticalChance: 0
+  currentCriticalChance: 0
+  baseCriticalMultiplier: 0
+  currentCriticalMultiplier: 0
+  minWave: 0
+  maxWave: 999
+  flyingEnemy: 0
 --- !u!114 &5304757031673099613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,13 +207,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 2292136734657674780}
-  speed: 50
+  baseSpeed: 80
+  currentSpeed: 0
+  baseBulletSpeed: 30
+  currentBulletSpeed: 0
+  baseShootingCooldown: 2.5
+  currentShootingCooldown: 0
   canShoot: 1
   bullet: {fileID: 2235161104584879765, guid: fef7ff2caaf98054e8debc67faba353a, type: 3}
   shootingPoint: {fileID: 6020592297030934712}
-  bulletSpeed: 30
   bulletLifetime: 25
-  shootingCooldown: 1.5
   layerMask:
     serializedVersion: 2
     m_Bits: 0

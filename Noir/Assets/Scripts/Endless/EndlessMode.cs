@@ -21,8 +21,10 @@ public class EndlessMode : MonoBehaviour
     [Tooltip("How many enemies are remaining?")]
     public int enemiesLeft;
 
-    [Tooltip("Used to determine how hard the wave is")]
-    public float difficultyRating;
+    [Tooltip("Determines how hard the wave is")]
+    public float difficultyMultiplier;
+    [Tooltip("How much the difficulty multiplier increases each wave (Should probably be lower 0.1)")]
+    public float difficultyMultiplierIncrease;
 
     [Tooltip("Transition time between waves (In Seconds)")]
     public int timeBetweenWaves;
@@ -90,7 +92,9 @@ public class EndlessMode : MonoBehaviour
         // advance wave
         waveCountdownText.text = "";
         wave++;
-        difficultyRating = wave;
+        // DON'T activate of first wave
+        if (wave != 1)
+            difficultyMultiplier += difficultyMultiplierIncrease;
 
         // spawning enemy process
         SpawnEnemies();
@@ -105,11 +109,11 @@ public class EndlessMode : MonoBehaviour
 
         // gets all the possible spawnable enemies (by using each enemies min & max difficulty spawning range)
         for (int i = 0; i < enemies.Length; i++)
-            if (difficultyRating >= enemies[i].GetComponent<Enemy>().minDifficulty && difficultyRating <= enemies[i].GetComponent<Enemy>().maxDifficulty)
+            if (difficultyMultiplier >= enemies[i].GetComponent<Enemy>().minWave && difficultyMultiplier <= enemies[i].GetComponent<Enemy>().maxWave)
                 possibleSpawningEnemies.Add(enemies[i]);
 
         // how many enemies to spawn (using difficulty rating)
-        float amount = difficultyRating/2;
+        float amount = wave/2;
         amount = Mathf.Clamp(amount, 1, possibleSpawningEnemies.Count);
 
         // spawns all enemies

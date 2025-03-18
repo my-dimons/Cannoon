@@ -64,7 +64,7 @@ public class Bullet : MonoBehaviour
             {
                 GameObject enemy = other.gameObject;
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
-                enemyScript.health -= damage;
+                enemyScript.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }
