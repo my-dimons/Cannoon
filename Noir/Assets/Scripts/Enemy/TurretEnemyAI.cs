@@ -74,7 +74,7 @@ public class TurretEnemyAI : MonoBehaviour
     private void ApplyDifficultyRating()
     {
         currentShootingCooldown = baseShootingCooldown / endlessModeScript.difficultyMultiplier;
-        currentBulletSpeed = baseBulletSpeed * endlessModeScript.difficultyMultiplier;
+        currentBulletSpeed = baseBulletSpeed * Mathf.Clamp(endlessModeScript.difficultyMultiplier/1.5f, 1, Mathf.Infinity);
     }
 
     public void SetTarget(Transform enemyTarget)
@@ -86,7 +86,7 @@ public class TurretEnemyAI : MonoBehaviour
     {
         GameObject prefab = Instantiate(bullet, enemyCannonShootingPoint.position, enemySpriteCannon.transform.rotation);
 
-        prefab.GetComponent<Bullet>().setStats(currentBulletSpeed, GetComponent<Enemy>().baseDamage, bulletLifetime, false);
+        prefab.GetComponent<Bullet>().setStats(currentBulletSpeed, GetComponent<Enemy>().currentDamage, bulletLifetime, false);
 
         StartCoroutine(ShootingCooldown());
     }

@@ -23,7 +23,7 @@ public class EndlessMode : MonoBehaviour
 
     [Tooltip("Determines how hard the wave is")]
     public float difficultyMultiplier;
-    [Tooltip("How much the difficulty multiplier increases each wave (Should probably be lower 0.1)")]
+    [Tooltip("How much the difficulty multiplier increases each wave (Should probably be lower than 0.05)")]
     public float difficultyMultiplierIncrease;
 
     [Tooltip("Transition time between waves (In Seconds)")]

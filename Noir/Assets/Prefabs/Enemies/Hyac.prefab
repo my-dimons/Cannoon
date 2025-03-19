@@ -241,7 +241,7 @@ MonoBehaviour:
   target: {fileID: 0}
   baseHealth: 40
   currentHealth: 0
-  baseDamage: 3
+  baseDamage: 2
   currentDamage: 0
   baseCriticalChance: 0
   currentCriticalChance: 0

@@ -9,6 +9,13 @@ public class GameManager : MonoBehaviour
     public int globalKills;
     public int globalDeaths;
 
+    public enum Difficulty
+    {
+        easy,
+        medium,
+        hard,
+        impossible
+    }
 
 
     // Loads a specified SCENE

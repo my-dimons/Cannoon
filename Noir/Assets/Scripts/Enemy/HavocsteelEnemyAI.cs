@@ -132,7 +132,7 @@ public class HavocsteelEnemyAI : MonoBehaviour
     private void ApplyDifficultyRating()
     {
         currentSpeed = baseSpeed * endlessModeScript.difficultyMultiplier;
-        currentBulletSpeed = baseBulletSpeed * endlessModeScript.difficultyMultiplier;
+        currentBulletSpeed = baseBulletSpeed * Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.5f, 1, Mathf.Infinity);
         currentShootingCooldown = baseShootingCooldown / endlessModeScript.difficultyMultiplier;
     }
 
@@ -153,7 +153,7 @@ public class HavocsteelEnemyAI : MonoBehaviour
                 spawnBulletRotation = 180f;
             
             GameObject newBullet = Instantiate(bullet, shootingPoint.transform.position, Quaternion.Euler(0, 0, spawnBulletRotation));
-            newBullet.GetComponent<Bullet>().setStats(currentBulletSpeed, enemyScript.baseDamage, bulletLifetime, false);
+            newBullet.GetComponent<Bullet>().setStats(currentBulletSpeed, enemyScript.currentDamage, bulletLifetime, false);
             StartCoroutine(ShootingCooldown());
         }
     }
