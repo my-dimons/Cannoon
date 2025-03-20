@@ -161,7 +161,7 @@ MonoBehaviour:
   baseCriticalMultiplier: 0
   currentCriticalMultiplier: 0
   minWave: 0
-  maxWave: 0
+  maxWave: 999
   flyingEnemy: 1
 --- !u!61 &8222551291712940573
 BoxCollider2D:

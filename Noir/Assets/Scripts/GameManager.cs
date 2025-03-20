@@ -9,13 +9,18 @@ public class GameManager : MonoBehaviour
     public int globalKills;
     public int globalDeaths;
 
+    [Header("Difficulty")]
+    int test;
+    // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it almost as a percentage value)
     public enum Difficulty
     {
-        easy,
-        medium,
-        hard,
-        impossible
+        easy = 75,
+        normal = 100, // USUAL PLAYTHROUGH
+        hard = 120,
+        impossible = 200
     }
+
+    public Difficulty difficulty;
 
 
     // Loads a specified SCENE

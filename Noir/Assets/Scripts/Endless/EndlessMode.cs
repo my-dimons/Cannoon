@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
 public class EndlessMode : MonoBehaviour
 {
     public GameObject player;
+    GameManager gameManager;
 
     [Header("Text")] // info text
     public TextMeshPro waveText;
@@ -20,7 +22,8 @@ public class EndlessMode : MonoBehaviour
     public int wave;
     [Tooltip("How many enemies are remaining?")]
     public int enemiesLeft;
-
+    [Tooltip("Z Offset of spawning enemies (To have enemies be behind the ground slightly)")]
+    public float enemyZOffset;
     [Tooltip("Determines how hard the wave is")]
     public float difficultyMultiplier;
     [Tooltip("How much the difficulty multiplier increases each wave (Should probably be lower than 0.05)")]
@@ -31,31 +34,64 @@ public class EndlessMode : MonoBehaviour
 
     bool advancingToNextWave;
 
+    [Header("Enemy Spawning")]
     public GameObject enemyParentObject;
-    [Header("Enemies")]
+
     // Enemies
+    [Tooltip("Total array of possible spawning enemies in this wave")]
     public GameObject[] enemies;
-    [Tooltip("Needs an empty game object (Or else it throws an error")]
+
+    [Tooltip("Enemies that can currently spawn in this wave (Based on their min/max wave)")]
     public List<GameObject> possibleSpawningEnemies;
 
     // Spawn Locations
-    public GameObject[] enemySpawnGroundLocations;
-    public GameObject[] enemySpawnSkyLocations;
+    [Tooltip("The lists of the different stages spawn locations (The Parent Object), PUT THE STAGES IN THIS LEVELS PROPER ORDER")]
+    public List<GameObject> parentEnemySpawnLocations;
 
     [Tooltip("Needs an empty game object (Or else it throws an error")]
-    public List<GameObject> possibleEnemySpawnGroundLocations;
-    [Tooltip("Needs an empty game object (Or else it throws an error")]
-    public List<GameObject> possibleEnemySpawnSkyLocations;
+    public List<GameObject> possibleEnemySpawnLocations;
+
+
+    [Header("Level Stages")]
+    
+    // LEVEL is the parent color/name of stages (ex. Green Level)
+    // =--=
+    // STAGES are the subdivisions of the parent level (ex. Meadow & Forest stages of the Green level)
+
+    public string levelColor; // TODO: Migrate to enum in GameManager (STILL SET COLOR HERE, JUST CHANGE STRING TO THE NEW ENUM)
+
+    [Tooltip("Different stages in this level")]
+    public List<string> stages;
+
+    [Tooltip("Different stages in this level")]
+    public string currentStage;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Resets
-        waveCountdownText.text = "";
-        ResetPossibleEnemySpawnLocations();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
+        // Set difficulty multiplier increase based on this saves/games difficulty
+        difficultyMultiplierIncrease *= (float)gameManager.difficulty / 100;
 
         //starts first round
         StartCoroutine(NextWave());
+
+        AdvanceStage(0);
+    }
+
+    // Gets available spawning locations from a stages parent object
+    // i corresponds to the stage you're advancing to (0 = first stage; 1 = second stage; etc.)
+    private void AdvanceStage(int i)
+    {
+        // Set current stage
+        currentStage = stages[i];
+
+        // Get next stages spawning positions
+        foreach (Transform x in parentEnemySpawnLocations[i].GetComponentInChildren<Transform>())
+        {
+            possibleEnemySpawnLocations.Add(x.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -98,7 +134,6 @@ public class EndlessMode : MonoBehaviour
 
         // spawning enemy process
         SpawnEnemies();
-        ResetPossibleEnemySpawnLocations();
 
         advancingToNextWave = false;
     }
@@ -121,17 +156,9 @@ public class EndlessMode : MonoBehaviour
         {
             GameObject spawningEnemy = FindSpawnableEnemy();
             Vector3 spawnPosition;
-            
-            // if spawning enemy is a ground enemy: get a ground spawning position
-            if (spawningEnemy.GetComponent<Enemy>().flyingEnemy == false)
-            {
-                spawnPosition = GetEnemySpawnLocation(true);
-            }
-            // else (if spawning enemy is a sky/flying enemy): get a sky position
-            else
-            {
-                spawnPosition = GetEnemySpawnLocation(false);
-            }
+
+
+            spawnPosition = GetEnemySpawnLocation(false, false);
 
             // spawn enemy
             GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, spawningEnemy.transform.rotation);
@@ -149,42 +176,37 @@ public class EndlessMode : MonoBehaviour
         GameObject enemy = possibleSpawningEnemies[number];
         return enemy;
     }
-
-    Vector3 GetEnemySpawnLocation(bool isGroundEnemy)
+    
+    // Fetches a random enemy spawning location, if everything is false
+    Vector3 GetEnemySpawnLocation(bool flyingEnemy, bool waterEnemy)
     {
         Vector3 pos;
-        
-        // fetches a random GROUND enemy spawn location
-        if (isGroundEnemy)
+        List<GameObject> spawnLocations = new List<GameObject>();
+        foreach (GameObject location in possibleEnemySpawnLocations)
         {
-            int randomRange = Random.Range(0, possibleEnemySpawnGroundLocations.Count);
-            pos = possibleEnemySpawnGroundLocations[randomRange].transform.position;
-            possibleEnemySpawnGroundLocations.Remove(possibleEnemySpawnGroundLocations[randomRange]);
+            SpawnPosition locationScript = location.GetComponent<SpawnPosition>();
+
+            // FLYING ENEMIES
+            if (flyingEnemy && locationScript.flying)
+                spawnLocations.Add(location);
+            // WATER ENEMIES
+            else if (waterEnemy && locationScript.water)
+                spawnLocations.Add(location);
+            else
+                spawnLocations.Add(location);
         }
-        // fetches a random FLYING enemy spawn location
-        else
-        {
-            int randomRange = Random.Range(0, possibleEnemySpawnSkyLocations.Count);
-            pos = possibleEnemySpawnSkyLocations[randomRange].transform.position;
-            possibleEnemySpawnSkyLocations.Remove(possibleEnemySpawnSkyLocations[randomRange]);
-        }
+
+        pos = FetchPos(spawnLocations);
+
         return pos;
-    }
 
-    void ResetPossibleEnemySpawnLocations() // sets possibleEnemySpawnLocations to enemySpawnLocations
-    {
-        possibleEnemySpawnGroundLocations.Clear();
-        possibleEnemySpawnSkyLocations.Clear();
-
-        // resets GROUND enemy locations
-        foreach (GameObject location in enemySpawnGroundLocations)
+        Vector3 FetchPos(List<GameObject> spawnLocations)
         {
-            possibleEnemySpawnGroundLocations.Add(location);
-        }
-        // resets FLYING enemy locations
-        foreach (GameObject location in enemySpawnSkyLocations)
-        {
-            possibleEnemySpawnSkyLocations.Add(location);
+            Vector3 pos;
+            int randomRange = Random.Range(0, spawnLocations.Count);
+            pos = possibleEnemySpawnLocations[randomRange].transform.position;
+            possibleEnemySpawnLocations.Remove(possibleEnemySpawnLocations[randomRange]);
+            return pos;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class HopperEnemyAI : MonoBehaviour
+public class FollowEnemyAI : MonoBehaviour
 {
     public Transform target;
     public Transform enemySprite;
@@ -21,6 +21,8 @@ public class HopperEnemyAI : MonoBehaviour
     public float jumpCooldown;
     [Tooltip("Used in the jump raycasting, how far the ray will be cast downwards to check for ground")]
     public float jumpCheckDistance;
+    // Can this enemy jump?
+    public bool canJump;
     [Tooltip("What object layer is getting checked for raycast collisions")]
     public LayerMask layerMask;
 
@@ -35,6 +37,13 @@ public class HopperEnemyAI : MonoBehaviour
     Rigidbody2D rb;
     Enemy enemyScript;
     EndlessMode endlessModeScript;
+
+    IEnumerator JumpCooldown()
+    {
+        canJump = false;
+        yield return new WaitForSeconds(jumpCooldown);
+        canJump = true;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +61,8 @@ public class HopperEnemyAI : MonoBehaviour
             target = this.gameObject.GetComponent<Enemy>().target;
             InvokeRepeating("UpdatePath", 0f, .5f);
         }
+
+        canJump = true;
     }
 
     private void UpdatePath()
@@ -76,7 +87,7 @@ public class HopperEnemyAI : MonoBehaviour
     private void ApplyDifficultyRating()
     {
         currentSpeed = baseSpeed * endlessModeScript.difficultyMultiplier;
-        currentJumpForce = baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.5f);
+        currentJumpForce =  Mathf.Clamp(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f), baseJumpForce, Mathf.Infinity);
     }
 
     // Update is called once per frame
@@ -104,10 +115,11 @@ public class HopperEnemyAI : MonoBehaviour
         rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
 
         // Jumping
-        if (target.position.y > rb.position.y + jumpThreshold)
+        if (target.position.y > rb.position.y + jumpThreshold && canJump)
         {
             Jump(forceX);
         }
+
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -128,6 +140,8 @@ public class HopperEnemyAI : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(xForce, currentJumpForce));
+
+            StartCoroutine(JumpCooldown());
         }
     }
     private bool CheckJump()

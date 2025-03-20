@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour
 
     [Tooltip("Does this enemy fly?, if so it will have different spawn locations than usual (NOTE: FLYING ENEMIES ARE SOMETIMES REFERED TO AS 'SKY' ENEMIES)")]
     public bool flyingEnemy; // NOTE: sometimes flying enemies are also refered to as "sky" enemies
+    [Tooltip("This enemy will spawn in water if true")]
+    public bool waterEnemy;
 
 
     //OTHER: Referenced in start

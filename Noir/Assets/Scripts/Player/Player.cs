@@ -25,9 +25,10 @@ public class Player : MonoBehaviour
     public bool canTakeDamage;
     public float damageInvincibilityCooldown;
 
+    [Tooltip("Maximum amount of jumps")]
     public int jumps;
+    [Tooltip("How many more times can the player currently jump")]
     public int jumpsRemaining;
-    public float jumpCheckDistance;
     public LayerMask layerMask;
 
     [Header("Health Bar")]
@@ -85,7 +86,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
             Heal(100f);
 
-        CheckJump();
         Movement();
 
         if (gameObject.transform.position.y <= -5 && !dead)
@@ -133,7 +133,6 @@ public class Player : MonoBehaviour
             Debug.Log("UNFLIPING SPRITE");
         }
     }
-
     private void RotateCannonTowardsMouse()
     {
         Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
@@ -141,17 +140,6 @@ public class Player : MonoBehaviour
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         cannonRotationObj.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
     }
-
-    private void CheckJump()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, jumpCheckDistance, layerMask);
-        if (hit && jumpsRemaining < jumps)
-        {
-            jumpsRemaining = jumps;
-            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance);
-        }
-    }
-
     void Death()
     {
         dead = true;
@@ -172,7 +160,6 @@ public class Player : MonoBehaviour
         }
 
     }
-
     public void TakeDamage(float damage)
     {
         if (canTakeDamage)
