@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 384b71840550ae94ebcfa6f04e2f495e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.24, y: 0.24}
@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 4568042042948064418}
   - component: {fileID: 5649508601060937523}
   - component: {fileID: 8154924602559650619}
+  - component: {fileID: 2620826317491520258}
   m_Layer: 8
   m_Name: Sunflower
   m_TagString: Enemy
@@ -143,8 +144,9 @@ MonoBehaviour:
   baseCriticalMultiplier: 0
   currentCriticalMultiplier: 0
   minWave: 0
-  maxWave: 0
+  maxWave: 999
   flyingEnemy: 0
+  waterEnemy: 0
 --- !u!114 &4568042042948064418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  enemySprite: {fileID: 0}
+  enemySprite: {fileID: 2667222559401973713}
   baseSpeed: 0
   currentSpeed: 0
   baseJumpForce: 0
@@ -169,7 +171,7 @@ MonoBehaviour:
   canJump: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   nextWaypointDistance: 3
 --- !u!50 &5649508601060937523
 Rigidbody2D:
@@ -243,3 +245,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15683003, y: 0.24513471}
   m_EdgeRadius: 0
+--- !u!114 &2620826317491520258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7837233794736061750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1

@@ -155,10 +155,18 @@ public class EndlessMode : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             GameObject spawningEnemy = FindSpawnableEnemy();
-            Vector3 spawnPosition;
+            Enemy spawningEnemyScript = spawningEnemy.GetComponent<Enemy>();
+            Vector3 spawnPosition = Vector3.zero;
 
-
-            spawnPosition = GetEnemySpawnLocation(false, false);
+            // spawns a ground enemy
+            if (!spawningEnemyScript.flyingEnemy && !spawningEnemyScript.waterEnemy)
+                spawnPosition = GetEnemySpawnLocation(false, false);
+            // spawns a flying enemy
+            else if (spawningEnemyScript.flyingEnemy && !spawningEnemyScript.waterEnemy)
+                spawnPosition = GetEnemySpawnLocation(true, false);
+            // spawns a water enemy
+            else if (!spawningEnemyScript.flyingEnemy && spawningEnemyScript.waterEnemy)
+                spawnPosition = GetEnemySpawnLocation(false, true);
 
             // spawn enemy
             GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, spawningEnemy.transform.rotation);
@@ -187,25 +195,25 @@ public class EndlessMode : MonoBehaviour
             SpawnPosition locationScript = location.GetComponent<SpawnPosition>();
 
             // FLYING ENEMIES
-            if (flyingEnemy && locationScript.flying)
+            if (flyingEnemy && locationScript.flying && !waterEnemy && !locationScript.water)
                 spawnLocations.Add(location);
             // WATER ENEMIES
-            else if (waterEnemy && locationScript.water)
+            else if (waterEnemy && locationScript.water && !flyingEnemy && !locationScript.flying)
                 spawnLocations.Add(location);
-            else
+            else if (!flyingEnemy && !waterEnemy && !locationScript.flying && !locationScript.water)
                 spawnLocations.Add(location);
         }
 
-        pos = FetchPos(spawnLocations);
+        pos = FetchPos();
 
         return pos;
 
-        Vector3 FetchPos(List<GameObject> spawnLocations)
+        Vector3 FetchPos()
         {
             Vector3 pos;
             int randomRange = Random.Range(0, spawnLocations.Count);
-            pos = possibleEnemySpawnLocations[randomRange].transform.position;
-            possibleEnemySpawnLocations.Remove(possibleEnemySpawnLocations[randomRange]);
+            pos = new Vector3(possibleEnemySpawnLocations[randomRange].transform.position.x, possibleEnemySpawnLocations[randomRange].transform.position.y, enemyZOffset);
+            spawnLocations.Remove(spawnLocations[randomRange]);
             return pos;
         }
     }

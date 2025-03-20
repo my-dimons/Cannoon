@@ -128,10 +128,12 @@ public class FollowEnemyAI : MonoBehaviour
             currentWaypoint++;
         }
 
-        if (forceX >= 0.01f)
+        if (path.vectorPath[currentWaypoint].x > transform.position.x)
             enemySprite.localScale = new Vector3(-1f, 1f, 1f);
-        else if (forceX <= -0.01f)
+        else if (path.vectorPath[currentWaypoint].x < transform.position.x)
             enemySprite.localScale = new Vector3(1f, 1f, 1f);
+        else
+            enemySprite.localScale = enemySprite.localScale;
     }
 
     void Jump(float xForce)
