@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
     }
     private void RotateCannonTowardsMouse()
     {
-        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - cannonRotationObj.transform.position;
         diff.Normalize();
         float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         cannonRotationObj.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
