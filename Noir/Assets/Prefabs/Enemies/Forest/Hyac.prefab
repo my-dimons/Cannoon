@@ -145,9 +145,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5962320817889119577}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8563987209242815588}
@@ -212,7 +212,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.008409943, y: -0.0070083216}
+  m_Offset: {x: -0.008409947, y: -0.008009408}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -223,7 +223,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15899861, y: 0.22908203}
+  m_Size: {x: 0.15899861, y: 0.2310842}
   m_EdgeRadius: 0
 --- !u!114 &2573864214207246581
 MonoBehaviour:
@@ -250,6 +250,7 @@ MonoBehaviour:
   minWave: 0
   maxWave: 999
   flyingEnemy: 0
+  waterEnemy: 0
 --- !u!114 &8297023988492628587
 MonoBehaviour:
   m_ObjectHideFlags: 0

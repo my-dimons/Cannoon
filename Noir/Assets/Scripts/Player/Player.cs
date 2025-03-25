@@ -9,8 +9,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public Sprite basePlayerSprite;
-
     [Header("Stats")]
     public float speed;
     public float jump;

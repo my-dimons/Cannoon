@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8592058830273724685}
@@ -97,7 +97,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009282894, y: -0.0034882426}
+  m_Offset: {x: 0.031213276, y: -0.004010394}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -108,7 +108,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.19296075, y: 0.26698077}
+  m_Size: {x: 0.20549242, y: 0.26802507}
   m_EdgeRadius: 0
 --- !u!50 &936472403224298096
 Rigidbody2D:
@@ -177,9 +177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 8592058830273724685}
-  baseSpeed: 150
+  baseSpeed: 450
   currentSpeed: 0
-  baseJumpForce: 350
+  baseJumpForce: 600
   currentJumpForce: 0
   jumpThreshold: 2.5
   jumpCooldown: 2

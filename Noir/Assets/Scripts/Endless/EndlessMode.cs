@@ -149,7 +149,7 @@ public class EndlessMode : MonoBehaviour
 
         // how many enemies to spawn (using difficulty rating)
         float amount = wave/2;
-        amount = Mathf.Clamp(amount, 1, possibleSpawningEnemies.Count);
+        amount = Mathf.Clamp(amount, 1, possibleEnemySpawnLocations.Count);
 
         // spawns all enemies
         for (int i = 0; i < amount; i++)
@@ -213,7 +213,7 @@ public class EndlessMode : MonoBehaviour
             Vector3 pos;
             int randomRange = Random.Range(0, spawnLocations.Count);
             pos = new Vector3(possibleEnemySpawnLocations[randomRange].transform.position.x, possibleEnemySpawnLocations[randomRange].transform.position.y, enemyZOffset);
-            spawnLocations.Remove(spawnLocations[randomRange]);
+            possibleEnemySpawnLocations.Remove(spawnLocations[randomRange]);
             return pos;
         }
     }

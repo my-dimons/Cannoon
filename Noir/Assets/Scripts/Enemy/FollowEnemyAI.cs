@@ -128,7 +128,7 @@ public class FollowEnemyAI : MonoBehaviour
             currentWaypoint++;
         }
 
-        if (path.vectorPath[currentWaypoint].x > transform.position.x)
+        if (path.vectorPath[currentWaypoint].x >= transform.position.x)
             enemySprite.localScale = new Vector3(-1f, 1f, 1f);
         else if (path.vectorPath[currentWaypoint].x < transform.position.x)
             enemySprite.localScale = new Vector3(1f, 1f, 1f);
