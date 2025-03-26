@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
+// This is a basic enemy AI that allows an enemy to follow a player and jump when needed
+// Enemy will rotate (Flips X) towards target
 public class FollowEnemyAI : MonoBehaviour
 {
     public Transform target;
@@ -12,11 +14,13 @@ public class FollowEnemyAI : MonoBehaviour
     [Tooltip("This enemys speed")]
     public float baseSpeed;
     public float currentSpeed;
-    [Tooltip("How high/hard this enemy will jump")]
+    [Tooltip("How high this enemy will jump")]
     public float baseJumpForce;
     public float currentJumpForce;
     [Tooltip("How much higher this enemys target needs to be compared to this object (Y axis)")]
-    public float jumpThreshold;
+    public float targetJumpYThreshold;
+    [Tooltip("Minimum total distance this enemys target needs be compared to this enemy to jump")]
+    public float targetJumpDistanceThreshold;
     [Tooltip("The maximum time between jumps")]
     public float jumpCooldown;
     [Tooltip("Used in the jump raycasting, how far the ray will be cast downwards to check for ground")]
@@ -115,11 +119,18 @@ public class FollowEnemyAI : MonoBehaviour
         rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
 
         // Jumping
-        if (target.position.y > rb.position.y + jumpThreshold && canJump)
+        // Attempts to jump if this enemy can jump, the target is withing the jumpCheckDistance, and the target positions Y is a certain amount higher than this enemy (defined by targetJumpYThreshold)... When the player is in proximity of the enemy, Jump (With some extra parameteres) 
+        if (target.position.y > this.rb.position.y + targetJumpYThreshold && canJump && Vector2.Distance(this.transform.position, target.transform.position) <= targetJumpDistanceThreshold)
         {
-            Jump(forceX);
+            Jump(forceX, false);
+            Debug.Log("Jumping1");
         }
-
+        // Tries to jump when the enemy is not moving and there is a wall infront of the enemy
+        if (canJump && this.rb.velocity.normalized.magnitude == 0)
+        {
+            Jump(forceX, true);
+            Debug.Log("Jumping2");
+        }
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -136,9 +147,13 @@ public class FollowEnemyAI : MonoBehaviour
             enemySprite.localScale = enemySprite.localScale;
     }
 
-    void Jump(float xForce)
+    // check front will check if there is a wall infront of an enemy (Normally when the player is not near the enemy to prevent the enemy from getting stuck on walls)
+    void Jump(float xForce, bool checkFront)
     {
-        if (CheckJump())
+        if (CheckJump(checkFront))
+            ApplyJump();
+
+        void ApplyJump()
         {
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(xForce, currentJumpForce));
@@ -146,15 +161,31 @@ public class FollowEnemyAI : MonoBehaviour
             StartCoroutine(JumpCooldown());
         }
     }
-    private bool CheckJump()
+    private bool CheckJump(bool forwardRay)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, jumpCheckDistance, layerMask);
+        float drawRayExtraRange = 1;
+        RaycastHit2D hitDown = Physics2D.Raycast(transform.position, Vector2.down, jumpCheckDistance, layerMask);
 
-        if (hit)
+        // Forward Rays
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, jumpCheckDistance, layerMask);
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, jumpCheckDistance, layerMask);
+
+        if (hitDown && !forwardRay)
         {
-            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance);
+            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance + drawRayExtraRange);
             return true;
-        } else
+        } 
+        else if (forwardRay && hitDown && hitLeft || forwardRay && hitDown && hitRight)
+        {
+            if (hitLeft)
+                Debug.DrawRay(transform.position, Vector2.left, Color.blue, jumpCheckDistance + drawRayExtraRange);
+            if (hitRight)
+                Debug.DrawRay(transform.position, Vector2.right, Color.blue, jumpCheckDistance + drawRayExtraRange);
+
+            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance + drawRayExtraRange);
+            return true;
+        }
+        else
             return false;
     }
 
