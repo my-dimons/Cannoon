@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     [Header("Stats")]
     public float speed;
     public float jump;
-
     [Tooltip("The base max health")]
     public int baseHealth;
     [Tooltip("The current max health")]
@@ -27,6 +26,8 @@ public class Player : MonoBehaviour
     public int jumps;
     [Tooltip("How many more times can the player currently jump")]
     public int jumpsRemaining;
+    [Tooltip("When the player is falling this variable is used on the players y velocity")]
+    public float gravityFallMultiplier;
     public LayerMask layerMask;
 
     [Header("Health Bar")]
@@ -185,6 +186,12 @@ public class Player : MonoBehaviour
         //left & right movement
         float horizontalInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
+
+        // Falling gravity multiplier
+        if (this.rb.velocity.normalized[1] < 0)
+            rb.gravityScale = gravityFallMultiplier; 
+        else
+            rb.gravityScale = 1;
 
         if (Input.GetKeyDown(KeyCode.Space) && CanPlayerJump())
         {
