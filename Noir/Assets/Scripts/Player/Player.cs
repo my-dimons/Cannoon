@@ -6,6 +6,8 @@ using TMPro;
 using static UnityEngine.GraphicsBuffer;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
@@ -41,8 +43,9 @@ public class Player : MonoBehaviour
 
     [Header("Death")]
     public Vector2 spawnPoint;
-    public TextMeshProUGUI respawnText;
+    public Button respawnButton;
     public GameObject deathScreen;
+    public GameObject postProcessing;
     private bool dead;
     public int respawnTime;
 
@@ -85,7 +88,12 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
             Heal(100f);
 
-        Movement();
+        if (!dead)
+        {
+            Movement();
+            RotateCannonTowardsMouse();
+            FlipCannonSprite();
+        }
 
         if (gameObject.transform.position.y <= -5 && !dead)
         {
@@ -96,12 +104,9 @@ public class Player : MonoBehaviour
             Death();
         }
 
-        RotateCannonTowardsMouse();
-        FlipCannonSprite();
-
 
         //SHOOT BULLET
-        if (Input.GetMouseButton(0) && cannonScript.canShoot)
+        if (Input.GetMouseButton(0) && cannonScript.canShoot && !dead)
         {
             cannonScript.ShootBullet();
         }
@@ -141,23 +146,53 @@ public class Player : MonoBehaviour
     }
     void Death()
     {
-        dead = true;
+        // VARS
+        TextMeshProUGUI respawnButtonText = respawnButton.GetComponentInChildren<TextMeshProUGUI>();
+
+        DisablePlayer();
+
+        // Toggle UI
         deathScreen.SetActive(true);
         healthBar.SetActive(false);
-        StartCoroutine(respawn());
+
+        // Post Processing Changes
+        Volume volume = postProcessing.GetComponent<Volume>();
+        ColorAdjustments colorAdjustments;
+        Vignette vignette;
+
+        volume.profile.TryGet(out colorAdjustments);
+        volume.profile.TryGet(out vignette);
+
+        //set saturation to 0
+        colorAdjustments.saturation.value = -50f;
+        vignette.intensity.value = 0.5f;
+
         gameManager.globalDeaths += 1;
 
+        // Respawning
+        StartCoroutine(respawn());
         IEnumerator respawn()
         {
+            respawnButton.interactable = false;
+
+            // Countdown untill you're able to respawn
             for (int i = 0; i < respawnTime; i++) 
             {
                 int time = respawnTime - i;
-                respawnText.text = "RESPAWNING IN " + time.ToString() + " SECONDS";
+                respawnButtonText.text = time.ToString();
                 yield return new WaitForSeconds(1);
             }
-            gameManager.LoadLevel(currentLevel);
+
+            // Can Respawn
+            respawnButton.interactable = true;
+            respawnButtonText.text = "Respawn";
         }
 
+        void DisablePlayer()
+        {
+            rb.bodyType = RigidbodyType2D.Static;
+            dead = true;
+        }
     }
     public void TakeDamage(float damage)
     {
