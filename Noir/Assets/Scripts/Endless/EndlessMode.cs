@@ -102,7 +102,7 @@ public class EndlessMode : MonoBehaviour
 
         // update info text
         waveText.text =  "Wave   " + wave;
-        killsText.text = player.GetComponent<Player>().kills + "   Kills";
+        killsText.text = gameManager.currentKills + "   Kills";
         enemiesLeftText.text = enemiesLeft + "   Left";
 
         // starts first round
@@ -189,7 +189,7 @@ public class EndlessMode : MonoBehaviour
     Vector3 GetEnemySpawnLocation(bool flyingEnemy, bool waterEnemy)
     {
         Vector3 pos;
-        List<GameObject> spawnLocations = new List<GameObject>();
+        List<GameObject> spawnLocations = new();
         foreach (GameObject location in possibleEnemySpawnLocations)
         {
             SpawnPosition locationScript = location.GetComponent<SpawnPosition>();

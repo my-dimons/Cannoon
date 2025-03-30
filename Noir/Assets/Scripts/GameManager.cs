@@ -6,12 +6,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("Global Player Stats")]
+    [Tooltip("Players total kills")]
     public int globalKills;
+    [Tooltip("Amount of kills the player has on the current stage")]
+    public int currentKills;
+    [Tooltip("Players total deaths")]
     public int globalDeaths;
 
     [Header("Difficulty")]
-    int test;
-    // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it almost as a percentage value)
+    readonly int test;
+    // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it as a percentage value)
     public enum Difficulty
     {
         easy = 75,

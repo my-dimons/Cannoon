@@ -11,12 +11,14 @@ public class Enemy : MonoBehaviour
 
     [Header("Stats")]
 
-    [Tooltip("How much HP this enemy has")]
+    [Tooltip("The base HP this enemy has")]
     public float baseHealth;
+    [Tooltip("The current HP this enemy has")]
     public float currentHealth;
 
-    [Tooltip("How much damage this enemy does")]
+    [Tooltip("The base damage this enemy does")]
     public float baseDamage;
+    [Tooltip("The current damage this enemy does")]
     public float currentDamage;
 
     [Tooltip("WIP | The chance of an enemy does a critical hit, which multiplies the base damage by the critical mutiplier")]
@@ -30,7 +32,6 @@ public class Enemy : MonoBehaviour
     public float minWave;
     [Tooltip("The highest possible wave this enemy will spawn in")]
     public float maxWave;
-
 
     [Header("Special Stats")]
 
@@ -69,8 +70,8 @@ public class Enemy : MonoBehaviour
     private void KillEnemy()
     {
         Destroy(gameObject);
-        player.GetComponent<Player>().kills += 1;
-        gameManager.globalKills += 1;
+
+        IncrementKills(1);
     }
 
     private void ApplyDifficultyRating(bool start)
@@ -86,5 +87,11 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+    }
+    
+    void IncrementKills(int kills)
+    {
+        gameManager.currentKills += kills;
+        gameManager.globalKills += kills;
     }
 }

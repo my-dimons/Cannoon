@@ -199,7 +199,7 @@ public class FollowEnemyAI : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
         {
             Debug.Log("Dealing damage to player");
-            target.GetComponent<Player>().TakeDamage(enemyScript.currentDamage);
+            target.GetComponent<PlayerHealth>().TakeDamage(enemyScript.currentDamage);
         }
     }
 }

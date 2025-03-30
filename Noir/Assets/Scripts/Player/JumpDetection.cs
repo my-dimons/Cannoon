@@ -6,11 +6,11 @@ public class JumpDetection : MonoBehaviour
 {
     [Tooltip("Put the player game object that needs jump detection here")]
     public GameObject player;
-    Player playerScript;
+    PlayerMovement playerScript;
 
     private void Start()
     {
-        playerScript = player.GetComponent<Player>();
+        playerScript = player.GetComponent<PlayerMovement>();
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

@@ -75,8 +75,8 @@ public class Bullet : MonoBehaviour
             if (other.gameObject.CompareTag("Player"))
             {
                 GameObject player = other.gameObject;
-                Player playerScript = player.GetComponent<Player>();
-                playerScript.TakeDamage(damage);
+                PlayerHealth playerHealthScript = player.GetComponent<PlayerHealth>();
+                playerHealthScript.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }
