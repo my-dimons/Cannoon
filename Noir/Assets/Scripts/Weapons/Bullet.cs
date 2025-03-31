@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         DespawnBullet(bulletLife);
 
         // moves bullet
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        transform.Translate(speed * Time.deltaTime * Vector3.right);
     }
 
     private void DespawnBullet(float time)
@@ -42,8 +42,7 @@ public class Bullet : MonoBehaviour
             dying = true;
         }
     }
-
-    public void setStats(float newSpeed, float newDamage, float life, bool isPlayerBullet)
+    public void SetStats(float newSpeed, float newDamage, float life, bool isPlayerBullet)
     {
         speed = newSpeed;
         damage = newDamage;
@@ -64,7 +63,7 @@ public class Bullet : MonoBehaviour
             {
                 GameObject enemy = other.gameObject;
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
-                enemyScript.health -= damage;
+                enemyScript.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }
@@ -75,8 +74,8 @@ public class Bullet : MonoBehaviour
             if (other.gameObject.CompareTag("Player"))
             {
                 GameObject player = other.gameObject;
-                Player playerScript = player.GetComponent<Player>();
-                playerScript.TakeDamage(damage);
+                PlayerHealth playerHealthScript = player.GetComponent<PlayerHealth>();
+                playerHealthScript.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }

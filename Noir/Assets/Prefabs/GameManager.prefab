@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalKills: 0
   globalDeaths: 0
+  difficulty: 100

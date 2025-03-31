@@ -10,7 +10,7 @@ public class Thornbush : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             Debug.Log("Player Hit by Thornbush!");
         }
     }
@@ -19,7 +19,7 @@ public class Thornbush : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
             Debug.Log("Player Hit by Thornbush!");
         }
     }

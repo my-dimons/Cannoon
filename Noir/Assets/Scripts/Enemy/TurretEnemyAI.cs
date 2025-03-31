@@ -4,26 +4,39 @@ using UnityEngine;
 
 public class TurretEnemyAI : MonoBehaviour
 {
+    [Header("Required References")]
     public Transform target;
+
+    [Tooltip("The enemys body/base sprite")]
     public Transform enemySpriteBase;
+    [Tooltip("This enemys cannon sprite")]
     public Transform enemySpriteCannon;
+    [Tooltip("The rotation anchor point that this enemys cannon sprite rotates on")]
     public Transform enemyCannonSpriteRotationAnchor;
+    [Tooltip("Where the bullets are shot from")]
     public Transform enemyCannonShootingPoint;
 
     public GameObject bullet;
     bool cannonFacingRight;
-    public bool canShoot;
-    public float shootingCooldownTime;
-    public float bulletSpeed;
+    bool canShoot;
+
+    [Header("Stats")]
+    public float baseShootingCooldown;
+    public float currentShootingCooldown;
+    public float baseBulletSpeed;
+    public float currentBulletSpeed;
+
     public float bulletLifetime;
 
+    // OTHER: Referenced in Start()
     Rigidbody2D rb;
     Enemy enemyScript;
+    EndlessMode endlessModeScript;
 
     IEnumerator ShootingCooldown()
     {
         canShoot = false;
-        yield return new WaitForSeconds(shootingCooldownTime);
+        yield return new WaitForSeconds(currentShootingCooldown);
         canShoot = true;
     }
     // Start is called before the first frame update
@@ -32,6 +45,7 @@ public class TurretEnemyAI : MonoBehaviour
         FlipCannonSprite();
         StartCoroutine(ShootingCooldown());
 
+        endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
         target = this.gameObject.GetComponent<Enemy>().target;
         enemyScript = this.GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
@@ -47,6 +61,7 @@ public class TurretEnemyAI : MonoBehaviour
 
     private void Update()
     {
+        ApplyDifficultyRating();
         RotateCannonTowardsTarget();
         FlipCannonSprite();
 
@@ -54,6 +69,12 @@ public class TurretEnemyAI : MonoBehaviour
         {
             ShootBullet();
         }
+    }
+
+    private void ApplyDifficultyRating()
+    {
+        currentShootingCooldown = baseShootingCooldown / endlessModeScript.difficultyMultiplier;
+        currentBulletSpeed = baseBulletSpeed * Mathf.Clamp(endlessModeScript.difficultyMultiplier/1.5f, 1, Mathf.Infinity);
     }
 
     public void SetTarget(Transform enemyTarget)
@@ -65,7 +86,7 @@ public class TurretEnemyAI : MonoBehaviour
     {
         GameObject prefab = Instantiate(bullet, enemyCannonShootingPoint.position, enemySpriteCannon.transform.rotation);
 
-        prefab.GetComponent<Bullet>().setStats(bulletSpeed, GetComponent<Enemy>().damage, bulletLifetime, false);
+        prefab.GetComponent<Bullet>().SetStats(currentBulletSpeed, GetComponent<Enemy>().currentDamage, bulletLifetime, false);
 
         StartCoroutine(ShootingCooldown());
     }

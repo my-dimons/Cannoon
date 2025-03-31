@@ -9,15 +9,18 @@ public class HavocsteelEnemyAI : MonoBehaviour
     public Transform enemySprite;
 
     [Header("Stats")]
-    public float speed;
+    public float baseSpeed;
+    public float currentSpeed;
+    public float baseBulletSpeed;
+    public float currentBulletSpeed;
+    public float baseShootingCooldown;
+    public float currentShootingCooldown;
 
     [Header("Shooting")]
     public bool canShoot;
     public GameObject bullet;
     public GameObject shootingPoint;
-    public float bulletSpeed;
     public float bulletLifetime;
-    public float shootingCooldown;
 
 
     [Header("Pathfinding")]
@@ -30,24 +33,28 @@ public class HavocsteelEnemyAI : MonoBehaviour
     bool reachedEndOfPath = false;
     bool isFacingRight = true;
 
+    // OTHER: Referenced in Start()
     Seeker seeker;
     Rigidbody2D rb;
     Enemy enemyScript;
+    EndlessMode endlessModeScript;
 
     IEnumerator ShootingCooldown()
     {
         canShoot = false;
-        yield return new WaitForSeconds(shootingCooldown);
+        yield return new WaitForSeconds(currentShootingCooldown);
         canShoot = true;
     }
     // Start is called before the first frame update
     void Start()
     {
+        endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
         enemyScript = GetComponent<Enemy>();
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
         StartCoroutine(GetTarget());
+        StartCoroutine(ShootingCooldown());
         IEnumerator GetTarget()
         {
             yield return new WaitForSeconds(.01f);
@@ -89,7 +96,7 @@ public class HavocsteelEnemyAI : MonoBehaviour
         }
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        float forceX = direction.x * speed * Time.deltaTime;
+        float forceX = direction.x * currentSpeed * Time.deltaTime;
 
         // Move enemy along the X axis, not Y
         rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
@@ -118,6 +125,15 @@ public class HavocsteelEnemyAI : MonoBehaviour
     private void Update()
     {
         ShootBullet();
+
+        ApplyDifficultyRating();
+    }
+
+    private void ApplyDifficultyRating()
+    {
+        currentSpeed = baseSpeed * endlessModeScript.difficultyMultiplier;
+        currentBulletSpeed = baseBulletSpeed * Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.5f, 1, Mathf.Infinity);
+        currentShootingCooldown = baseShootingCooldown / endlessModeScript.difficultyMultiplier;
     }
 
     public void SetTarget(Transform enemyTarget)
@@ -137,7 +153,7 @@ public class HavocsteelEnemyAI : MonoBehaviour
                 spawnBulletRotation = 180f;
             
             GameObject newBullet = Instantiate(bullet, shootingPoint.transform.position, Quaternion.Euler(0, 0, spawnBulletRotation));
-            newBullet.GetComponent<Bullet>().setStats(bulletSpeed, enemyScript.damage, bulletLifetime, false);
+            newBullet.GetComponent<Bullet>().SetStats(currentBulletSpeed, enemyScript.currentDamage, bulletLifetime, false);
             StartCoroutine(ShootingCooldown());
         }
     }
