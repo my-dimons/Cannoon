@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         DespawnBullet(bulletLife);
 
         // moves bullet
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        transform.Translate(speed * Time.deltaTime * Vector3.right);
     }
 
     private void DespawnBullet(float time)
@@ -42,8 +42,7 @@ public class Bullet : MonoBehaviour
             dying = true;
         }
     }
-
-    public void setStats(float newSpeed, float newDamage, float life, bool isPlayerBullet)
+    public void SetStats(float newSpeed, float newDamage, float life, bool isPlayerBullet)
     {
         speed = newSpeed;
         damage = newDamage;

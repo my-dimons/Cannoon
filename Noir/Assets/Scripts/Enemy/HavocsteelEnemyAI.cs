@@ -153,7 +153,7 @@ public class HavocsteelEnemyAI : MonoBehaviour
                 spawnBulletRotation = 180f;
             
             GameObject newBullet = Instantiate(bullet, shootingPoint.transform.position, Quaternion.Euler(0, 0, spawnBulletRotation));
-            newBullet.GetComponent<Bullet>().setStats(currentBulletSpeed, enemyScript.currentDamage, bulletLifetime, false);
+            newBullet.GetComponent<Bullet>().SetStats(currentBulletSpeed, enemyScript.currentDamage, bulletLifetime, false);
             StartCoroutine(ShootingCooldown());
         }
     }

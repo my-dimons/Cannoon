@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   target: {fileID: 0}
-  baseHealth: 150
+  baseHealth: 125
   currentHealth: 0
   baseDamage: 25
   currentDamage: 0

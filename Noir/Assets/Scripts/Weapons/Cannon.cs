@@ -1,7 +1,11 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class Cannon : MonoBehaviour
 {
@@ -9,23 +13,16 @@ public class Cannon : MonoBehaviour
     public GameObject bullet;
 
     [Header("Stats")]
-    [Tooltip("How much damage shot bullets do")]
-    public float bulletDamage;
-    [Tooltip("How fast bullets travel")]
-    public float bulletSpeed;
+    [Tooltip("Minimum damage shot bullets do")]
+    public float minBulletDamage;
+    [Tooltip("Maximum damage shot bullets do")]
+    public float maxBulletDamage;
     [Tooltip("Time inbetween shooting (In Seconds)")]
     public float bulletCooldown;
     [Tooltip("Time untill the shot bullet gets deleted (in Seconds)")]
     public float bulletLifetime;
 
-    [Tooltip("Minimun hold time for shooting (In Seconds)")]
-    public float minCharge;
-    [Tooltip("Maximum hold time for shooting (In Seconds)")]
-    public float maxCharge;
-    [Tooltip("Minimum shooting power")]
-    public float minPower;
-    [Tooltip("Maximum shooting power")]
-    public float maxPower;
+
 
 
     /*
@@ -40,6 +37,21 @@ public class Cannon : MonoBehaviour
     public GameObject cannonRotationObj;
     public GameObject bulletSpawnObj;
     bool cannonFacingRight;
+
+    [Tooltip("Minimun hold time for shooting (In Seconds)")]
+    public float minCharge;
+    [Tooltip("Maximum hold time for shooting (In Seconds)")]
+    public float maxCharge;
+    [Tooltip("Minimum shooting power")]
+    public float minPower;
+    [Tooltip("Maximum shooting power")]
+    public float maxPower;
+
+    public Image cannonChargeImage;
+    public GameObject cannonChargeCanvas;
+
+    public bool timerActive;
+    private float currentTime;
 
     [Header("OTHER")]
     public bool canShoot;
@@ -68,11 +80,55 @@ public class Cannon : MonoBehaviour
             FlipCannonSprite();
             RotateCannonTowardsMouse();
 
-            if (Input.GetMouseButton(0) && canShoot)
-                ShootBullet();
+            Shooting();
         }
     }
-    public void ShootBullet()
+
+    // Hold down left click to shoot, vars are explained at their defining
+    private void Shooting()
+    {
+        // Start timer and make charge meter appear
+        if (Input.GetMouseButtonDown(0))
+        {
+            timerActive = true;
+
+            // charge meter
+            cannonChargeCanvas.SetActive(true);
+        }
+
+        // Stop timer and shoot bullet (bullet stats depend on hold time), and make charge meter disappear
+        else if (Input.GetMouseButtonUp(0))
+        {
+            // charge meter
+            cannonChargeCanvas.SetActive(false);
+
+            // clamp time
+            Mathf.Clamp(currentTime, minCharge, maxCharge);
+
+            // bullet stats
+            float force = Mathf.Lerp(minPower, maxPower, currentTime);
+            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage, currentTime);
+
+            ShootBullet(force, damage);
+
+            // reset timer
+            timerActive = false;
+            currentTime = 0;
+        }
+
+        // Advances timer and fills the charge meter
+        if (timerActive)
+        {
+            // CHARGE METER FILL
+            float fill = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
+            cannonChargeImage.fillAmount = fill;
+
+            // TIMER
+            currentTime += Time.deltaTime;
+        }
+    }
+
+    public void ShootBullet(float force, float damage)
     {
         Debug.Log("Shot bullet");
         Vector2 spawnPos;
@@ -80,7 +136,9 @@ public class Cannon : MonoBehaviour
 
         GameObject prefab = Instantiate(bullet, spawnPos, cannonRotationObj.transform.rotation);
 
-        prefab.GetComponent<Bullet>().setStats(bulletSpeed, bulletDamage, bulletLifetime, true);
+        prefab.GetComponent<Bullet>().SetStats(0, damage, bulletLifetime, true);
+        prefab.GetComponent<Rigidbody2D>().AddForce(prefab.transform.right * force, ForceMode2D.Impulse);
+
         StartCoroutine(BulletShootingCooldown());
     }
     private void FlipCannonSprite()
@@ -92,6 +150,8 @@ public class Cannon : MonoBehaviour
             cannonFacingRight)
         {
             GetComponent<SpriteRenderer>().flipY = true;
+            FlipCannonChargeCanvas();
+
             cannonFacingRight = false;
             Debug.Log("FLIPING SPRITE");
         }
@@ -103,8 +163,17 @@ public class Cannon : MonoBehaviour
             !cannonFacingRight)
         {
             GetComponent<SpriteRenderer>().flipY = false;
+
+            FlipCannonChargeCanvas();
+
             cannonFacingRight = true;
             Debug.Log("UNFLIPING SPRITE");
+        }
+
+        void FlipCannonChargeCanvas()
+        {
+            RectTransform canvas = cannonChargeCanvas.GetComponent<RectTransform>();
+            canvas.localScale = new Vector3(canvas.localScale.x, -canvas.localScale.y, canvas.localScale.z);
         }
     }
     private void RotateCannonTowardsMouse()

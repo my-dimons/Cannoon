@@ -63,7 +63,7 @@ public class FollowEnemyAI : MonoBehaviour
             yield return new WaitForSeconds(.01f);
 
             target = this.gameObject.GetComponent<Enemy>().target;
-            InvokeRepeating("UpdatePath", 0f, .5f);
+            InvokeRepeating(nameof(UpdatePath), 0f, .5f);
         }
 
         canJump = true;

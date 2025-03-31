@@ -35,7 +35,6 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Other")]
     private GameManager gameManager;
-    private Rigidbody2D rb;
     IEnumerator DamageInvincibilityTimer()
     {
         canTakeDamage = false;
@@ -46,7 +45,6 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        rb = this.GetComponent<Rigidbody2D>();
 
         maxHealth = baseHealth;
         currentHealth = maxHealth;
