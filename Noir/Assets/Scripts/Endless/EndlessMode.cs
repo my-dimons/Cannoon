@@ -11,11 +11,10 @@ public class EndlessMode : MonoBehaviour
     GameManager gameManager;
 
     [Header("Text")] // info text
-    public TextMeshPro waveText;
-    public TextMeshPro killsText;
-    public TextMeshPro enemiesLeftText;
 
+    public TextMeshPro waveText;
     public TextMeshPro waveCountdownText;
+    public GameObject advancingWaveTexts;
 
     [Header("Waves")]
     [Tooltip("Current wave")]
@@ -74,8 +73,6 @@ public class EndlessMode : MonoBehaviour
         // Set difficulty multiplier increase based on this saves/games difficulty
         difficultyMultiplierIncrease *= (float)gameManager.difficulty / 100;
 
-        //starts first round
-        StartCoroutine(NextWave());
 
         AdvanceStage(0);
     }
@@ -101,9 +98,7 @@ public class EndlessMode : MonoBehaviour
         enemiesLeft = enemyParentObject.transform.childCount;
 
         // update info text
-        waveText.text =  "Wave   " + wave;
-        killsText.text = gameManager.currentKills + "   Kills";
-        enemiesLeftText.text = enemiesLeft + "   Left";
+
 
         // starts first round
         if (enemiesLeft <= 0 && !advancingToNextWave)
@@ -113,15 +108,17 @@ public class EndlessMode : MonoBehaviour
     IEnumerator NextWave()
     {
         advancingToNextWave = true;
+        advancingWaveTexts.SetActive(true);
+        waveText.text = "Wave  " + wave;
 
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;
-        waveCountdownText.text = secondsUntilNextWave + "s Until Next Wave";
+        waveCountdownText.text = secondsUntilNextWave.ToString();
         secondsUntilNextWave--;
         for (int i = 0; i < timeBetweenWaves + 1; i++)
         {
             yield return new WaitForSeconds(1);
-            waveCountdownText.text = secondsUntilNextWave + "s Until Next Wave";
+            waveCountdownText.text = secondsUntilNextWave.ToString();
             secondsUntilNextWave--;
         }
 
@@ -136,11 +133,13 @@ public class EndlessMode : MonoBehaviour
         SpawnEnemies();
 
         advancingToNextWave = false;
+        advancingWaveTexts.SetActive(false);
     }
 
     void SpawnEnemies()
     {
         possibleSpawningEnemies.Clear();
+        List<GameObject> originalEnemySpawningLocations = possibleEnemySpawnLocations;
 
         // gets all the possible spawnable enemies (by using each enemies min & max difficulty spawning range)
         for (int i = 0; i < enemies.Length; i++)
@@ -176,6 +175,9 @@ public class EndlessMode : MonoBehaviour
             // might not need at the moment
             enemiesLeft++;
         }
+
+        // Re-adds all of the removed spawn locations
+        possibleEnemySpawnLocations = originalEnemySpawningLocations;
     }
 
     GameObject FindSpawnableEnemy()

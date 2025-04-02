@@ -165,10 +165,12 @@ MonoBehaviour:
   currentSpeed: 0
   baseJumpForce: 0
   currentJumpForce: 0
-  jumpThreshold: 0
+  targetJumpYThreshold: 0
+  targetJumpDistanceThreshold: 0
   jumpCooldown: 0
   jumpCheckDistance: 0
   canJump: 0
+  gravityFallMultiplier: 4
   layerMask:
     serializedVersion: 2
     m_Bits: 128

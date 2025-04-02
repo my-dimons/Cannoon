@@ -60,11 +60,6 @@ public class PlayerHealth : MonoBehaviour
 
         // Ways to die
 
-        // Below the map
-        if (gameObject.transform.position.y <= -5 && !dead)
-        {
-            Death();
-        }
         // No Health
         if (currentHealth <= 0 && !dead)
         {

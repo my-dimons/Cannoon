@@ -22,9 +22,6 @@ public class Cannon : MonoBehaviour
     [Tooltip("Time untill the shot bullet gets deleted (in Seconds)")]
     public float bulletLifetime;
 
-
-
-
     /*
     [Header("Special Stats")]
     public bool canPierce;
@@ -106,8 +103,8 @@ public class Cannon : MonoBehaviour
             Mathf.Clamp(currentTime, minCharge, maxCharge);
 
             // bullet stats
-            float force = Mathf.Lerp(minPower, maxPower, currentTime);
-            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage, currentTime);
+            float force = Mathf.Lerp(minPower, maxPower, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
+            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
 
             ShootBullet(force, damage);
 

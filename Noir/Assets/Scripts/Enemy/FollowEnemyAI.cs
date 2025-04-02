@@ -27,6 +27,8 @@ public class FollowEnemyAI : MonoBehaviour
     public float jumpCheckDistance;
     // Can this enemy jump?
     public bool canJump;
+    [Tooltip("Gravity increase when this enemy is falling")]
+    public float gravityFallMultiplier;
     [Tooltip("What object layer is getting checked for raycast collisions")]
     public LayerMask layerMask;
 
@@ -85,6 +87,7 @@ public class FollowEnemyAI : MonoBehaviour
     }
     private void Update()
     {
+        GravityMultiplier();
         ApplyDifficultyRating();
     }
 
@@ -201,5 +204,13 @@ public class FollowEnemyAI : MonoBehaviour
             Debug.Log("Dealing damage to player");
             target.GetComponent<PlayerHealth>().TakeDamage(enemyScript.currentDamage);
         }
+    }
+
+    private void GravityMultiplier()
+    {
+        if (this.rb.velocity.normalized[1] < 0)
+            rb.gravityScale = gravityFallMultiplier;
+        else
+            rb.gravityScale = 1;
     }
 }

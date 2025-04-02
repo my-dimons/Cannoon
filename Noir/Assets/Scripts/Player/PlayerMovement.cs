@@ -43,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Falling gravity multiplier
+        GravityMultiplier();
         if (!playerHealthScript.dead)
         {
             Movement();
@@ -51,8 +53,6 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && CanPlayerJump())
                 Jump();
 
-            // Falling gravity multiplier
-            GravityMultiplier();
         }
     }
 
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        rb.velocity = new Vector2(0, 0);
+        rb.velocity = Vector2.zero;
         rb.AddForce(new Vector2(rb.velocity.x, jump));
     }
     private bool CanPlayerJump()

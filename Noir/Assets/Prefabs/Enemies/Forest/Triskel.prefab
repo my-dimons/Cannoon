@@ -186,6 +186,7 @@ MonoBehaviour:
   jumpCooldown: 2
   jumpCheckDistance: 4
   canJump: 0
+  gravityFallMultiplier: 4
   layerMask:
     serializedVersion: 2
     m_Bits: 128
