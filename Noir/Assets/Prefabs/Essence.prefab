@@ -155,6 +155,8 @@ MonoBehaviour:
   value: 1
   minPickupDistance: 25
   speed: 15
+  canFollowPlayer: 0
+  playerFollowDelay: 1
   player: {fileID: 0}
   essenceAmountText: {fileID: 0}
 --- !u!61 &2570172948270719768

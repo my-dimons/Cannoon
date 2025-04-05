@@ -18,9 +18,10 @@ MonoBehaviour:
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 1410097416, guid: 1782365a3773acb4e8930ee4e318bcec, type: 3}
-    - {fileID: -968673, guid: 1782365a3773acb4e8930ee4e318bcec, type: 3}
-    - {fileID: -1359761146, guid: 1782365a3773acb4e8930ee4e318bcec, type: 3}
+    - {fileID: -637292215, guid: 865b468655907b545a899e83f4e7ab1f, type: 3}
+    - {fileID: -450896903, guid: 865b468655907b545a899e83f4e7ab1f, type: 3}
+    - {fileID: -1487057061, guid: 865b468655907b545a899e83f4e7ab1f, type: 3}
+    - {fileID: 1308869737, guid: 865b468655907b545a899e83f4e7ab1f, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1

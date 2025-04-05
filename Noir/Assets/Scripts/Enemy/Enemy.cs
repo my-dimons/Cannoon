@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     // The general script ALL enemies need, and an AI script
     public GameObject player;
     public Transform target;
+    public GameObject essence;
 
     [Header("Stats")]
 
@@ -70,6 +71,7 @@ public class Enemy : MonoBehaviour
     private void KillEnemy()
     {
         Destroy(gameObject);
+        Instantiate(essence, this.transform.position, essence.transform.rotation);
 
         IncrementKills(1);
     }

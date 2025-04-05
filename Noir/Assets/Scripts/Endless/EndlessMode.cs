@@ -12,8 +12,8 @@ public class EndlessMode : MonoBehaviour
 
     [Header("Text")] // info text
 
-    public TextMeshPro waveText;
-    public TextMeshPro waveCountdownText;
+    public TextMeshProUGUI currentWaveText;
+    public TextMeshProUGUI waveCountdownText;
     public GameObject advancingWaveTexts;
 
     [Header("Waves")]
@@ -109,7 +109,7 @@ public class EndlessMode : MonoBehaviour
     {
         advancingToNextWave = true;
         advancingWaveTexts.SetActive(true);
-        waveText.text = "Wave  " + wave;
+        currentWaveText.text = "Wave  " + wave;
 
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;

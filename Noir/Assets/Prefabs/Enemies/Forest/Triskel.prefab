@@ -151,6 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   target: {fileID: 0}
+  essence: {fileID: 5623117955588689666, guid: da3b7e532c007e5439f89ad4f78e85d9, type: 3}
   baseHealth: 125
   currentHealth: 0
   baseDamage: 25
