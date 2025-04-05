@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("Players total deaths")]
     public int globalDeaths;
 
+    [Tooltip("How much essence the player has")]
+    public float essence;
     [Header("Difficulty")]
     readonly int test;
     // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it as a percentage value)
