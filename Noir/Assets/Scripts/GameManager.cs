@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// most game stats, difficulty, and the current level
 public class GameManager : MonoBehaviour
 {
     [Header("Global Player Stats")]
@@ -14,8 +15,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Players total deaths")]
     public int globalDeaths;
 
-    [Tooltip("How much essence the player has")]
-    public float essence;
+
     [Header("Difficulty")]
     readonly int test;
     // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it as a percentage value)

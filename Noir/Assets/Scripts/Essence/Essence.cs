@@ -6,7 +6,7 @@ using UnityEngine;
 public class Essence : MonoBehaviour
 {
     [Tooltip("How much this essence is worth")]
-    public float value;
+    public int value;
     [Tooltip("Minimum distance the player needs to be for this essence to start to drift towards the player")]
     public float minPickupDistance;
     [Tooltip("How fast essence travels towards the player")]
@@ -18,8 +18,7 @@ public class Essence : MonoBehaviour
     public float playerFollowDelay;
 
     public GameObject player;
-    public TextMeshProUGUI essenceAmountText;
-    GameManager gameManager;
+    EssenceManager essenceManager;
 
     IEnumerator PlayerFollowDelayTimer()
     {
@@ -30,9 +29,8 @@ public class Essence : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        essenceManager = GameObject.FindGameObjectWithTag("EssenceManager").GetComponent<EssenceManager>();
         player = GameObject.FindGameObjectWithTag("Player");
-        essenceAmountText = GameObject.Find("Currency Text").GetComponent<TextMeshProUGUI>();
 
         StartCoroutine(PlayerFollowDelayTimer());
     }
@@ -53,8 +51,8 @@ public class Essence : MonoBehaviour
 
     void Pickup()
     {
-        gameManager.essence += value;
-        essenceAmountText.text = gameManager.essence.ToString();
+        essenceManager.essence += value;
+
         Destroy(this.gameObject);
     }
 
