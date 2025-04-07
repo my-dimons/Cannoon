@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 // MANAGES ESSENCE CURRENCY, buying, spending, and gaining essence is managed here
 public class EssenceManager : MonoBehaviour

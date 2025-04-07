@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class Essence : MonoBehaviour
@@ -17,7 +15,7 @@ public class Essence : MonoBehaviour
     [Tooltip("Follow player delay upon spawning (In Seconds)")]
     public float playerFollowDelay;
 
-    public GameObject player;
+    GameObject player;
     EssenceManager essenceManager;
 
     IEnumerator PlayerFollowDelayTimer()
@@ -30,7 +28,8 @@ public class Essence : MonoBehaviour
     void Start()
     {
         essenceManager = GameObject.FindGameObjectWithTag("EssenceManager").GetComponent<EssenceManager>();
-        player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log(player);
 
         StartCoroutine(PlayerFollowDelayTimer());
     }
