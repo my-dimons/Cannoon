@@ -19,20 +19,9 @@ public class EssenceManager : MonoBehaviour
     {
         essenceAmountText.text = essence.ToString();
     }
-    public void BuyCannon(GameObject cannon, int price)
-    {
-        SpendEssence(price);
-    }
 
-    public void BuyCannonBall(GameObject cannonball, int amount, int price)
-    {
-        SpendEssence(price);
-    }
     public void SpendEssence(int price)
     {
-        if (essence >= price)
-            essence -= price;
-        else
-            Debug.Log("NOT ENOUGH MONEY");
+        essence -= price;
     }
 }

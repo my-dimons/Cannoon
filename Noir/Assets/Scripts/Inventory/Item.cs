@@ -6,8 +6,8 @@ public class Item
 {
     public enum ItemType
     {
-        cannon,
-        cannonball,
+        baseCannon,
+        baseCannonball,
         bouncingCannonball
     }
 
@@ -18,10 +18,11 @@ public class Item
     {
         switch (itemType)
         {
-            default:
-            case ItemType.cannon: return ItemAssets.Instance.baseCannonSprite;
-            case ItemType.cannonball: return ItemAssets.Instance.baseCannonballSprite;
-            case ItemType.bouncingCannonball: return ItemAssets.Instance.bouncingCannonballSprite;
+            case ItemType.baseCannon:           return ItemAssets.Instance.baseCannonSprite;
+            case ItemType.baseCannonball:       return ItemAssets.Instance.baseCannonballSprite;
+            case ItemType.bouncingCannonball:   return ItemAssets.Instance.bouncingCannonballSprite;
+
+            default: return null;
         }
     }
 }

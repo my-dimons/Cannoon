@@ -158,7 +158,6 @@ MonoBehaviour:
   canFollowPlayer: 0
   playerFollowDelay: 1
   player: {fileID: 0}
-  essenceAmountText: {fileID: 0}
 --- !u!61 &2570172948270719768
 BoxCollider2D:
   m_ObjectHideFlags: 0

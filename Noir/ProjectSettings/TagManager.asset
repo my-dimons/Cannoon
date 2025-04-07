@@ -9,6 +9,7 @@ TagManager:
   - SpawnLocations
   - PlayerEnemyCollisions
   - EndlessModeGameManager
+  - EssenceManager
   layers:
   - Default
   - TransparentFX

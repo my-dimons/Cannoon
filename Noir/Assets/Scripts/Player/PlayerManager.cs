@@ -13,7 +13,7 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("All bought cannonballs currently in the inventory (must have >0 cannonballs in stack)")]
     public List<GameObject> boughtCannonballs;
 
-    private Inventory inventory;
+    public Inventory inventory;
 
     [SerializeField] private UIInventory uiInventory;
     public bool inventoryEnabled;
@@ -24,25 +24,23 @@ public class PlayerManager : MonoBehaviour
         uiInventory.SetInventory(inventory);
     }
 
+    public void AddItem(Item item)
+    {
+        inventory.AddItem(item);
+    }
+
     private void Update()
     {
         // toggle inventory ui
         if (Input.GetKeyDown(KeyCode.E))
         {
-
             inventoryEnabled = !inventoryEnabled;
-            
-            if (inventoryEnabled)
-            {
-                uiInventory.transform.Find("background").gameObject.SetActive(false);
-                foreach (GameObject go in uiInventory.itemSlots)
-                    go.transform.parent.gameObject.SetActive(false);
-            } else
-            {
-                uiInventory.transform.Find("background").gameObject.SetActive(true);
-                foreach (GameObject go in uiInventory.itemSlots)
-                    go.transform.parent.gameObject.SetActive(true);
-            }
+
+            // turn inventory UI on or off based on inventoryEnabled VAR
+            uiInventory.transform.Find("backgrounds").gameObject.SetActive(inventoryEnabled);
+            uiInventory.transform.Find("outlineSlots").gameObject.SetActive(inventoryEnabled);
+            foreach (GameObject go in uiInventory.itemSlots)
+                go.transform.parent.gameObject.SetActive(inventoryEnabled);
         }
     }
 }
