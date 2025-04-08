@@ -150,7 +150,6 @@ public class Cannon : MonoBehaviour
             FlipCannonChargeCanvas();
 
             cannonFacingRight = false;
-            Debug.Log("FLIPING SPRITE");
         }
 
         else if (cannonRotationObj.transform.eulerAngles.z < 90 && !cannonFacingRight
@@ -164,7 +163,6 @@ public class Cannon : MonoBehaviour
             FlipCannonChargeCanvas();
 
             cannonFacingRight = true;
-            Debug.Log("UNFLIPING SPRITE");
         }
 
         void FlipCannonChargeCanvas()

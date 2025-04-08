@@ -10,14 +10,35 @@ public class Inventory
     public Inventory()
     {
         itemList = new List<Item>();
-        AddItem(new Item { itemType = Item.ItemType.bouncingCannonball, amount = 1 });
         Debug.Log(itemList.Count);
     }
 
-
     public void AddItem(Item item)
     {
-        itemList.Add(item);
+        if (item.IsStackable())
+        {
+            bool itemAlreadyInInventory = false;
+            foreach(Item inventoryItem in itemList)
+            {
+                if (inventoryItem.itemType == item.itemType)
+                {
+                    Debug.Log(itemList);
+                    //item.amount = 5;
+                    //int amount = inventoryItem.amount;
+                    //Debug.Log(inventoryItem.amount);
+                    //Debug.Log(item.amount);
+                    //Debug.Log(inventoryItem.amount + item.amount);
+                    inventoryItem.amount += item.amount;
+                    //inventoryItem.amount = amount;
+                    itemAlreadyInInventory = true;
+                }
+            }
+            if (!itemAlreadyInInventory)
+            {
+                itemList.Add(new Item { itemType = item.itemType, amount = item.amount });
+            }
+        } else
+            itemList.Add(new Item { itemType = item.itemType, amount = item.amount });
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 

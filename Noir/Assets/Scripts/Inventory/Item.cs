@@ -23,4 +23,17 @@ public class Item
             default: return null;
         }
     }
+
+    public bool IsStackable()
+    {
+        switch(itemType)
+        {
+            default:
+            case ItemType.baseCannonball:
+            case ItemType.bouncingCannonball:
+                return true;
+            case ItemType.baseCannon:
+                return false;
+        }
+    }
 }

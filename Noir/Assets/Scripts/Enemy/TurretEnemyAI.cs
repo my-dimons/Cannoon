@@ -100,7 +100,6 @@ public class TurretEnemyAI : MonoBehaviour
         {
             enemySpriteCannon.GetComponent<SpriteRenderer>().flipY = true;
             cannonFacingRight = false;
-            Debug.Log("FLIPING SPRITE");
         }
 
         else if (enemyCannonSpriteRotationAnchor.transform.eulerAngles.z < 90 && !cannonFacingRight 
@@ -111,7 +110,6 @@ public class TurretEnemyAI : MonoBehaviour
         {
             enemySpriteCannon.GetComponent<SpriteRenderer>().flipY = false;
             cannonFacingRight = true;
-            Debug.Log("UNFLIPING SPRITE");
         }
     }
 }

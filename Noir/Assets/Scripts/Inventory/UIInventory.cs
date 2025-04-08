@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,8 +54,16 @@ public class UIInventory : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true);
             itemSlotRectTransform.anchoredPosition = new Vector2(itemSlotTemplate.GetComponent<RectTransform>().anchoredPosition.x + x * itemSlotCellSize,
                 itemSlotTemplate.GetComponent<RectTransform>().anchoredPosition.y + -y * itemSlotCellSize);
+
             Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
             image.sprite = item.GetSprite();
+
+            TextMeshProUGUI uiText = itemSlotRectTransform.Find("text").GetComponent<TextMeshProUGUI>();
+            if (item.amount > 1)
+                uiText.SetText(item.amount.ToString());
+            else
+                uiText.SetText("");
+
             x++;
             if (x >= maxX)
             {

@@ -47,17 +47,20 @@ public class Shop : MonoBehaviour
             int amount = Random.Range(minCannonballAmount, maxCannonballAmount);
             int price = Random.Range(minCannonballPrice, maxCannonballPrice);
 
-            // get sprite
-            Item item = new Item { itemType = type, amount = 1 };
+            // change sprite, and amount text
+            Item item = new Item { itemType = type, amount = amount };
             Image image = transform.Find("Canvas").Find("cannonballImage").GetComponent<Image>();
+            TextMeshProUGUI text = transform.Find("Canvas").Find("text").GetComponent<TextMeshProUGUI>();
             image.gameObject.SetActive(true);
+            text.gameObject.SetActive(true);
             image.sprite = item.GetSprite();
+            text.text = "x" + amount.ToString();
 
             // add onclick listenter
             Button buyButton = transform.Find("Canvas").Find("buyButton").GetComponent<Button>();
             buyButton.onClick.AddListener(() => BuyCannonball(item, price));
 
-            // show proper price on text
+            // show price on text
             TextMeshPro priceText = transform.Find("priceText").GetComponent<TextMeshPro>();
             priceText.text = price.ToString();
         }
@@ -72,6 +75,7 @@ public class Shop : MonoBehaviour
     {
         if (essenceManager.essence >= price)
         {
+            Debug.Log(cannonball.amount);
             playerManager.AddItem(cannonball);
             essenceManager.SpendEssence(price);
         } else

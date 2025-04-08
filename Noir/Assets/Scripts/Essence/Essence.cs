@@ -29,7 +29,6 @@ public class Essence : MonoBehaviour
     {
         essenceManager = GameObject.FindGameObjectWithTag("EssenceManager").GetComponent<EssenceManager>();
         player = GameObject.FindGameObjectWithTag("Player");
-        Debug.Log(player);
 
         StartCoroutine(PlayerFollowDelayTimer());
     }
