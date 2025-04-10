@@ -50,20 +50,42 @@ public class UIInventory : MonoBehaviour
 
         foreach (Item item in inventory.GetItemList())
         {
+            // Instantiate and position item slot
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
             itemSlotRectTransform.anchoredPosition = new Vector2(itemSlotTemplate.GetComponent<RectTransform>().anchoredPosition.x + x * itemSlotCellSize,
                 itemSlotTemplate.GetComponent<RectTransform>().anchoredPosition.y + -y * itemSlotCellSize);
 
+            // add listener to button
+            itemSlotRectTransform.Find("background").GetComponent<Button>().onClick.AddListener(() => playerManager.EquipCannonball(item));
+            // change image
             Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
             image.sprite = item.GetSprite();
 
+            // set proper text
             TextMeshProUGUI uiText = itemSlotRectTransform.Find("text").GetComponent<TextMeshProUGUI>();
             if (item.amount > 1)
+            {
                 uiText.SetText(item.amount.ToString());
+                Debug.Log(item.amount);
+            }
             else
                 uiText.SetText("");
 
+            // update outline/equipped slot if needed
+            if (playerManager.currentEquipedCannonballItem == null)
+            {}   
+            else if (item.itemType == playerManager.currentEquipedCannonballItem.itemType)
+            {
+                playerManager.EquipCannonball(item);
+            }
+            // disable bought gameobject if players inventory is not open
+            if (!playerManager.inventoryOpen)
+            {
+                itemSlotRectTransform.gameObject.SetActive(false);
+            }
+
+            
             x++;
             if (x >= maxX)
             {
@@ -73,7 +95,7 @@ public class UIInventory : MonoBehaviour
 
             itemSlots.Add(image.gameObject);
 
-            if (!playerManager.inventoryEnabled)
+            if (!playerManager.inventoryOpen)
             {
                 image.transform.parent.gameObject.SetActive(false);
             }

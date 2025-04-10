@@ -6,7 +6,8 @@ public class Item
     {
         baseCannon,
         baseCannonball,
-        bouncingCannonball
+        bouncingCannonball,
+        empty
     }
 
     public ItemType itemType;
@@ -21,6 +22,18 @@ public class Item
             case ItemType.bouncingCannonball:   return ItemAssets.Instance.bouncingCannonballSprite;
 
             default: return null;
+        }
+    }
+
+    public GameObject GetPrefab()
+    {
+        switch (itemType)
+        {
+            default: return null;
+
+            case ItemType.baseCannon:           return ItemAssets.Instance.baseCannonPrefab;
+            case ItemType.baseCannonball:       return ItemAssets.Instance.baseCannonballPrefab;
+            case ItemType.bouncingCannonball:   return ItemAssets.Instance.bouncingCannonballPrefab;
         }
     }
 

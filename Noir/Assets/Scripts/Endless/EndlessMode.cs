@@ -50,21 +50,6 @@ public class EndlessMode : MonoBehaviour
     [Tooltip("Needs an empty game object (Or else it throws an error")]
     public List<GameObject> possibleEnemySpawnLocations;
 
-
-    [Header("Level Stages")]
-    
-    // LEVEL is the parent color/name of stages (ex. Green Level)
-    // =--=
-    // STAGES are the subdivisions of the parent level (ex. Meadow & Forest stages of the Green level)
-
-    public string levelColor; // TODO: Migrate to enum in GameManager (STILL SET COLOR HERE, JUST CHANGE STRING TO THE NEW ENUM)
-
-    [Tooltip("Different stages in this level")]
-    public List<string> stages;
-
-    [Tooltip("Different stages in this level")]
-    public string currentStage;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -81,9 +66,6 @@ public class EndlessMode : MonoBehaviour
     // i corresponds to the stage you're advancing to (0 = first stage; 1 = second stage; etc.)
     private void AdvanceStage(int i)
     {
-        // Set current stage
-        currentStage = stages[i];
-
         // Get next stages spawning positions
         foreach (Transform x in parentEnemySpawnLocations[i].GetComponentInChildren<Transform>())
         {

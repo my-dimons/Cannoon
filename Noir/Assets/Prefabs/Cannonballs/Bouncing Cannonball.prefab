@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2619340425909537381}
   - component: {fileID: 8452061209117489522}
   m_Layer: 0
-  m_Name: Base Cannonball
+  m_Name: Bouncing Cannonball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,7 +198,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 97c16c34abd7a6143a65d959afb3379e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1764995b7f9a7d04aad21f9f7898531f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
