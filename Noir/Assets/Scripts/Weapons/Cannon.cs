@@ -194,9 +194,12 @@ public class Cannon : MonoBehaviour
     }
     private void RotateCannonTowardsMouse()
     {
-        Vector3 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - cannonRotationObj.transform.position;
-        diff.Normalize();
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        cannonRotationObj.transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = 0;
+        Vector3 objectPos = Camera.main.WorldToScreenPoint(cannonRotationObj.transform.position);
+        mousePos.x = mousePos.x - objectPos.x;
+        mousePos.y = mousePos.y - objectPos.y;
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        cannonRotationObj.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 }
