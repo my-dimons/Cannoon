@@ -12,15 +12,22 @@ using UnityEngine.Rendering;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Stats")]
+    public float baseSpeed;
     public float speed;
-    public float jump;
+    public float jumpForce;
 
-    [Tooltip("Maximum amount of jumps")]
-    public int jumps;
-    [Tooltip("How many more times can the player currently jump")]
-    public int jumpsRemaining;
     [Tooltip("When the player is falling this variable is used on the players y velocity")]
     public float gravityFallMultiplier;
+    [Tooltip("in seconds")]
+    public float cyoteJump;
+    [Tooltip("how fast the player needs to be falling for the players gravity to increase (can be applied before the player starts falling)")]
+    public float fallingAffecterNumber;
+    [Tooltip("how much slower the player is after landing on the ground (divides speed by this variable)")]
+    public float jumpLandingSpeedDivisor;
+    [Tooltip("the small pause time when the player lands on the ground (in seconds)")]
+    public float jumpLandingSpeedTime;
+    public bool canJump;
+
     public LayerMask layerMask;
 
     [Header("Info")]
@@ -36,9 +43,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
-        playerHealthScript = GetComponent<PlayerHealth>(); 
-
-        jumpsRemaining = jumps;
+        playerHealthScript = GetComponent<PlayerHealth>();
+        speed = baseSpeed;
     }
     // Update is called once per frame
     void Update()
@@ -50,9 +56,8 @@ public class PlayerMovement : MonoBehaviour
             Movement();
 
             // Jumping
-            if (Input.GetKeyDown(KeyCode.Space) && CanPlayerJump())
+            if (Input.GetKeyDown(KeyCode.Space) && canJump)
                 Jump();
-
         }
     }
 
@@ -67,7 +72,9 @@ public class PlayerMovement : MonoBehaviour
     // when FALLING increase the gravity by a set amount
     private void GravityMultiplier()
     {
-        if (this.rb.velocity.normalized[1] < 0)
+        if (this.rb.velocity.y < fallingAffecterNumber && !canJump)
+            rb.gravityScale = gravityFallMultiplier;
+        else if (this.rb.velocity.y < 0 && !canJump)
             rb.gravityScale = gravityFallMultiplier;
         else
             rb.gravityScale = 1;
@@ -75,16 +82,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        canJump = false;
         rb.velocity = Vector2.zero;
-        rb.AddForce(new Vector2(rb.velocity.x, jump));
-    }
-    private bool CanPlayerJump()
-    {
-        if (jumpsRemaining <= jumps && jumpsRemaining != 0)
-        {
-            jumpsRemaining -= 1;
-            return true;
-        }
-        return false;
+        rb.AddForce(new Vector2(rb.velocity.x, jumpForce));
     }
 }

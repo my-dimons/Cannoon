@@ -7,12 +7,7 @@ public class EssenceManager : MonoBehaviour
     [Tooltip("How much essence the player has")]
     public int essence;
     public TextMeshProUGUI essenceAmountText;
-    PlayerManager playerManager;
 
-    private void Start()
-    {
-        playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
-    }
     private void Update()
     {
         essenceAmountText.text = essence.ToString();

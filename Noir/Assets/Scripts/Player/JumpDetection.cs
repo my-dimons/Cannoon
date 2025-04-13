@@ -16,6 +16,12 @@ public class JumpDetection : MonoBehaviour
         yield return new WaitForSeconds(playerScript.jumpLandingSpeedTime);
         playerScript.speed = playerScript.baseSpeed;
     }
+    IEnumerator CyoteJumpTimer()
+    {
+        Debug.Log("CYOTE JUMP");
+        yield return new WaitForSeconds(playerScript.cyoteJump);
+        playerScript.canJump = false;
+    }
     private void Start()
     {
         playerScript = player.GetComponent<PlayerMovement>();
@@ -27,6 +33,14 @@ public class JumpDetection : MonoBehaviour
         {
             playerScript.canJump = true;
             StartCoroutine(PlayerLanding());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (playerScript.canJump)
+        {
+            StartCoroutine(CyoteJumpTimer());
         }
     }
 }

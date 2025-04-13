@@ -10,7 +10,7 @@ using UnityEngine.Rendering;
 public class Cannon : MonoBehaviour
 {
     public GameObject player;
-    public GameObject bullet;
+    public GameObject cannonball;
 
     [Header("Stats")]
     [Tooltip("Minimum damage shot bullets do")]
@@ -55,7 +55,6 @@ public class Cannon : MonoBehaviour
     public bool canShoot;
 
     PlayerHealth playerHealthScript;
-    PlayerManager playerManager;
 
     public IEnumerator BulletShootingCooldown()
     {
@@ -68,12 +67,6 @@ public class Cannon : MonoBehaviour
     void Start()
     {
         playerHealthScript = player.GetComponent<PlayerHealth>();
-        playerManager = player.GetComponent<PlayerManager>();
-
-        if (playerManager.currentEquipedCannonballItem != null)
-        {
-            StartCoroutine(BulletShootingCooldown());
-        }
         cannonFacingRight = true;
     }
     void Update()
@@ -91,7 +84,7 @@ public class Cannon : MonoBehaviour
     private void Shooting()
     {
         // Start timer and make charge meter appear
-        if (Input.GetMouseButtonDown(0) && !playerManager.inventoryOpen && canShoot && !charging && playerManager.currentEquipedCannonballItem != null)
+        if (Input.GetMouseButtonDown(0) && canShoot && !charging )
         {
             timerActive = true;
             charging = true;
@@ -101,7 +94,7 @@ public class Cannon : MonoBehaviour
         }
 
         // Stop timer and shoot bullet (bullet stats depend on hold time), and make charge meter disappear
-        else if (Input.GetMouseButtonUp(0) && !playerManager.inventoryOpen && canShoot && charging && playerManager.currentEquipedCannonballItem != null)
+        else if (Input.GetMouseButtonUp(0) && canShoot && charging)
         {
             charging = false;
             // charge meter
@@ -138,26 +131,11 @@ public class Cannon : MonoBehaviour
         Vector2 spawnPos;
         spawnPos = new Vector2(bulletSpawnObj.transform.position.x, bulletSpawnObj.transform.position.y);
 
-        if (playerManager.currentEquipedCannonballItem == null)
-        {
-            Debug.Log("Not enough ammo");
-            canShoot = false;
-        } else
-        {
-            GameObject prefab = Instantiate(playerManager.currentEquipedCannonballItem.GetPrefab(), spawnPos, cannonRotationObj.transform.rotation);
-            prefab.GetComponent<Bullet>().SetStats(0, damage, bulletLifetime, true);
-            prefab.GetComponent<Rigidbody2D>().AddForce(prefab.transform.right * force, ForceMode2D.Impulse);
+        GameObject prefab = Instantiate(cannonball, spawnPos, cannonRotationObj.transform.rotation);
+        prefab.GetComponent<Bullet>().SetStats(0, damage, bulletLifetime, true);
+        prefab.GetComponent<Rigidbody2D>().AddForce(prefab.transform.right * force, ForceMode2D.Impulse);
 
-            // TODO: change to new shooting amount var soon
-
-            playerManager.RemoveItem(new Item { itemType = playerManager.currentEquipedCannonballItem.itemType, amount = 1});
-            if (playerManager.currentEquipedCannonballItem.amount <= 0)
-            {
-                playerManager.UnequipCannonball();
-            }
-
-            StartCoroutine(BulletShootingCooldown());
-        }
+        StartCoroutine(BulletShootingCooldown());
     }
     private void FlipCannonSprite()
     {
@@ -197,8 +175,8 @@ public class Cannon : MonoBehaviour
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 0;
         Vector3 objectPos = Camera.main.WorldToScreenPoint(cannonRotationObj.transform.position);
-        mousePos.x = mousePos.x - objectPos.x;
-        mousePos.y = mousePos.y - objectPos.y;
+        mousePos.x -= objectPos.x;
+        mousePos.y -= objectPos.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         cannonRotationObj.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
