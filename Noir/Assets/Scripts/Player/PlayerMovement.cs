@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("can the player jump")]
     public bool canJump;
     [Tooltip("in seconds")]
-    public float cyoteJump;
+    public float coyoteJumpTime;
 
     [Header("Landing")]
     [Tooltip("how much slower the player is after landing on the ground (divides speed by this variable)")]
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravityFallMultiplier;
     [Tooltip("how fast the player needs to be falling for the players gravity to increase (can be applied before the player starts falling)")]
     public float fallingAffecterNumber;
-    [Tooltip("(MULTIPLIER) When falling off an edge, for a certain amount of time, multiply the players gravity scale by this variable (calculated in the JumpDetections cyote jump)")]
+    [Tooltip("(MULTIPLIER) When falling off an edge, for a certain amount of time, multiply the players gravity scale by this variable (calculated in the JumpDetections coyote jump)")]
     public float edgeCoastingGravity;
     [Tooltip("Lets the players gravity scale be overriden (disables GravityMultiplier() function)")]
     public bool fallingGravityOverride;

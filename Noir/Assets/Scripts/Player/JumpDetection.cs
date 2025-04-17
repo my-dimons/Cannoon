@@ -16,12 +16,12 @@ public class JumpDetection : MonoBehaviour
         yield return new WaitForSeconds(playerScript.jumpLandingSpeedTime);
         playerScript.speed = playerScript.baseSpeed;
     }
-    IEnumerator CyoteJumpTimer()
+    IEnumerator CoyoteJumpTimer()
     {
-        Debug.Log("CYOTE JUMP");
+        Debug.Log("COYOTE JUMP");
         playerScript.fallingGravityOverride = true;
         player.GetComponent<Rigidbody2D>().gravityScale = playerScript.gravityFallMultiplier * playerScript.edgeCoastingGravity;
-        yield return new WaitForSeconds(playerScript.cyoteJump);
+        yield return new WaitForSeconds(playerScript.coyoteJumpTime);
         playerScript.fallingGravityOverride = false;
         playerScript.canJump = false;
     }
@@ -56,7 +56,7 @@ public class JumpDetection : MonoBehaviour
         {
             if (playerScript.onGround && playerScript.canJump)
             {
-                StartCoroutine(CyoteJumpTimer());
+                StartCoroutine(CoyoteJumpTimer());
             }
 
             playerScript.onGround = false;
