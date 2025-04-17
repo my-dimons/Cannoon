@@ -10,7 +10,7 @@ public class JumpDetection : MonoBehaviour
     PlayerMovement playerScript;
 
     // when the player hits the ground, make them move slower for a set time
-    IEnumerator PlayerLanding()
+    IEnumerator SlowPlayerOnLanding()
     {
         playerScript.speed /= playerScript.jumpLandingSpeedDivisor;
         yield return new WaitForSeconds(playerScript.jumpLandingSpeedTime);
@@ -19,7 +19,10 @@ public class JumpDetection : MonoBehaviour
     IEnumerator CyoteJumpTimer()
     {
         Debug.Log("CYOTE JUMP");
+        playerScript.fallingGravityOverride = true;
+        player.GetComponent<Rigidbody2D>().gravityScale = playerScript.gravityFallMultiplier * playerScript.edgeCoastingGravity;
         yield return new WaitForSeconds(playerScript.cyoteJump);
+        playerScript.fallingGravityOverride = false;
         playerScript.canJump = false;
     }
     private void Start()
@@ -29,18 +32,35 @@ public class JumpDetection : MonoBehaviour
     // player hits ground
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!playerScript.canJump)
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            playerScript.canJump = true;
-            StartCoroutine(PlayerLanding());
+            // player falls on the ground
+            if (!playerScript.onGround)
+            {
+                StartCoroutine(SlowPlayerOnLanding());
+            }
+            // reset players jump when hitting the ground
+            if (!playerScript.canJump)
+            {
+                playerScript.canJump = true;
+            }
+
+            playerScript.onGround = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (playerScript.canJump)
+
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            StartCoroutine(CyoteJumpTimer());
+            if (playerScript.onGround && playerScript.canJump)
+            {
+                StartCoroutine(CyoteJumpTimer());
+            }
+
+            playerScript.onGround = false;
         }
+
     }
 }

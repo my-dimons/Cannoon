@@ -132,7 +132,6 @@ public class FollowEnemyAI : MonoBehaviour
         if (canJump && this.rb.velocity.normalized.magnitude == 0)
         {
             Jump(forceX, true);
-            Debug.Log("Jumping2");
         }
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
