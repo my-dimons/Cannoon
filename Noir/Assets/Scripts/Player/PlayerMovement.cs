@@ -117,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canJump = false;
         rb.velocity = Vector2.zero;
+        rb.gravityScale = 1;
         // add upward force
         rb.AddForce(new Vector2(rb.velocity.x, jumpForce), ForceMode2D.Impulse);
     }
