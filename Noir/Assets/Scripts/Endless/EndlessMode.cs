@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 
 public class EndlessMode : MonoBehaviour
 {
@@ -32,6 +30,7 @@ public class EndlessMode : MonoBehaviour
     public int timeBetweenWaves;
 
     bool advancingToNextWave;
+    public bool wavesStarted;
 
     [Header("Enemy Spawning")]
     public GameObject enemyParentObject;
@@ -57,20 +56,6 @@ public class EndlessMode : MonoBehaviour
 
         // Set difficulty multiplier increase based on this saves/games difficulty
         difficultyMultiplierIncrease *= (float)gameManager.difficulty / 100;
-
-
-        AdvanceStage(0);
-    }
-
-    // Gets available spawning locations from a stages parent object
-    // i corresponds to the stage you're advancing to (0 = first stage; 1 = second stage; etc.)
-    private void AdvanceStage(int i)
-    {
-        // Get next stages spawning positions
-        foreach (Transform x in parentEnemySpawnLocations[i].GetComponentInChildren<Transform>())
-        {
-            possibleEnemySpawnLocations.Add(x.gameObject);
-        }
     }
 
     // Update is called once per frame
@@ -79,11 +64,8 @@ public class EndlessMode : MonoBehaviour
         // checks how many enemies are left
         enemiesLeft = enemyParentObject.transform.childCount;
 
-        // update info text
-
-
         // starts first round
-        if (enemiesLeft <= 0 && !advancingToNextWave)
+        if (enemiesLeft <= 0 && !advancingToNextWave && wavesStarted)
             StartCoroutine(NextWave());
     }
 

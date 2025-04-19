@@ -1,13 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using TMPro;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {

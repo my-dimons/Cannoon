@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
 
     public Difficulty difficulty;
 
-
     // Loads a specified SCENE
     public void LoadLevel(string scene)
     {
