@@ -6,6 +6,4 @@ public class SpawnPosition : MonoBehaviour
 {
     [Tooltip("Is this a flying/sky enemy spawning location")]
     public bool flying;
-    [Tooltip("Is this a water enemy spawning location")]
-    public bool water;
 }

@@ -43,8 +43,8 @@ public class EndlessMode : MonoBehaviour
     public List<GameObject> possibleSpawningEnemies;
 
     // Spawn Locations
-    [Tooltip("The lists of the different stages spawn locations (The Parent Object), PUT THE STAGES IN THIS LEVELS PROPER ORDER")]
-    public List<GameObject> parentEnemySpawnLocations;
+    [Tooltip("Parent object of all the enemy spawn locations")]
+    public GameObject enemySpawnLocationsParent;
 
     [Tooltip("Needs an empty game object (Or else it throws an error")]
     public List<GameObject> possibleEnemySpawnLocations;
@@ -53,7 +53,10 @@ public class EndlessMode : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-
+        foreach (Transform child in enemySpawnLocationsParent.transform)
+        {
+            possibleEnemySpawnLocations.Add(child.gameObject);
+        }
         // Set difficulty multiplier increase based on this saves/games difficulty
         difficultyMultiplierIncrease *= (float)gameManager.difficulty / 100;
     }
@@ -122,14 +125,11 @@ public class EndlessMode : MonoBehaviour
             Vector3 spawnPosition = Vector3.zero;
 
             // spawns a ground enemy
-            if (!spawningEnemyScript.flyingEnemy && !spawningEnemyScript.waterEnemy)
-                spawnPosition = GetEnemySpawnLocation(false, false);
+            if (!spawningEnemyScript.flyingEnemy)
+                spawnPosition = GetEnemySpawnLocation(false);
             // spawns a flying enemy
-            else if (spawningEnemyScript.flyingEnemy && !spawningEnemyScript.waterEnemy)
-                spawnPosition = GetEnemySpawnLocation(true, false);
-            // spawns a water enemy
-            else if (!spawningEnemyScript.flyingEnemy && spawningEnemyScript.waterEnemy)
-                spawnPosition = GetEnemySpawnLocation(false, true);
+            else if (spawningEnemyScript.flyingEnemy)
+                spawnPosition = GetEnemySpawnLocation(true);
 
             // spawn enemy
             GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, spawningEnemy.transform.rotation);
@@ -152,7 +152,7 @@ public class EndlessMode : MonoBehaviour
     }
     
     // Fetches a random enemy spawning location, if everything is false
-    Vector3 GetEnemySpawnLocation(bool flyingEnemy, bool waterEnemy)
+    Vector3 GetEnemySpawnLocation(bool flyingEnemy)
     {
         Vector3 pos;
         List<GameObject> spawnLocations = new();
@@ -160,13 +160,11 @@ public class EndlessMode : MonoBehaviour
         {
             SpawnPosition locationScript = location.GetComponent<SpawnPosition>();
 
+            // GROUND ENEMY
+            if (!flyingEnemy && !locationScript.flying)
+                spawnLocations.Add(location);
             // FLYING ENEMIES
-            if (flyingEnemy && locationScript.flying && !waterEnemy && !locationScript.water)
-                spawnLocations.Add(location);
-            // WATER ENEMIES
-            else if (waterEnemy && locationScript.water && !flyingEnemy && !locationScript.flying)
-                spawnLocations.Add(location);
-            else if (!flyingEnemy && !waterEnemy && !locationScript.flying && !locationScript.water)
+            if (flyingEnemy && locationScript.flying)
                 spawnLocations.Add(location);
         }
 
