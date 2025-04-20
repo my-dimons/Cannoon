@@ -93,7 +93,7 @@ public class PlayerHealth : MonoBehaviour
         // set saturation to 0
         colorAdjustments.saturation.value = -50f;
         // increase vignette strength
-        vignette.intensity.value = 1f;
+        vignette.intensity.value = 0.5f;
         // Post Processing Changes
 
 

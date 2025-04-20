@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     public bool fallingGravityOverride;
 
     [Header("Info")]
-    [Header("is the player on the ground")]
+    [Tooltip("is the player on the ground")]
     public bool onGround;
 
     Rigidbody2D rb;
