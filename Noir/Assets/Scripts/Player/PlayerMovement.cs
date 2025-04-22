@@ -1,13 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using TMPro;
-using static UnityEngine.GraphicsBuffer;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -55,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     public bool fallingGravityOverride;
 
     [Header("Info")]
-    [Header("is the player on the ground")]
+    [Tooltip("is the player on the ground")]
     public bool onGround;
 
     Rigidbody2D rb;
@@ -125,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canJump = false;
         rb.velocity = Vector2.zero;
+        rb.gravityScale = 1;
         // add upward force
         rb.AddForce(new Vector2(rb.velocity.x, jumpForce), ForceMode2D.Impulse);
     }

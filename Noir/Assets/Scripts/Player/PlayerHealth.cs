@@ -11,12 +11,14 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Death")]
-    public Vector2 spawnPoint;
-    public Button respawnButton;
     public GameObject deathScreen;
     public GameObject postProcessing;
     public bool dead;
+
+    [Header("Respawning")]
+    public Vector2 spawnPoint;
     public int respawnTime;
+    public Button respawnButton;
 
     [Header("Health Bar")]
     public TextMeshProUGUI healthText;
@@ -35,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("Other")]
     private GameManager gameManager;
+    private EndlessMode endlessMode;
     IEnumerator DamageInvincibilityTimer()
     {
         canTakeDamage = false;
@@ -45,6 +48,7 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        endlessMode = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
 
         maxHealth = baseHealth;
         currentHealth = maxHealth;
@@ -69,7 +73,7 @@ public class PlayerHealth : MonoBehaviour
     void Death()
     {
         // VARS
-        TextMeshProUGUI respawnButtonText = respawnButton.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI respawnButtonText = this.respawnButton.GetComponentInChildren<TextMeshProUGUI>();
 
         Volume volume = postProcessing.GetComponent<Volume>();
 
@@ -94,11 +98,11 @@ public class PlayerHealth : MonoBehaviour
 
 
         // Respawning
-        StartCoroutine(respawn());
+        StartCoroutine(respawnButton());
 
-        IEnumerator respawn()
+        IEnumerator respawnButton()
         {
-            respawnButton.interactable = false;
+            this.respawnButton.interactable = false;
 
             // Countdown untill you're able to respawn
             for (int i = 0; i < respawnTime; i++)
@@ -109,7 +113,7 @@ public class PlayerHealth : MonoBehaviour
             }
 
             // Can Respawn
-            respawnButton.interactable = true;
+            this.respawnButton.interactable = true;
             respawnButtonText.text = "Respawn";
         }
         // Respawning
@@ -142,5 +146,13 @@ public class PlayerHealth : MonoBehaviour
 
         healthBarImage.fillAmount = currentHealth / 100;
         healthText.text = Mathf.RoundToInt(currentHealth).ToString();
+    }
+
+    public void Respawn()
+    {
+        transform.position = spawnPoint;
+        endlessMode.wave = 0;
+        endlessMode.difficultyMultiplier = 1;
+        endlessMode.wavesStarted = true;
     }
 }
