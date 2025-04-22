@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
     // The general script ALL enemies need, and an AI script
     public GameObject player;
     public Transform target;
-    public GameObject essence;
 
     [Header("Stats")]
 
@@ -38,8 +37,6 @@ public class Enemy : MonoBehaviour
 
     [Tooltip("Does this enemy fly?, if so it will have different spawn locations than usual (NOTE: FLYING ENEMIES ARE SOMETIMES REFERED TO AS 'SKY' ENEMIES)")]
     public bool flyingEnemy; // NOTE: sometimes flying enemies are also refered to as "sky" enemies
-    [Tooltip("This enemy will spawn in water if true")]
-    public bool waterEnemy;
 
 
     //OTHER: Referenced in start
@@ -71,19 +68,19 @@ public class Enemy : MonoBehaviour
     private void KillEnemy()
     {
         Destroy(gameObject);
-        Instantiate(essence, this.transform.position, essence.transform.rotation);
 
         IncrementKills(1);
     }
 
     private void ApplyDifficultyRating(bool start)
     {
-        if (start)
-            currentHealth = baseHealth * endlessModeScript.difficultyMultiplier;
-
         currentDamage = baseDamage * endlessModeScript.difficultyMultiplier;
         currentCriticalChance = Mathf.Clamp(baseCriticalChance * endlessModeScript.difficultyMultiplier, 0, 100);
         currentCriticalMultiplier = baseCriticalMultiplier * endlessModeScript.difficultyMultiplier;
+
+        // apply only when the enemy spawns
+        if (start)
+            currentHealth = baseHealth * endlessModeScript.difficultyMultiplier;
     }
 
     public void TakeDamage(float damage)
