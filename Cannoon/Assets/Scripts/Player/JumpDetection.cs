@@ -60,6 +60,5 @@ public class JumpDetection : MonoBehaviour
 
             playerScript.onGround = false;
         }
-
     }
 }

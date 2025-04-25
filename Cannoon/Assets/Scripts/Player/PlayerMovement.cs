@@ -121,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
         // add upward force
         rb.AddForce(new Vector2(rb.velocity.x, jumpForce), ForceMode2D.Impulse);
     }
-
     private void InAir()
     {
         if (!onGround)
@@ -130,7 +129,6 @@ public class PlayerMovement : MonoBehaviour
             speed = baseSpeed / airSpeedDivisor;
         }
     }
-
     private void GroundPound()
     {
         // add downward force

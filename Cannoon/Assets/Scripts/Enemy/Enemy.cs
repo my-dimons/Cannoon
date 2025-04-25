@@ -28,11 +28,6 @@ public class Enemy : MonoBehaviour
     [Tooltip("The highest possible wave this enemy will spawn in")]
     public float maxWave;
 
-    [Header("Special Stats")]
-
-    [Tooltip("Does this enemy fly?, if so it will have different spawn locations than usual (NOTE: FLYING ENEMIES ARE SOMETIMES REFERED TO AS 'SKY' ENEMIES)")]
-    public bool flyingEnemy; // NOTE: sometimes flying enemies are also refered to as "sky" enemies
-
 
     //OTHER: Referenced in start
     GameManager gameManager;

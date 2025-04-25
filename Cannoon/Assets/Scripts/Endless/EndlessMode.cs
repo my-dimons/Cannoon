@@ -47,7 +47,7 @@ public class EndlessMode : MonoBehaviour
     public GameObject enemySpawnLocationsParent;
 
     [Tooltip("Needs an empty game object (Or else it throws an error")]
-    public List<GameObject> possibleEnemySpawnLocations;
+    public List<GameObject> enemySpawnLocations;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +55,7 @@ public class EndlessMode : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         foreach (Transform child in enemySpawnLocationsParent.transform)
         {
-            possibleEnemySpawnLocations.Add(child.gameObject);
+            enemySpawnLocations.Add(child.gameObject);
         }
         // Set difficulty multiplier increase based on this saves/games difficulty
         difficultyMultiplierIncrease *= (float)gameManager.difficulty / 100;
@@ -110,7 +110,7 @@ public class EndlessMode : MonoBehaviour
     void SpawnEnemies()
     {
         possibleSpawningEnemies.Clear();
-        List<GameObject> originalEnemySpawningLocations = possibleEnemySpawnLocations;
+        List<GameObject> tempEnemySpawningLocations = new(enemySpawnLocations);
 
         // gets all the possible spawnable enemies (by using each enemies min & max difficulty spawning range)
         for (int i = 0; i < enemies.Length; i++)
@@ -119,21 +119,13 @@ public class EndlessMode : MonoBehaviour
 
         // how many enemies to spawn (using difficulty rating)
         float amount = wave/2;
-        amount = Mathf.Clamp(amount, 1, possibleEnemySpawnLocations.Count);
+        amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);
 
         // spawns all enemies
         for (int i = 0; i < amount; i++)
         {
             GameObject spawningEnemy = FindSpawnableEnemy();
-            Enemy spawningEnemyScript = spawningEnemy.GetComponent<Enemy>();
-            Vector3 spawnPosition = Vector3.zero;
-
-            // spawns a ground enemy
-            if (!spawningEnemyScript.flyingEnemy)
-                spawnPosition = GetEnemySpawnLocation(false);
-            // spawns a flying enemy
-            else if (spawningEnemyScript.flyingEnemy)
-                spawnPosition = GetEnemySpawnLocation(true);
+            Vector3 spawnPosition = GetEnemySpawnLocation();
 
             // spawn enemy
             GameObject newEnemy = Instantiate(spawningEnemy, spawnPosition, spawningEnemy.transform.rotation);
@@ -142,10 +134,20 @@ public class EndlessMode : MonoBehaviour
 
             // might not need at the moment
             enemiesLeft++;
-        }
 
-        // Re-adds all of the removed spawn locations
-        possibleEnemySpawnLocations = originalEnemySpawningLocations;
+            Vector3 GetEnemySpawnLocation()
+            {
+                Vector3 pos;
+                List<GameObject> spawnLocations = new();
+                foreach (GameObject location in tempEnemySpawningLocations)
+                    spawnLocations.Add(location);
+
+                int randomRange = Random.Range(0, spawnLocations.Count);
+                pos = new Vector3(tempEnemySpawningLocations[randomRange].transform.position.x, tempEnemySpawningLocations[randomRange].transform.position.y, enemyZOffset);
+                tempEnemySpawningLocations.Remove(spawnLocations[randomRange]);
+                return pos;
+            }
+        }
     }
 
     GameObject FindSpawnableEnemy()
@@ -153,36 +155,5 @@ public class EndlessMode : MonoBehaviour
         int number = Random.Range(0, possibleSpawningEnemies.Count);
         GameObject enemy = possibleSpawningEnemies[number];
         return enemy;
-    }
-    
-    // Fetches a random enemy spawning location, if everything is false
-    Vector3 GetEnemySpawnLocation(bool flyingEnemy)
-    {
-        Vector3 pos;
-        List<GameObject> spawnLocations = new();
-        foreach (GameObject location in possibleEnemySpawnLocations)
-        {
-            SpawnPosition locationScript = location.GetComponent<SpawnPosition>();
-
-            // GROUND ENEMY
-            if (!flyingEnemy && !locationScript.flying)
-                spawnLocations.Add(location);
-            // FLYING ENEMIES
-            if (flyingEnemy && locationScript.flying)
-                spawnLocations.Add(location);
-        }
-
-        pos = FetchPos();
-
-        return pos;
-
-        Vector3 FetchPos()
-        {
-            Vector3 pos;
-            int randomRange = Random.Range(0, spawnLocations.Count);
-            pos = new Vector3(possibleEnemySpawnLocations[randomRange].transform.position.x, possibleEnemySpawnLocations[randomRange].transform.position.y, enemyZOffset);
-            possibleEnemySpawnLocations.Remove(spawnLocations[randomRange]);
-            return pos;
-        }
     }
 }

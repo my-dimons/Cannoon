@@ -14,16 +14,13 @@ public class Teleporter : MonoBehaviour
         endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collision");
-        player.transform.position = teleportationObject.transform.position;
-        endlessModeScript.wavesStarted = true;
+        if (collision.CompareTag("Player"))
+        {
+            Debug.Log("Collision");
+            player.transform.position = teleportationObject.transform.position;
+            endlessModeScript.wavesStarted = true;
+        }
     }
 }
