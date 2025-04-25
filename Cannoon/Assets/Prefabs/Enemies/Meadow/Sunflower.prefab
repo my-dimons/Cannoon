@@ -135,11 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   target: {fileID: 0}
-  essence: {fileID: 5623117955588689666, guid: da3b7e532c007e5439f89ad4f78e85d9, type: 3}
   baseHealth: 75
   currentHealth: 0
-  baseDamage: 10
-  currentDamage: 0
   baseCriticalChance: 0
   currentCriticalChance: 0
   baseCriticalMultiplier: 0
@@ -147,7 +144,6 @@ MonoBehaviour:
   minWave: 0
   maxWave: 999
   flyingEnemy: 0
-  waterEnemy: 0
 --- !u!114 &4568042042948064418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +171,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
+  contactDamage: 1
   nextWaypointDistance: 3
 --- !u!50 &5649508601060937523
 Rigidbody2D:

@@ -78,6 +78,9 @@ public class EndlessMode : MonoBehaviour
         advancingWaveTexts.SetActive(true);
         currentWaveText.text = "Wave  " + wave;
 
+        // heal player (by 1 heart)
+        player.GetComponent<PlayerHealth>().Heal(1);
+
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;
         waveCountdownText.text = secondsUntilNextWave.ToString();
@@ -92,7 +95,8 @@ public class EndlessMode : MonoBehaviour
         // advance wave
         waveCountdownText.text = "";
         wave++;
-        // DON'T activate of first wave
+
+        // DON'T activate off first wave
         if (wave != 1)
             difficultyMultiplier += difficultyMultiplierIncrease;
 

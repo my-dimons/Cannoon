@@ -31,6 +31,8 @@ public class FollowEnemyAI : MonoBehaviour
     public float gravityFallMultiplier;
     [Tooltip("What object layer is getting checked for raycast collisions")]
     public LayerMask layerMask;
+    [Tooltip("Does this enemy deal damage when it comes in contact with the player")]
+    public bool contactDamage;
 
     public float nextWaypointDistance = 3f;
 
@@ -198,10 +200,10 @@ public class FollowEnemyAI : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
+        if (collision.gameObject.CompareTag("PlayerEnemyCollisions") && contactDamage)
         {
             Debug.Log("Dealing damage to player");
-            target.GetComponent<PlayerHealth>().TakeDamage(enemyScript.currentDamage);
+            target.GetComponent<PlayerHealth>().TakeDamage(1);
         }
     }
 

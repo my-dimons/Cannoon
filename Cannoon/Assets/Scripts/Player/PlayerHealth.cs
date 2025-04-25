@@ -20,17 +20,15 @@ public class PlayerHealth : MonoBehaviour
     public int respawnTime;
     public Button respawnButton;
 
-    [Header("Health Bar")]
-    public TextMeshProUGUI healthText;
-    public Image healthBarImage;
-    public GameObject healthBar;
+    [Header("Health")]
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
 
-    [Tooltip("The base max health")]
-    public int baseHealth;
-    [Tooltip("The current max health")]
-    public int maxHealth;
-
-    public float currentHealth;
+    [Tooltip("players max amount of hearts")]
+    public int numOfHearts;
+    [Tooltip("players current health/hearts")]
+    public float health;
 
     public bool canTakeDamage;
     public float damageInvincibilityCooldown;
@@ -50,22 +48,22 @@ public class PlayerHealth : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         endlessMode = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
 
-        maxHealth = baseHealth;
-        currentHealth = maxHealth;
-
         canTakeDamage = true;
+        health = numOfHearts;
     }
 
     private void Update()
-    {        
+    {
+        UpdateHearts();
+
         // FULL HEAL (TEMPERARY)
         if (Input.GetKeyDown(KeyCode.UpArrow))
-            Heal(100f);
+            Heal(numOfHearts);
 
         // Ways to die
 
         // No Health
-        if (currentHealth <= 0 && !dead)
+        if (health <= 0 && !dead)
         {
             Death();
         }
@@ -86,7 +84,6 @@ public class PlayerHealth : MonoBehaviour
 
         // Toggle UI
         deathScreen.SetActive(true);
-        healthBar.SetActive(false);
         // Toggle UI
 
         // Post Processing Changes
@@ -130,22 +127,16 @@ public class PlayerHealth : MonoBehaviour
         if (canTakeDamage)
         {
             Debug.Log("Taking Damage");
-            currentHealth -= damage;
-            currentHealth = Mathf.Clamp(currentHealth, 0, 100);
-
-            healthBarImage.fillAmount = currentHealth / 100;
-            healthText.text = Mathf.RoundToInt(currentHealth).ToString();
+            health -= damage;
+            health = Mathf.Clamp(health, 0, numOfHearts);
 
             StartCoroutine(DamageInvincibilityTimer());
         }
     }
     public void Heal(float healingAmount)
     {
-        currentHealth += healingAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, 100);
-
-        healthBarImage.fillAmount = currentHealth / 100;
-        healthText.text = Mathf.RoundToInt(currentHealth).ToString();
+        health += healingAmount;
+        health = Mathf.Clamp(health, 0, numOfHearts);
     }
 
     public void Respawn()
@@ -154,5 +145,23 @@ public class PlayerHealth : MonoBehaviour
         endlessMode.wave = 0;
         endlessMode.difficultyMultiplier = 1;
         endlessMode.wavesStarted = true;
+    }
+
+    private void UpdateHearts()
+    {
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            // set heart to a full or empty heart based on health
+            if (i < health)
+                hearts[i].gameObject.GetComponent<Animator>().SetBool("emptyHeart", false);
+            else
+                hearts[i].gameObject.GetComponent<Animator>().SetBool("emptyHeart", true);
+
+            // enable or disable hearts based on health
+            if (i < numOfHearts)
+                hearts[i].enabled = true;
+            else
+                hearts[i].enabled = false;
+        }
     }
 }

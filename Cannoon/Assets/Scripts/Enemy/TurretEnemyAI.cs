@@ -85,7 +85,7 @@ public class TurretEnemyAI : MonoBehaviour
     {
         GameObject prefab = Instantiate(bullet, enemyCannonShootingPoint.position, enemySpriteCannon.transform.rotation);
 
-        prefab.GetComponent<Bullet>().SetStats(currentBulletSpeed, GetComponent<Enemy>().currentDamage, bulletLifetime, false);
+        prefab.GetComponent<Bullet>().SetStats(currentBulletSpeed, 1, bulletLifetime, false);
 
         StartCoroutine(ShootingCooldown());
     }

@@ -111,7 +111,7 @@ public class FlyingEnemyAI : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerEnemyCollisions"))
         {
             Debug.Log("Dealing damage to player");
-            target.GetComponent<PlayerHealth>().TakeDamage(enemyScript.currentDamage);
+            target.GetComponent<PlayerHealth>().TakeDamage(1);
         }
     }
 

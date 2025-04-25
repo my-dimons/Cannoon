@@ -16,11 +16,6 @@ public class Enemy : MonoBehaviour
     [Tooltip("The current HP this enemy has")]
     public float currentHealth;
 
-    [Tooltip("The base damage this enemy does")]
-    public float baseDamage;
-    [Tooltip("The current damage this enemy does")]
-    public float currentDamage;
-
     [Tooltip("WIP | The chance of an enemy does a critical hit, which multiplies the base damage by the critical mutiplier")]
     public float baseCriticalChance;
     public float currentCriticalChance;
@@ -74,7 +69,6 @@ public class Enemy : MonoBehaviour
 
     private void ApplyDifficultyRating(bool start)
     {
-        currentDamage = baseDamage * endlessModeScript.difficultyMultiplier;
         currentCriticalChance = Mathf.Clamp(baseCriticalChance * endlessModeScript.difficultyMultiplier, 0, 100);
         currentCriticalMultiplier = baseCriticalMultiplier * endlessModeScript.difficultyMultiplier;
 
