@@ -9,11 +9,17 @@ public class FollowEnemyAI : MonoBehaviour
 {
     public Transform target;
     public Transform enemySprite;
+    [Tooltip("Does this enemy deal damage when it comes in contact with the player")]
+    public bool contactDamage;
 
-    [Header("Stats")]
+    [Header("Movement")]
     [Tooltip("This enemys speed")]
     public float baseSpeed;
     public float currentSpeed;
+    [Tooltip("Can this enemy move, useful for pausing movement during animations")]
+    public bool canMove;
+
+    [Header("Jumping")]
     [Tooltip("How high this enemy will jump")]
     public float baseJumpForce;
     public float currentJumpForce;
@@ -25,15 +31,13 @@ public class FollowEnemyAI : MonoBehaviour
     public float jumpCooldown;
     [Tooltip("Used in the jump raycasting, how far the ray will be cast downwards to check for ground")]
     public float jumpCheckDistance;
-    // Can this enemy jump?
     public bool canJump;
     [Tooltip("Gravity increase when this enemy is falling")]
     public float gravityFallMultiplier;
     [Tooltip("What object layer is getting checked for raycast collisions")]
     public LayerMask layerMask;
-    [Tooltip("Does this enemy deal damage when it comes in contact with the player")]
-    public bool contactDamage;
 
+    [Header("Pathfinding")]
     public float nextWaypointDistance = 3f;
 
     Path path;
@@ -95,8 +99,8 @@ public class FollowEnemyAI : MonoBehaviour
 
     private void ApplyDifficultyRating()
     {
-        currentSpeed = baseSpeed * endlessModeScript.difficultyMultiplier;
-        currentJumpForce =  Mathf.Clamp(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f), baseJumpForce, Mathf.Infinity);
+        currentSpeed = Mathf.Clamp(baseSpeed * endlessModeScript.difficultyMultiplier, baseSpeed, baseSpeed * 3f);
+        currentJumpForce =  Mathf.Clamp(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f), baseJumpForce, baseJumpForce * 1.2f);
     }
 
     // Update is called once per frame

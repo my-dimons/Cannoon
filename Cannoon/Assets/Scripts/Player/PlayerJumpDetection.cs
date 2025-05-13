@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class JumpDetection : MonoBehaviour
+public class PlayerJumpDetection : MonoBehaviour
 {
     [Tooltip("Put the player game object that needs jump detection here")]
     public GameObject player;

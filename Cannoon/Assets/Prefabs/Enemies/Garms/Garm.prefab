@@ -135,8 +135,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 5314557678417610450}
+  contactDamage: 1
   baseSpeed: 1000
   currentSpeed: 0
+  canMove: 0
   baseJumpForce: 600
   currentJumpForce: 0
   targetJumpYThreshold: 0
@@ -148,7 +150,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
-  contactDamage: 1
   nextWaypointDistance: 3
 --- !u!114 &8144556888214686507
 MonoBehaviour:
