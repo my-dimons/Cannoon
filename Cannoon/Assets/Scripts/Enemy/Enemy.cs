@@ -9,13 +9,18 @@ public class Enemy : MonoBehaviour
     public GameObject player;
     public Transform target;
 
-    [Header("Stats")]
+    [Header("Movement")]
+    public bool canJump;
+    public bool canMove;
+    public bool onGround;
 
+    [Header("Health")]
     [Tooltip("The base HP this enemy has")]
     public float baseHealth;
     [Tooltip("The current HP this enemy has")]
-    public float currentHealth;
+    public float health;
 
+    [Header("Criticals")]
     [Tooltip("WIP | The chance of an enemy does a critical hit, which multiplies the base damage by the critical mutiplier")]
     public float baseCriticalChance;
     public float currentCriticalChance;
@@ -41,13 +46,14 @@ public class Enemy : MonoBehaviour
         target = player.transform;
 
         ApplyDifficultyRating(true);
+        canMove = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         // if health is below 0: kill this enemy
-        if (currentHealth <= 0)
+        if (health <= 0)
         {
             KillEnemy();
         }
@@ -69,12 +75,19 @@ public class Enemy : MonoBehaviour
 
         // apply only when the enemy spawns
         if (start)
-            currentHealth = baseHealth * endlessModeScript.difficultyMultiplier;
+        {
+            health = baseHealth * endlessModeScript.difficultyMultiplier;
+        }
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
+        health -= damage;
+    }
+
+    public void Heal(float heal)
+    {
+        health += heal;
     }
     
     void IncrementKills(int kills)

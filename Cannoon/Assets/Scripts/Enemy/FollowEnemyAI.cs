@@ -15,23 +15,16 @@ public class FollowEnemyAI : MonoBehaviour
     [Header("Movement")]
     [Tooltip("This enemys speed")]
     public float baseSpeed;
-    public float currentSpeed;
-    [Tooltip("Can this enemy move, useful for pausing movement during animations")]
-    public bool canMove;
+    public float speed;
 
     [Header("Jumping")]
     [Tooltip("How high this enemy will jump")]
     public float baseJumpForce;
     public float currentJumpForce;
-    [Tooltip("How much higher this enemys target needs to be compared to this object (Y axis)")]
-    public float targetJumpYThreshold;
-    [Tooltip("Minimum total distance this enemys target needs be compared to this enemy to jump")]
-    public float targetJumpDistanceThreshold;
     [Tooltip("The maximum time between jumps")]
     public float jumpCooldown;
     [Tooltip("Used in the jump raycasting, how far the ray will be cast downwards to check for ground")]
     public float jumpCheckDistance;
-    public bool canJump;
     [Tooltip("Gravity increase when this enemy is falling")]
     public float gravityFallMultiplier;
     [Tooltip("What object layer is getting checked for raycast collisions")]
@@ -52,9 +45,9 @@ public class FollowEnemyAI : MonoBehaviour
 
     IEnumerator JumpCooldown()
     {
-        canJump = false;
+        enemyScript.canJump = false;
         yield return new WaitForSeconds(jumpCooldown);
-        canJump = true;
+        enemyScript.canJump = true;
     }
 
     // Start is called before the first frame update
@@ -74,7 +67,7 @@ public class FollowEnemyAI : MonoBehaviour
             InvokeRepeating(nameof(UpdatePath), 0f, .5f);
         }
 
-        canJump = true;
+        enemyScript.canJump = true;
     }
 
     private void UpdatePath()
@@ -99,7 +92,7 @@ public class FollowEnemyAI : MonoBehaviour
 
     private void ApplyDifficultyRating()
     {
-        currentSpeed = Mathf.Clamp(baseSpeed * endlessModeScript.difficultyMultiplier, baseSpeed, baseSpeed * 3f);
+        speed = Mathf.Clamp(baseSpeed * endlessModeScript.difficultyMultiplier, baseSpeed, baseSpeed * 3f);
         currentJumpForce =  Mathf.Clamp(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f), baseJumpForce, baseJumpForce * 1.2f);
     }
 
@@ -122,22 +115,19 @@ public class FollowEnemyAI : MonoBehaviour
 
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        float forceX = direction.x * currentSpeed * Time.deltaTime;
+        float forceX = direction.x * speed * Time.deltaTime;
 
-        // Move enemy along the X axis, not Y
-        rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
+        if (enemyScript.canMove)
+        {
+            // Move enemy along the X axis, not Y
+            rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
+        }
 
         // Jumping
-        // Attempts to jump if this enemy can jump, the target is withing the jumpCheckDistance, and the target positions Y is a certain amount higher than this enemy (defined by targetJumpYThreshold)... When the player is in proximity of the enemy, Jump (With some extra parameteres) 
-        if (target.position.y > this.rb.position.y + targetJumpYThreshold && canJump && Vector2.Distance(this.transform.position, target.transform.position) <= targetJumpDistanceThreshold)
-        {
-            Jump(forceX, false);
-            Debug.Log("Jumping1");
-        }
         // Tries to jump when the enemy is not moving and there is a wall infront of the enemy
-        if (canJump && this.rb.velocity.normalized.magnitude == 0)
+        if (enemyScript.canJump && this.rb.velocity.normalized.magnitude == 0)
         {
-            Jump(forceX, true);
+            Jump(forceX);
         }
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
@@ -156,10 +146,12 @@ public class FollowEnemyAI : MonoBehaviour
     }
 
     // check front will check if there is a wall infront of an enemy (Normally when the player is not near the enemy to prevent the enemy from getting stuck on walls)
-    void Jump(float xForce, bool checkFront)
+    void Jump(float xForce)
     {
-        if (CheckJump(checkFront))
+        if (enemyScript.canJump)
+        {
             ApplyJump();
+        }
 
         void ApplyJump()
         {
@@ -168,33 +160,6 @@ public class FollowEnemyAI : MonoBehaviour
 
             StartCoroutine(JumpCooldown());
         }
-    }
-    private bool CheckJump(bool forwardRay)
-    {
-        float drawRayExtraRange = 1;
-        RaycastHit2D hitDown = Physics2D.Raycast(transform.position, Vector2.down, jumpCheckDistance, layerMask);
-
-        // Forward Rays
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, jumpCheckDistance, layerMask);
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, jumpCheckDistance, layerMask);
-
-        if (hitDown && !forwardRay)
-        {
-            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance + drawRayExtraRange);
-            return true;
-        } 
-        else if (forwardRay && hitDown && hitLeft || forwardRay && hitDown && hitRight)
-        {
-            if (hitLeft)
-                Debug.DrawRay(transform.position, Vector2.left, Color.blue, jumpCheckDistance + drawRayExtraRange);
-            if (hitRight)
-                Debug.DrawRay(transform.position, Vector2.right, Color.blue, jumpCheckDistance + drawRayExtraRange);
-
-            Debug.DrawRay(transform.position, Vector2.down, Color.blue, jumpCheckDistance + drawRayExtraRange);
-            return true;
-        }
-        else
-            return false;
     }
 
     public void SetTarget(Transform enemyTarget)
