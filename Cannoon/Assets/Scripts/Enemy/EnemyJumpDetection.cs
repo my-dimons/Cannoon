@@ -27,7 +27,11 @@ public class EnemyJumpDetection : MonoBehaviour
         enemyFollowAi = enemy.GetComponent<FollowEnemyAI>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Update()
+    {
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
@@ -36,6 +40,7 @@ public class EnemyJumpDetection : MonoBehaviour
             {
                 StartCoroutine(SlowEnemyOnLanding());
                 enemyScript.onGround = true;
+                enemyFollowAi.animator.SetBool("isJumping", !enemyScript.onGround);
             }
             // reset players jump when hitting the ground
             if (!enemyScript.canJump)
@@ -53,6 +58,7 @@ public class EnemyJumpDetection : MonoBehaviour
         {
             enemyScript.onGround = false;
             enemyScript.canJump = false;
+            enemyFollowAi.animator.SetBool("isJumping", !enemyScript.onGround);
         }
     }
 }

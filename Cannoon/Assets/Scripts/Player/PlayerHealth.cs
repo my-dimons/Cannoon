@@ -36,10 +36,10 @@ public class PlayerHealth : MonoBehaviour
     [Header("Other")]
     private GameManager gameManager;
     private EndlessMode endlessMode;
-    IEnumerator DamageInvincibilityTimer()
+    public IEnumerator Invincibility(float time)
     {
         canTakeDamage = false;
-        yield return new WaitForSeconds(damageInvincibilityCooldown);
+        yield return new WaitForSeconds(time);
         canTakeDamage = true;
     }
 
@@ -84,19 +84,17 @@ public class PlayerHealth : MonoBehaviour
 
         // Toggle UI
         deathScreen.SetActive(true);
-        // Toggle UI
 
         // Post Processing Changes
+
         // set saturation to 0
         colorAdjustments.saturation.value = -50f;
         // increase vignette strength
         vignette.intensity.value = 0.5f;
-        // Post Processing Changes
-
 
         // Respawning
         StartCoroutine(respawnButton());
-
+        // makes the respawn button interactable after a certain amount of time
         IEnumerator respawnButton()
         {
             this.respawnButton.interactable = false;
@@ -113,7 +111,6 @@ public class PlayerHealth : MonoBehaviour
             this.respawnButton.interactable = true;
             respawnButtonText.text = "Respawn";
         }
-        // Respawning
 
 
         void DisablePlayer()
@@ -130,7 +127,7 @@ public class PlayerHealth : MonoBehaviour
             health -= damage;
             health = Mathf.Clamp(health, 0, numOfHearts);
 
-            StartCoroutine(DamageInvincibilityTimer());
+            StartCoroutine(Invincibility(damageInvincibilityCooldown));
         }
     }
     public void Heal(float healingAmount)

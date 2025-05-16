@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Difficulty")]
-    readonly int test;
+    public Difficulty difficulty;
     // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it as a percentage value)
     public enum Difficulty
     {
@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
         impossible = 200
     }
 
-    public Difficulty difficulty;
 
     // Loads a specified SCENE
     public void LoadLevel(string scene)

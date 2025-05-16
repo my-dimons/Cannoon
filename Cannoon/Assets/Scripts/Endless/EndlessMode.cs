@@ -26,9 +26,11 @@ public class EndlessMode : MonoBehaviour
     [Tooltip("How much the difficulty multiplier increases each wave (Should probably be lower than 0.05)")]
     public float difficultyMultiplierIncrease;
 
+    [Header("Wave Transition")]
     [Tooltip("Transition time between waves (In Seconds)")]
     public int timeBetweenWaves;
-
+    [Tooltip("How long the player is invincible for when a wave starts (in seconds)")]
+    public float playerInvincibility;
     bool advancingToNextWave;
     public bool wavesStarted;
 
@@ -80,6 +82,8 @@ public class EndlessMode : MonoBehaviour
 
         // heal player (by 1 heart)
         player.GetComponent<PlayerHealth>().Heal(1);
+        // trigger player invincibility
+        StartCoroutine(player.GetComponent<PlayerHealth>().Invincibility(playerInvincibility + timeBetweenWaves));
 
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;

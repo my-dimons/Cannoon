@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using System;
 
-// This is a basic enemy AI that allows an enemy to follow a player and jump when needed
+// This is a basic enemy AI that allows an enemy to follow a player and jump when needed (with animations)
 // Enemy will rotate (Flips X) towards target
 public class FollowEnemyAI : MonoBehaviour
 {
     public Transform target;
     public Transform enemySprite;
+    public Animator animator;
     [Tooltip("Does this enemy deal damage when it comes in contact with the player")]
     public bool contactDamage;
 
@@ -54,9 +56,10 @@ public class FollowEnemyAI : MonoBehaviour
     void Start()
     {
         endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
+        animator = enemySprite.GetComponent<Animator>();
         enemyScript = GetComponent<Enemy>();
-        seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+        seeker = GetComponent<Seeker>();
 
         StartCoroutine(GetTarget());
         IEnumerator GetTarget()
@@ -78,7 +81,7 @@ public class FollowEnemyAI : MonoBehaviour
 
     void OnPathComplete(Path p)
     {
-        if(!p.error)
+        if (!p.error)
         {
             path = p;
             currentWaypoint = 0;
@@ -88,12 +91,16 @@ public class FollowEnemyAI : MonoBehaviour
     {
         GravityMultiplier();
         ApplyDifficultyRating();
+
+        // walking animation
+        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+        animator.SetFloat("yVelocity", rb.velocity.y);
     }
 
     private void ApplyDifficultyRating()
     {
         speed = Mathf.Clamp(baseSpeed * endlessModeScript.difficultyMultiplier, baseSpeed, baseSpeed * 3f);
-        currentJumpForce =  Mathf.Clamp(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f), baseJumpForce, baseJumpForce * 1.2f);
+        currentJumpForce = Mathf.Clamp(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f), baseJumpForce, baseJumpForce * 1.2f);
     }
 
     // Update is called once per frame
@@ -137,11 +144,11 @@ public class FollowEnemyAI : MonoBehaviour
             currentWaypoint++;
         }
 
-        if (path.vectorPath[currentWaypoint].x >= transform.position.x)
+        if (target.transform.position.x >= transform.position.x)
             enemySprite.localScale = new Vector3(-1f, 1f, 1f);
-        else if (path.vectorPath[currentWaypoint].x < transform.position.x)
+        else if (target.transform.position.x < transform.position.x)
             enemySprite.localScale = new Vector3(1f, 1f, 1f);
-        else
+        else if (target.transform.position.x == transform.position.x)
             enemySprite.localScale = enemySprite.localScale;
     }
 
@@ -182,5 +189,11 @@ public class FollowEnemyAI : MonoBehaviour
             rb.gravityScale = gravityFallMultiplier;
         else
             rb.gravityScale = 1;
+    }
+
+    // freezes the enemy
+    public void FreezeEnemy()
+    {
+        rb.velocity = Vector3.zero;
     }
 }
