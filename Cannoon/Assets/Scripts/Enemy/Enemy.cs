@@ -8,11 +8,13 @@ public class Enemy : MonoBehaviour
     // The general script ALL enemies need, and an AI script
     public GameObject player;
     public Transform target;
+    public AnimationClip deathAnimation;
 
-    [Header("Movement")]
+    [Header("Can ___")]
     public bool canJump;
     public bool canMove;
     public bool onGround;
+    public bool canDealDamage;
 
     [Header("Health")]
     [Tooltip("The base HP this enemy has")]
@@ -63,9 +65,19 @@ public class Enemy : MonoBehaviour
 
     private void KillEnemy()
     {
-        Destroy(gameObject);
+        GetComponent<FollowEnemyAI>().animator.SetBool("isDying", true);
+        canDealDamage = false;
 
-        IncrementKills(1);
+        StartCoroutine(DestroyEnemy(deathAnimation.length));
+        StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(deathAnimation.length));
+
+        IEnumerator DestroyEnemy(float time)
+        {
+            yield return new WaitForSeconds(time);
+
+            Destroy(gameObject);
+            IncrementKills(1);
+        }
     }
 
     private void ApplyDifficultyRating(bool start)

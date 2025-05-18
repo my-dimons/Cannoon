@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 790b551a5c7dfc143bb3bfd7f44abfb0
+guid: 1dc2da76c91e7dc4f93aa50411627107
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Cyler Walking anim_0
+      name: Cyler Idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b80f2dc160ccae4986016e8a8e7c5b6
-      internalID: -1033454421
+      spriteID: 83fa319e35ad3c34bbbf0a177347ab3c
+      internalID: 1036338579
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cyler Walking anim_1
+      name: Cyler Idle_1
       rect:
         serializedVersion: 2
         x: 64
@@ -158,50 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 081a057a8c280134584663f2cc8082a3
-      internalID: -545397499
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cyler Walking anim_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 83a50eab251ee5740bff8c6267b8c989
-      internalID: 1547711356
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cyler Walking anim_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b6ae4a940553bb44d8f84b2a8c380055
-      internalID: 1333771374
+      spriteID: 57ffb6d55124356449184905607b80e2
+      internalID: 227648902
       vertices: []
       indices: 
       edges: []
@@ -217,10 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Cyler Walking anim_0: -1033454421
-      Cyler Walking anim_1: -545397499
-      Cyler Walking anim_2: 1547711356
-      Cyler Walking anim_3: 1333771374
+      Cyler Idle_0: 1036338579
+      Cyler Idle_1: 227648902
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

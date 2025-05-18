@@ -11,8 +11,6 @@ public class FollowEnemyAI : MonoBehaviour
     public Transform target;
     public Transform enemySprite;
     public Animator animator;
-    [Tooltip("Does this enemy deal damage when it comes in contact with the player")]
-    public bool contactDamage;
 
     [Header("Movement")]
     [Tooltip("This enemys speed")]
@@ -174,15 +172,6 @@ public class FollowEnemyAI : MonoBehaviour
         target = enemyTarget;
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerEnemyCollisions") && contactDamage)
-        {
-            Debug.Log("Dealing damage to player");
-            target.GetComponent<PlayerHealth>().TakeDamage(1);
-        }
-    }
-
     private void GravityMultiplier()
     {
         if (this.rb.velocity.normalized[1] < 0)
@@ -191,9 +180,19 @@ public class FollowEnemyAI : MonoBehaviour
             rb.gravityScale = 1;
     }
 
-    // freezes the enemy
-    public void FreezeEnemy()
+    // freezes the enemy for a set amount of time, usually for the length of an animation clip
+    public IEnumerator FreezeEnemy(float time)
     {
         rb.velocity = Vector3.zero;
+        enemyScript.canMove = false;
+        enemyScript.canJump = false;
+
+        yield return new WaitForSeconds(time);
+
+        enemyScript.canMove = true;
+
+        yield return new WaitForSeconds(.1f);
+
+        enemyScript.canJump = true;
     }
 }

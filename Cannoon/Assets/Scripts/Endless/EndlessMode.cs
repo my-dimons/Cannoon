@@ -122,7 +122,7 @@ public class EndlessMode : MonoBehaviour
                 possibleSpawningEnemies.Add(enemies[i]);
 
         // how many enemies to spawn (using difficulty rating)
-        float amount = wave/2;
+        float amount = wave/1.5f;
         amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);
 
         // spawns all enemies
