@@ -53,11 +53,12 @@ MonoBehaviour:
   target: {fileID: 0}
   enemySprite: {fileID: 3629104447951525173}
   animator: {fileID: 0}
-  baseSpeed: 900
+  spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
+  baseSpeed: 600
   speed: 0
+  facingRight: 0
   baseJumpForce: 600
   currentJumpForce: 0
-  jumpCooldown: 1
   jumpCheckDistance: 3
   gravityFallMultiplier: 6
   layerMask:
@@ -79,9 +80,11 @@ MonoBehaviour:
   player: {fileID: 0}
   target: {fileID: 0}
   deathAnimation: {fileID: 7400000, guid: cf230da77684ab749b6293db7aa54c2a, type: 2}
+  frozen: 0
   canJump: 0
   canMove: 0
   onGround: 0
+  canDealDamage: 0
   baseHealth: 75
   health: 0
   baseCriticalChance: 0
@@ -203,6 +206,7 @@ GameObject:
   - component: {fileID: 7787257548927585457}
   - component: {fileID: 6349801715540469853}
   - component: {fileID: 7146578214035053717}
+  - component: {fileID: 6851968783475059434}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -245,7 +249,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 12386b3ec4c837a47ae9f2f8266df1b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -356,6 +360,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  notEnemy: 0
+--- !u!114 &6851968783475059434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5388126883272689442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 288c3b7103bf03e4e922cb6ff8a19450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashTime: 0.1
+  flashMaterial: {fileID: 2100000, guid: 12386b3ec4c837a47ae9f2f8266df1b6, type: 2}
 --- !u!1 &6889895371167645371
 GameObject:
   m_ObjectHideFlags: 0

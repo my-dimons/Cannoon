@@ -27,10 +27,6 @@ public class EnemyJumpDetection : MonoBehaviour
         enemyFollowAi = enemy.GetComponent<FollowEnemyAI>();
     }
 
-    private void Update()
-    {
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

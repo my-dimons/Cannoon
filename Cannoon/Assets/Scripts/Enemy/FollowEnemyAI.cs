@@ -11,19 +11,19 @@ public class FollowEnemyAI : MonoBehaviour
     public Transform target;
     public Transform enemySprite;
     public Animator animator;
+    public AnimationClip spawningAnimation;
 
     [Header("Movement")]
     [Tooltip("This enemys speed")]
     public float baseSpeed;
     public float speed;
+    public bool facingRight;
 
     [Header("Jumping")]
     [Tooltip("How high this enemy will jump")]
     public float baseJumpForce;
     public float currentJumpForce;
-    [Tooltip("The maximum time between jumps")]
-    public float jumpCooldown;
-    [Tooltip("Used in the jump raycasting, how far the ray will be cast downwards to check for ground")]
+    [Tooltip("Used in the jump raycasting, how far the ray will be cast forward to check for ground")]
     public float jumpCheckDistance;
     [Tooltip("Gravity increase when this enemy is falling")]
     public float gravityFallMultiplier;
@@ -43,13 +43,6 @@ public class FollowEnemyAI : MonoBehaviour
     Enemy enemyScript;
     EndlessMode endlessModeScript;
 
-    IEnumerator JumpCooldown()
-    {
-        enemyScript.canJump = false;
-        yield return new WaitForSeconds(jumpCooldown);
-        enemyScript.canJump = true;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +52,7 @@ public class FollowEnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
 
+        StartCoroutine(FreezeEnemy(spawningAnimation.length));
         StartCoroutine(GetTarget());
         IEnumerator GetTarget()
         {
@@ -67,8 +61,6 @@ public class FollowEnemyAI : MonoBehaviour
             target = this.gameObject.GetComponent<Enemy>().target;
             InvokeRepeating(nameof(UpdatePath), 0f, .5f);
         }
-
-        enemyScript.canJump = true;
     }
 
     private void UpdatePath()
@@ -122,17 +114,23 @@ public class FollowEnemyAI : MonoBehaviour
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         float forceX = direction.x * speed * Time.deltaTime;
 
-        if (enemyScript.canMove)
+        if (enemyScript.canMove && !enemyScript.frozen)
         {
             // Move enemy along the X axis, not Y
             rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
         }
 
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.right) * jumpCheckDistance, Color.red);
         // Jumping
-        // Tries to jump when the enemy is not moving and there is a wall infront of the enemy
-        if (enemyScript.canJump && this.rb.velocity.normalized.magnitude == 0)
+        // Tries to jump when the enemy is not moving and there is a wall infront of the enemy, raycast checks for wall
+        RaycastHit hit;
+        if (enemyScript.canJump && this.rb.velocity.normalized.magnitude == 0 && !enemyScript.frozen &&
+        (Physics2D.Raycast(transform.position, Vector3.right, jumpCheckDistance, layerMask) || Physics2D.Raycast(transform.position, Vector3.left, jumpCheckDistance, layerMask)))
         {
             Jump(forceX);
+            Debug.DrawRay(transform.position, Vector3.right * jumpCheckDistance, Color.blue);
+            Debug.DrawRay(transform.position, Vector3.left * jumpCheckDistance, Color.yellow);
         }
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
@@ -143,9 +141,15 @@ public class FollowEnemyAI : MonoBehaviour
         }
 
         if (target.transform.position.x >= transform.position.x)
+        {
             enemySprite.localScale = new Vector3(-1f, 1f, 1f);
+            facingRight = true;
+        }
         else if (target.transform.position.x < transform.position.x)
+        {
             enemySprite.localScale = new Vector3(1f, 1f, 1f);
+            facingRight = false;
+        }
         else if (target.transform.position.x == transform.position.x)
             enemySprite.localScale = enemySprite.localScale;
     }
@@ -162,8 +166,6 @@ public class FollowEnemyAI : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
             rb.AddForce(new Vector2(xForce, currentJumpForce));
-
-            StartCoroutine(JumpCooldown());
         }
     }
 
@@ -184,15 +186,10 @@ public class FollowEnemyAI : MonoBehaviour
     public IEnumerator FreezeEnemy(float time)
     {
         rb.velocity = Vector3.zero;
-        enemyScript.canMove = false;
-        enemyScript.canJump = false;
+        enemyScript.frozen = true;
 
         yield return new WaitForSeconds(time);
 
-        enemyScript.canMove = true;
-
-        yield return new WaitForSeconds(.1f);
-
-        enemyScript.canJump = true;
+        enemyScript.frozen = false;
     }
 }

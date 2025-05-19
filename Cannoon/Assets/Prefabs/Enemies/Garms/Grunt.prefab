@@ -54,12 +54,13 @@ MonoBehaviour:
   target: {fileID: 0}
   enemySprite: {fileID: 1484923361916180028}
   animator: {fileID: 0}
+  spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
   baseSpeed: 750
   speed: 0
+  facingRight: 0
   baseJumpForce: 600
   currentJumpForce: 0
-  jumpCooldown: 1
-  jumpCheckDistance: 3
+  jumpCheckDistance: 1.5
   gravityFallMultiplier: 6
   layerMask:
     serializedVersion: 2
@@ -96,6 +97,7 @@ MonoBehaviour:
   player: {fileID: 0}
   target: {fileID: 0}
   deathAnimation: {fileID: 7400000, guid: 1d0f8d6489bfbb14582853fae3db6e5e, type: 2}
+  frozen: 0
   canJump: 0
   canMove: 0
   onGround: 0
@@ -221,6 +223,7 @@ GameObject:
   - component: {fileID: 8515519668057250244}
   - component: {fileID: 4876942077239614981}
   - component: {fileID: 7349106274399912006}
+  - component: {fileID: 5439846112680193149}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -263,7 +266,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 12386b3ec4c837a47ae9f2f8266df1b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -308,6 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  notEnemy: 0
 --- !u!95 &4876942077239614981
 Animator:
   serializedVersion: 5
@@ -374,6 +378,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4432932, y: 0.6975875}
   m_EdgeRadius: 0
+--- !u!114 &5439846112680193149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5851402352090048030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 288c3b7103bf03e4e922cb6ff8a19450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashTime: 0.1
+  flashMaterial: {fileID: 2100000, guid: 12386b3ec4c837a47ae9f2f8266df1b6, type: 2}
 --- !u!1 &6261326114223399654
 GameObject:
   m_ObjectHideFlags: 0

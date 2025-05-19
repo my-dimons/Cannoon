@@ -9,38 +9,45 @@ public class Bullet : MonoBehaviour
     public float damage;
     public float distanceFromShooter;
     public float bulletLife;
+    [Tooltip("Leave 0 for no despawning")]
+    public float NoSpeedBulletLife;
     public bool playerBullet;
-
     public GameObject sprite;
 
-    bool dying;
     // Start is called before the first frame update
     void Start()
     {
-        dying = false;
+        if (NoSpeedBulletLife != 0)
+            StartCoroutine(NoSpeedLife());
+        StartCoroutine(BulletLife(bulletLife));
+    }
+
+    IEnumerator BulletLife(float life)
+    {
+        yield return new WaitForSeconds(life);
+        DespawnBullet();
+    }
+
+    IEnumerator NoSpeedLife()
+    {
+        yield return new WaitForSeconds(NoSpeedBulletLife);
+        if (speed == 0)
+        {
+            DespawnBullet();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // gets destroyed after a certain time
-        DespawnBullet(bulletLife);
 
         // moves bullet
         transform.Translate(speed * Time.deltaTime * Vector3.right);
     }
 
-    private void DespawnBullet(float time)
+    private void DespawnBullet()
     {
-        if (!dying)
-            StartCoroutine(BulletLife(time));
-
-        IEnumerator BulletLife(float life)
-        {
-            yield return new WaitForSeconds(life);
-            Destroy(this.gameObject);
-            dying = true;
-        }
+        Destroy(this.gameObject);
     }
     public void SetStats(float newSpeed, float newDamage, float life, bool isPlayerBullet)
     {

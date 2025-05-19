@@ -24,6 +24,8 @@ public class PlayerHealth : MonoBehaviour
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
+    [Tooltip("Used for damage flash")]
+    public GameObject cannon;
 
     [Tooltip("players max amount of hearts")]
     public int numOfHearts;
@@ -126,6 +128,7 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Taking Damage");
             health -= damage;
             health = Mathf.Clamp(health, 0, numOfHearts);
+            StartCoroutine(cannon.GetComponent<DamageFlash>().FlashWhite());
 
             StartCoroutine(Invincibility(damageInvincibilityCooldown));
         }

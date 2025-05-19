@@ -10,7 +10,8 @@ public class Enemy : MonoBehaviour
     public Transform target;
     public AnimationClip deathAnimation;
 
-    [Header("Can ___")]
+    [Header("Bools")]
+    public bool frozen;
     public bool canJump;
     public bool canMove;
     public bool onGround;
@@ -48,7 +49,9 @@ public class Enemy : MonoBehaviour
         target = player.transform;
 
         ApplyDifficultyRating(true);
+        canDealDamage = true;
         canMove = true;
+        canJump = true;
     }
 
     // Update is called once per frame
@@ -95,6 +98,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        StartCoroutine(GetComponent<FollowEnemyAI>().enemySprite.GetComponent<DamageFlash>().FlashWhite());
     }
 
     public void Heal(float heal)

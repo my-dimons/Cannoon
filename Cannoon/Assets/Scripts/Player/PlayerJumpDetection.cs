@@ -17,7 +17,6 @@ public class PlayerJumpDetection : MonoBehaviour
     }
     IEnumerator CoyoteJumpTimer()
     {
-        Debug.Log("COYOTE JUMP");
         playerScript.fallingGravityOverride = true;
         player.GetComponent<Rigidbody2D>().gravityScale = playerScript.gravityFallMultiplier * playerScript.edgeCoastingGravity;
         yield return new WaitForSeconds(playerScript.coyoteJumpTime);

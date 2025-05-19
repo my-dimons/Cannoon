@@ -7,6 +7,7 @@ using UnityEngine.Animations;
 public class Grunt : MonoBehaviour
 {
     Enemy enemyScript;
+    FollowEnemyAI enemyAiScript;
     Animator animator;
     [Tooltip("Assign this variable the baseMaceAttack animation clip")]
     public AnimationClip baseMaceAttack;
@@ -37,8 +38,15 @@ public class Grunt : MonoBehaviour
     void Start()
     {
         enemyScript = GetComponent<Enemy>();
+        enemyAiScript = GetComponent<FollowEnemyAI>();
         animator = GetComponent<FollowEnemyAI>().animator;
-        canAttack = true;
+
+        StartCoroutine(StartAttackCooldown());
+        IEnumerator StartAttackCooldown()
+        {
+            yield return new WaitForSeconds(enemyAiScript.spawningAnimation.length);
+            canAttack = true;
+        }
     }
 
     // Update is called once per frame
