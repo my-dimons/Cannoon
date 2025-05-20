@@ -5,18 +5,17 @@ using UnityEngine;
 public class Breaker : MonoBehaviour
 {
     public float attackingCooldown;
+    public bool canAttack;
     public GameObject sprite;
     [Header("Throwing")]
     public float spikeSpeed;
     public float minThrowingDistance;
-    public bool canThrow;
     public AnimationClip throwingAnimation;
     public GameObject spike;
     public Vector2 spikeSpawningPosition;
 
     [Header("Attacking")]
     public float attackingDistance;
-    public bool canAttack;
     public AnimationClip attackingAnimation;
     public AnimationClip groundSpikeAnimation;
     public GameObject groundSpikes;
@@ -27,6 +26,10 @@ public class Breaker : MonoBehaviour
     GameObject player;
     Animator animator;
     bool isAttacking;
+
+    [Header("DEBUGGING")]
+    public bool visualizeGroundSpikeRaycast;
+    public bool debugLogPlayerDistance;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,10 +44,8 @@ public class Breaker : MonoBehaviour
 
     IEnumerator AttackCooldown(float time)
     {
-        canThrow = false;
         canAttack = false;
         yield return new WaitForSeconds(time);
-        canThrow = true;
         canAttack = true;
     }
 
@@ -55,10 +56,22 @@ public class Breaker : MonoBehaviour
         {
             StartCoroutine(GroundSpikeAttack());
         }
-        if (Vector2.Distance(player.transform.position, transform.position) > minThrowingDistance && canThrow && !isAttacking)
+        if (Vector2.Distance(player.transform.position, transform.position) > minThrowingDistance && canAttack && !isAttacking)
         {
             StartCoroutine(ThrowingSpikeAttack());
         }
+
+        // DEBUGGING
+
+        if (visualizeGroundSpikeRaycast)
+        {
+            Debug.DrawRay(new Vector2(transform.position.x + groundSpikeSpawningPositionX - groundSpikes.GetComponent<BoxCollider2D>().size.x * 1.5f, transform.position.y),
+                Vector2.down * 2, Color.magenta);
+            Debug.DrawRay(new Vector2(transform.position.x - groundSpikeSpawningPositionX + groundSpikes.GetComponent<BoxCollider2D>().size.x * 1.5f, transform.position.y),
+                Vector2.down * 2, Color.blue);
+        }
+        if (debugLogPlayerDistance)
+            Debug.Log(Vector2.Distance(player.transform.position, transform.position));
     }
 
     IEnumerator GroundSpikeAttack()
@@ -68,36 +81,48 @@ public class Breaker : MonoBehaviour
         float earlyTime = 0.25f;
         // adjusts the high of the spikes so they are level
         float spikeSpawningYPos = 4.5f;
-        canAttack = false;
-        canThrow = false;
-        isAttacking = true;
-        StartCoroutine(enemyAiScript.FreezeEnemy(attackingAnimation.length + groundSpikeAnimation.length));
-        animator.SetBool("isAttacking", true);
+        // how far the raycast is send downward
+        float depth = 2f;
 
-        yield return new WaitForSeconds(attackingAnimation.length - earlyTime);
 
-        animator.SetBool("isAttacking", false);
+        if ((Physics2D.Raycast(new Vector2(transform.position.x + groundSpikeSpawningPositionX - groundSpikes.GetComponent<BoxCollider2D>().size.x * 1.5f, transform.position.y), 
+            Vector2.down, depth, enemyAiScript.layerMask) && !enemyAiScript.facingRight) 
+            || 
+            (Physics2D.Raycast(new Vector2(transform.position.x - groundSpikeSpawningPositionX + groundSpikes.GetComponent<BoxCollider2D>().size.x * 1.5f, transform.position.y),
+            Vector2.down, depth, enemyAiScript.layerMask) && enemyAiScript.facingRight))
+        {
+            canAttack = false;
+            isAttacking = true;
+            StartCoroutine(enemyAiScript.FreezeEnemy(attackingAnimation.length + groundSpikeAnimation.length));
+            animator.SetBool("isAttacking", true);
 
-        if (enemyAiScript.facingRight)
-            spawningPosition = new Vector3(transform.position.x - groundSpikeSpawningPositionX, transform.position.y + spikeSpawningYPos, 0);
-        else
-            spawningPosition = new Vector3(transform.position.x + groundSpikeSpawningPositionX, transform.position.y + spikeSpawningYPos, 0);
+            yield return new WaitForSeconds(attackingAnimation.length - earlyTime);
 
-        GameObject spawnedSpike = Instantiate(groundSpikes, spawningPosition, groundSpikes.transform.rotation);
-        spawnedSpike.GetComponent<DestroyAfterTime>().destroyTime = groundSpikeAnimation.length - earlyTime;
-        spawnedSpike.transform.GetChild(0).transform.localScale = enemyAiScript.enemySprite.localScale;
+            animator.SetBool("isAttacking", false);
 
-        isAttacking = false;
+            if (enemyAiScript.facingRight)
+                spawningPosition = new Vector3(transform.position.x - groundSpikeSpawningPositionX, transform.position.y + spikeSpawningYPos, 0);
+            else
+                spawningPosition = new Vector3(transform.position.x + groundSpikeSpawningPositionX, transform.position.y + spikeSpawningYPos, 0);
 
-        yield return new WaitForSeconds(groundSpikeAnimation.length - earlyTime);
+            GameObject spawnedSpike = Instantiate(groundSpikes, spawningPosition, groundSpikes.transform.rotation);
+            spawnedSpike.GetComponent<DestroyAfterTime>().destroyTime = groundSpikeAnimation.length - earlyTime;
+            spawnedSpike.transform.GetChild(0).transform.localScale = enemyAiScript.enemySprite.localScale;
 
-        StartCoroutine(AttackCooldown(attackingCooldown));
+            isAttacking = false;
+
+            yield return new WaitForSeconds(groundSpikeAnimation.length - earlyTime);
+
+            StartCoroutine(AttackCooldown(attackingCooldown));
+        } else
+        {
+            StartCoroutine(ThrowingSpikeAttack());
+        }
     }
 
     IEnumerator ThrowingSpikeAttack()
     {
         Vector3 spawningPosition;
-        canThrow = false;
         canAttack = false;
         isAttacking = true;
         StartCoroutine(enemyAiScript.FreezeEnemy(attackingAnimation.length));

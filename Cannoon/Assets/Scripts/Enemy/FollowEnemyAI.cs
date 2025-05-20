@@ -120,8 +120,6 @@ public class FollowEnemyAI : MonoBehaviour
             rb.AddForce(new Vector2(forceX, 0f), ForceMode2D.Force);
         }
 
-
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.right) * jumpCheckDistance, Color.red);
         // Jumping
         // Tries to jump when the enemy is not moving and there is a wall infront of the enemy, raycast checks for wall
         RaycastHit hit;

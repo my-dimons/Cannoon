@@ -229,6 +229,6 @@ MonoBehaviour:
   damage: 1
   distanceFromShooter: 0
   bulletLife: 20
-  NoSpeedBulletLife: 2
+  NoSpeedBulletLife: 0.75
   playerBullet: 0
   sprite: {fileID: 6810931321548401021}
