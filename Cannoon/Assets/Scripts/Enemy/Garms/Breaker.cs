@@ -39,7 +39,7 @@ public class Breaker : MonoBehaviour
         player = enemyScript.player;
      
         // a short cooldown when the enemy spawns so it cant attack instantly
-        StartCoroutine(AttackCooldown(enemyAiScript.spawningAnimation.length));
+        StartCoroutine(AttackCooldown(enemyAiScript.spawningAnimation.length + attackingCooldown));
     }
 
     IEnumerator AttackCooldown(float time)
