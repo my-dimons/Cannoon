@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject playerSprite;
+    public GameObject cannon;
+    Animator playerAnimator;
     [Header("Speed")]
     [Tooltip("The players base speed stat")]
     public float baseSpeed;
@@ -50,6 +54,13 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("is the player on the ground")]
     public bool onGround;
 
+    private bool facingRight;
+
+    [Header("Cannon Bobbing")]
+    public float bobAmount;
+    public float bobTime;
+
+
     Rigidbody2D rb;
 
     [Header("Other")]
@@ -66,8 +77,11 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         playerHealthScript = GetComponent<PlayerHealth>();
+        playerAnimator = playerSprite.GetComponent<Animator>();
         speed = baseSpeed;
         jumpForce = baseJumpForce;
+
+        StartCoroutine(CannonMovement());
     }
     // Update is called once per frame
     void Update()
@@ -86,8 +100,25 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
                 Jump();
         }
+
+        FacingDirection();
+
+        // Update animation params
+        playerAnimator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
     }
 
+    IEnumerator CannonMovement()
+    {
+        if (rb.velocity.x != 0)
+        {
+            yield return new WaitForSeconds(bobTime);
+            cannon.transform.position = new Vector3(cannon.transform.position.x, cannon.transform.position.y + bobAmount, cannon.transform.position.z);
+            yield return new WaitForSeconds(bobTime);
+            cannon.transform.position = new Vector3(cannon.transform.position.x, cannon.transform.position.y - bobAmount, cannon.transform.position.z);
+        }
+        yield return new WaitForSeconds(0.05f);
+        StartCoroutine(CannonMovement());
+    }
     // Left right movement
     private void Movement()
     {
@@ -140,6 +171,22 @@ public class PlayerMovement : MonoBehaviour
             jumpForce = baseJumpForce + (baseJumpForce * groundPoundJumpPercentage / 100);
             canApplyGroundPoundJumpBoost = false;
             StartCoroutine(GroundPoundJumpBoostTimer());
+        }
+    }
+
+    private void FacingDirection()
+    {
+        if (rb.velocity.x > 0)
+            facingRight = true;
+        else if (rb.velocity.x < 0)
+            facingRight = false;
+
+        if (facingRight)
+        {
+            playerSprite.transform.localScale = new Vector3(-3.25f, 3.25f, 1f);
+        } else
+        {
+            playerSprite.transform.localScale = new Vector3(3.25f, 3.25f, 1f);
         }
     }
 }

@@ -11,6 +11,8 @@ public class Cannon : MonoBehaviour
 {
     public GameObject player;
     public GameObject cannonball;
+    public AnimationClip loadingAnimation;
+    Animator animator;
 
     [Header("Stats")]
     [Tooltip("Minimum damage shot bullets do")]
@@ -67,6 +69,7 @@ public class Cannon : MonoBehaviour
     void Start()
     {
         playerHealthScript = player.GetComponent<PlayerHealth>();
+        animator = GetComponent<Animator>();
         cannonFacingRight = true;
     }
     void Update()
@@ -89,6 +92,10 @@ public class Cannon : MonoBehaviour
             timerActive = true;
             charging = true;
 
+            // animation
+            animator.SetBool("isLoading", true);
+            animator.SetFloat("loadingMultiplier", loadingAnimation.length / maxCharge);
+
             // charge meter
             cannonChargeCanvas.SetActive(true);
         }
@@ -99,6 +106,9 @@ public class Cannon : MonoBehaviour
             charging = false;
             // charge meter
             cannonChargeCanvas.SetActive(false);
+
+            // animation
+            animator.SetBool("isLoading", false);
 
             // clamp time
             Mathf.Clamp(currentTime, minCharge, maxCharge);

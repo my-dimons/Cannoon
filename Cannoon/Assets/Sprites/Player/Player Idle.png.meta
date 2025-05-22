@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6e07f1937954ea84db97b4870bd98fbd
+guid: 818a27c453d47394dac90ea108df4215
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Goober Death_0
+      name: Player Idle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b5b5809969fcfe4187c569de1fc3659
-      internalID: -527814186
+      spriteID: a800dfca30d96dc4dad89cc2df53edd4
+      internalID: -1595744419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Goober Death_1
+      name: Player Idle_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 24
         y: 0
-        width: 64
-        height: 64
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,92 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ed7a70a42bb3784bba5f2469db30b9b
-      internalID: 931977154
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Goober Death_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 86cd56ef29de0944295c5600448a6978
-      internalID: -360597052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Goober Death_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3205b5f9d8e404e49abebbf427d85432
-      internalID: -1319460067
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Goober Death_4
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 068b558275cdddf4fa8758fb4165ccfa
-      internalID: -210230272
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Goober Death_5
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 22c6888dba90b3a419c184a2a6cb1e75
-      internalID: 67305270
+      spriteID: 552a6416b0600dd41bd0a42d72da61ac
+      internalID: 1721697760
       vertices: []
       indices: 
       edges: []
@@ -259,12 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Goober Death_0: -527814186
-      Goober Death_1: 931977154
-      Goober Death_2: -360597052
-      Goober Death_3: -1319460067
-      Goober Death_4: -210230272
-      Goober Death_5: 67305270
+      Player Idle_0: -1595744419
+      Player Idle_1: 1721697760
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
