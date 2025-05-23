@@ -9,23 +9,23 @@ public class Grunt : MonoBehaviour
     Enemy enemyScript;
     FollowEnemyAI enemyAiScript;
     Animator animator;
-    [Tooltip("Assign this variable the baseMaceAttack animation clip")]
-    public AnimationClip baseMaceAttack;
+    [Tooltip("Assign this variable the attack animation clip")]
+    public AnimationClip attackAnimation;
 
-    [Header("Base Mace Attack")]
+    [Header("Attack")]
     public float attackCooldown;
     public bool canAttack;
     [Tooltip("How close the player needs to be for this enemy to use this attack")]
     public float playerDistance;
 
-    IEnumerator BaseMaceAttack(float cooldown)
+    IEnumerator Attack(float cooldown)
     {
         canAttack = false;
-        StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(baseMaceAttack.length));
+        StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(attackAnimation.length));
         animator.SetBool("isAttacking", true);
 
         // stop animation
-        yield return new WaitForSeconds(baseMaceAttack.length);
+        yield return new WaitForSeconds(attackAnimation.length);
 
         animator.SetBool("isAttacking", false);
 
@@ -56,7 +56,7 @@ public class Grunt : MonoBehaviour
         // Base Mace Attack
         if (canAttack && currentPlayerDistance < playerDistance && enemyScript.onGround)
         {
-            StartCoroutine(BaseMaceAttack(attackCooldown));
+            StartCoroutine(Attack(attackCooldown));
         }
     }
 }

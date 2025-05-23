@@ -481,17 +481,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5b188f22f187d47b3cf8e3b949e073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackingCooldown: 5
+  attackingCooldown: 6.5
+  canAttack: 0
   sprite: {fileID: 231307460574426387}
   spikeSpeed: 25
   minThrowingDistance: 20
-  canThrow: 0
   throwingAnimation: {fileID: 7400000, guid: 335833545d7bd6d48a2543ec0372efc2, type: 2}
   spike: {fileID: 8942876478715038525, guid: dcb0bdeac729a2c41ab64374d5b89cf3, type: 3}
   spikeSpawningPosition: {x: 3, y: 2}
   attackingDistance: 20
-  canAttack: 0
   attackingAnimation: {fileID: 7400000, guid: 4c0579d838dc27b48b95ac53c9a9c232, type: 2}
   groundSpikeAnimation: {fileID: 7400000, guid: 51378a8506440374fac7c70211fd1b6a, type: 2}
   groundSpikes: {fileID: 940027617493297928, guid: 58367e77a96115d41b87674f0c21c16b, type: 3}
   groundSpikeSpawningPositionX: -8
+  visualizeGroundSpikeRaycast: 0
+  debugLogPlayerDistance: 0
