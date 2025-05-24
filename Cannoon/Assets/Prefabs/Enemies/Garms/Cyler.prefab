@@ -91,6 +91,7 @@ MonoBehaviour:
   minWave: 12
   maxWave: 75
   waveOverride: 0
+  damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
 --- !u!50 &5217486097153105915
 Rigidbody2D:
   serializedVersion: 4

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -29,6 +30,9 @@ public class Enemy : MonoBehaviour
     public float maxWave;
     [Tooltip("This enemy can be spawned no matter the wave")]
     public bool waveOverride;
+
+    [Header("Damage")]
+    public GameObject damageText;
 
 
     //OTHER: Referenced in start
@@ -88,8 +92,41 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        // deal damage
         health -= damage;
+
+        // flash white
         StartCoroutine(GetComponent<FollowEnemyAI>().enemySprite.GetComponent<DamageFlash>().FlashWhite());
+
+        // damage text
+        Vector3 spawnPos = new Vector3(
+            transform.position.x + Random.Range(-1f, 1f),
+            transform.position.y + Random.Range(0.1f, 1f),
+            0);
+        Vector2 force = new Vector2(
+            Random.Range(-100, 100),
+            Random.Range(300, 500));
+        GameObject text = Instantiate(damageText, spawnPos, Quaternion.identity);
+        text.GetComponent<TextMeshPro>().text = Mathf.RoundToInt(damage).ToString();
+        text.GetComponent<Rigidbody2D>().AddForce(force);
+        // text color
+        Color damageColor;
+        switch (damage)
+        {
+            case >= 50:
+                damageColor = new Color(0.84f, 0.41f, 0.41f);
+                break;
+            case >= 40:
+                damageColor = new Color(0.45f, 0.84f, 0.41f);
+                break;
+            case >= 35:
+                damageColor = new Color(0.81f, 0.84f, 0.4f);
+                break;
+            default:
+                damageColor = Color.white;
+                break;
+        }
+        text.GetComponent<TextMeshPro>().color = damageColor;
     }
 
     public void Heal(float heal)
