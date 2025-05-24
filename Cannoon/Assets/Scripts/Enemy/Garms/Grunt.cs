@@ -23,11 +23,13 @@ public class Grunt : MonoBehaviour
         canAttack = false;
         StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(attackAnimation.length));
         animator.SetBool("isAttacking", true);
+        enemyAiScript.canTurn = false;
 
         // stop animation
         yield return new WaitForSeconds(attackAnimation.length);
 
         animator.SetBool("isAttacking", false);
+        enemyAiScript.canTurn = true;
 
         // can attack
         yield return new WaitForSeconds(cooldown);

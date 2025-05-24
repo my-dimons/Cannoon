@@ -21,10 +21,17 @@ public class EndlessMode : MonoBehaviour
     public int enemiesLeft;
     [Tooltip("Z Offset of spawning enemies (To have enemies be behind the ground slightly)")]
     public float enemyZOffset;
+
+    public float minSpawningRandomness;
+    public float maxSpawningRandomness;
+
+    [Header("Difficulty Multiplier")]
     [Tooltip("Determines how hard the wave is")]
     public float difficultyMultiplier;
     [Tooltip("How much the difficulty multiplier increases each wave (Should probably be lower than 0.05)")]
     public float difficultyMultiplierIncrease;
+    [Tooltip("If enabled, the difficulty multiplier will increase by the difficultyMultiplierIncrease every round")]
+    public bool increasingDifficulty;
 
     [Header("Wave Transition")]
     [Tooltip("Transition time between waves (In Seconds)")]
@@ -100,9 +107,14 @@ public class EndlessMode : MonoBehaviour
         waveCountdownText.text = "";
         wave++;
 
-        // DON'T activate off first wave
-        if (wave != 1)
-            difficultyMultiplier += difficultyMultiplierIncrease;
+        // Increase difficulty (if bool is enabled)
+        if (increasingDifficulty)
+        {
+            // DON'T activate on first wave
+            if (wave != 1)
+                IncreaseDifficulty();
+        }
+
 
         // spawning enemy process
         SpawnEnemies();
@@ -116,14 +128,25 @@ public class EndlessMode : MonoBehaviour
         possibleSpawningEnemies.Clear();
         List<GameObject> tempEnemySpawningLocations = new(enemySpawnLocations);
 
-        // gets all the possible spawnable enemies (by using each enemies min & max difficulty spawning range)
+        // gets all the possible spawnable enemies (by using each enemies min & max wave spawning range, unless it has wave override on)
         for (int i = 0; i < enemies.Length; i++)
-            if (difficultyMultiplier >= enemies[i].GetComponent<Enemy>().minWave && difficultyMultiplier <= enemies[i].GetComponent<Enemy>().maxWave)
+            if (wave >= enemies[i].GetComponent<Enemy>().minWave && wave <= enemies[i].GetComponent<Enemy>().maxWave || enemies[i].GetComponent<Enemy>().waveOverride)
                 possibleSpawningEnemies.Add(enemies[i]);
 
         // how many enemies to spawn (using difficulty rating)
-        float amount = wave/1.5f;
+        float amount;
+        if (wave < 15)
+            amount = wave / 3.5f;
+        else if (wave < 25)
+            amount = wave / 3f;
+        else if (wave < 40)
+            amount = wave / 2f;
+        else
+            amount = wave / 1f;
+        amount = Random.Range(amount * minSpawningRandomness, amount * maxSpawningRandomness);
+        amount = Mathf.RoundToInt(amount);
         amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);
+        Debug.Log("Spawning " + amount + " Enemies");
 
         // spawns all enemies
         for (int i = 0; i < amount; i++)
@@ -159,5 +182,10 @@ public class EndlessMode : MonoBehaviour
         int number = Random.Range(0, possibleSpawningEnemies.Count);
         GameObject enemy = possibleSpawningEnemies[number];
         return enemy;
+    }
+
+    private void IncreaseDifficulty()
+    {
+        difficultyMultiplier += difficultyMultiplierIncrease;
     }
 }

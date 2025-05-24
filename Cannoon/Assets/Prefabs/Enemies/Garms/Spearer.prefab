@@ -58,6 +58,7 @@ MonoBehaviour:
   baseSpeed: 700
   speed: 0
   facingRight: 0
+  canTurn: 1
   baseJumpForce: 600
   currentJumpForce: 0
   jumpCheckDistance: 1.5
@@ -104,12 +105,9 @@ MonoBehaviour:
   canDealDamage: 0
   baseHealth: 40
   health: 0
-  baseCriticalChance: 0
-  currentCriticalChance: 0
-  baseCriticalMultiplier: 0
-  currentCriticalMultiplier: 0
-  minWave: 0
-  maxWave: 999
+  minWave: 4
+  maxWave: 25
+  waveOverride: 0
 --- !u!50 &4658452010861624777
 Rigidbody2D:
   serializedVersion: 4

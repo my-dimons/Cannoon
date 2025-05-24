@@ -58,6 +58,7 @@ MonoBehaviour:
   baseSpeed: 750
   speed: 0
   facingRight: 0
+  canTurn: 1
   baseJumpForce: 600
   currentJumpForce: 0
   jumpCheckDistance: 1.5
@@ -78,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e3574c02bc84b948b08aaf7c44d0a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAnimation: {fileID: 0}
+  attackAnimation: {fileID: 7400000, guid: 6384a2887c897cc4db2e44edd89f4f4d, type: 2}
   attackCooldown: 3.5
   canAttack: 0
   playerDistance: 6
@@ -104,12 +105,9 @@ MonoBehaviour:
   canDealDamage: 0
   baseHealth: 50
   health: 0
-  baseCriticalChance: 0
-  currentCriticalChance: 0
-  baseCriticalMultiplier: 0
-  currentCriticalMultiplier: 0
-  minWave: 0
-  maxWave: 999
+  minWave: 6
+  maxWave: 60
+  waveOverride: 0
 --- !u!50 &6523312710196359765
 Rigidbody2D:
   serializedVersion: 4

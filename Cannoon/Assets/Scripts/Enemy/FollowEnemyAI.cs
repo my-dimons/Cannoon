@@ -18,6 +18,7 @@ public class FollowEnemyAI : MonoBehaviour
     public float baseSpeed;
     public float speed;
     public bool facingRight;
+    public bool canTurn;
 
     [Header("Jumping")]
     [Tooltip("How high this enemy will jump")]
@@ -138,12 +139,12 @@ public class FollowEnemyAI : MonoBehaviour
             currentWaypoint++;
         }
 
-        if (target.transform.position.x >= transform.position.x)
+        if (target.transform.position.x >= transform.position.x && canTurn)
         {
             enemySprite.localScale = new Vector3(-1f, 1f, 1f);
             facingRight = true;
         }
-        else if (target.transform.position.x < transform.position.x)
+        else if (target.transform.position.x < transform.position.x && canTurn)
         {
             enemySprite.localScale = new Vector3(1f, 1f, 1f);
             facingRight = false;

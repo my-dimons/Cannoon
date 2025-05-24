@@ -23,18 +23,12 @@ public class Enemy : MonoBehaviour
     [Tooltip("The current HP this enemy has")]
     public float health;
 
-    [Header("Criticals")]
-    [Tooltip("WIP | The chance of an enemy does a critical hit, which multiplies the base damage by the critical mutiplier")]
-    public float baseCriticalChance;
-    public float currentCriticalChance;
-    [Tooltip("WIP | multiplier * damage, in effect when the enemy does a critical hit")]
-    public float baseCriticalMultiplier;
-    public float currentCriticalMultiplier;
-
     [Tooltip("The lowest possible wave this enemy will spawn in")]
     public float minWave;
     [Tooltip("The highest possible wave this enemy will spawn in")]
     public float maxWave;
+    [Tooltip("This enemy can be spawned no matter the wave")]
+    public bool waveOverride;
 
 
     //OTHER: Referenced in start
@@ -85,9 +79,6 @@ public class Enemy : MonoBehaviour
 
     private void ApplyDifficultyRating(bool start)
     {
-        currentCriticalChance = Mathf.Clamp(baseCriticalChance * endlessModeScript.difficultyMultiplier, 0, 100);
-        currentCriticalMultiplier = baseCriticalMultiplier * endlessModeScript.difficultyMultiplier;
-
         // apply only when the enemy spawns
         if (start)
         {

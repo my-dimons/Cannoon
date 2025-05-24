@@ -24,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
+    public bool invincible;
     [Tooltip("Used for damage flash")]
     public GameObject cannon;
 
@@ -123,7 +124,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (canTakeDamage)
+        if (canTakeDamage && !invincible)
         {
             Debug.Log("Taking Damage");
             health -= damage;

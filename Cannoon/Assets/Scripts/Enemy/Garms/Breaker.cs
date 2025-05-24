@@ -92,6 +92,7 @@ public class Breaker : MonoBehaviour
             Vector2.down, depth, enemyAiScript.layerMask) && enemyAiScript.facingRight))
         {
             canAttack = false;
+            enemyAiScript.canTurn = false;
             isAttacking = true;
             StartCoroutine(enemyAiScript.FreezeEnemy(attackingAnimation.length + groundSpikeAnimation.length));
             animator.SetBool("isAttacking", true);
@@ -110,6 +111,7 @@ public class Breaker : MonoBehaviour
             spawnedSpike.transform.GetChild(0).transform.localScale = enemyAiScript.enemySprite.localScale;
 
             isAttacking = false;
+            enemyAiScript.canTurn = true;
 
             yield return new WaitForSeconds(groundSpikeAnimation.length - earlyTime);
 
@@ -125,6 +127,7 @@ public class Breaker : MonoBehaviour
         Vector3 spawningPosition;
         canAttack = false;
         isAttacking = true;
+        enemyAiScript.canTurn = false;
         StartCoroutine(enemyAiScript.FreezeEnemy(attackingAnimation.length));
         animator.SetBool("isThrowing", true);
         if (enemyAiScript.facingRight)
@@ -152,10 +155,10 @@ public class Breaker : MonoBehaviour
         else
             spawnedSpike.GetComponent<Bullet>().speed = -25;
 
-
         yield return new WaitForSeconds(throwingAnimation.length / 2);
 
         isAttacking = false;
+        enemyAiScript.canTurn = true;
 
         StartCoroutine(AttackCooldown(attackingCooldown));
     }
