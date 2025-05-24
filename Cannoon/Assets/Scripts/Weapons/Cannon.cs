@@ -6,6 +6,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using UnityEditor.AnimatedValues;
 
 public class Cannon : MonoBehaviour
 {
@@ -52,6 +54,17 @@ public class Cannon : MonoBehaviour
     public bool timerActive;
     private float currentTime;
 
+    [Header("Shooting Effects")]
+    public GameObject postProcessing;
+    public GameObject chargeParticleSystem;
+    private bool playedParticles;
+    private Volume volume;
+    public float baseFov;
+    public float maxFov;
+
+    private float baseVigette;
+    private float baseBloom;
+
     [Header("OTHER")]
     bool charging;
     public bool canShoot;
@@ -69,8 +82,12 @@ public class Cannon : MonoBehaviour
     void Start()
     {
         playerHealthScript = player.GetComponent<PlayerHealth>();
+        volume = postProcessing.GetComponent<Volume>();
         animator = GetComponent<Animator>();
+
         cannonFacingRight = true;
+        baseVigette = volume.GetComponent<Vignette>().intensity.value;
+        baseVigette = volume.GetComponent<Bloom>().intensity.value;
     }
     void Update()
     {
@@ -122,17 +139,53 @@ public class Cannon : MonoBehaviour
             // reset timer
             timerActive = false;
             currentTime = 0;
+
+            // reset shooting effects
+            Camera.main.fieldOfView = baseFov;
+            volume.profile.TryGet(out ChromaticAberration chromaticAbberation);
+            volume.profile.TryGet(out Vignette vignette);
+            volume.profile.TryGet(out Bloom bloom);
+            chromaticAbberation.intensity.value = 0;
+            vignette.intensity.value = baseVigette;
+            bloom.intensity.value = baseBloom;
+            playedParticles = false;
+            cannonChargeImage.color = Color.white;
         }
 
-        // Advances timer and fills the charge meter
+        // Advances timer, fills the charge meter, and applies shooting effects
         if (timerActive && canShoot && charging)
         {
+            float time = Mathf.InverseLerp(minCharge, maxCharge, currentTime);
+
             // CHARGE METER FILL
-            float fill = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
+            float fill = Mathf.Lerp(0, 1, time);
             cannonChargeImage.fillAmount = fill;
+            // Shooting effects
+            float fov = Mathf.Lerp(baseFov, maxFov, time);
+            float chromaticAbberationValue = Mathf.Lerp(0, 0.15f, time);
+            float vigetteValue = Mathf.Lerp(baseVigette, 0.36f, time);
+            float bloomValue = Mathf.Lerp(baseBloom, 14, time);
+
+            volume.profile.TryGet(out ChromaticAberration chromaticAbberation);
+            volume.profile.TryGet(out Vignette vignette);
+            volume.profile.TryGet(out Bloom bloom);
+
+            chromaticAbberation.intensity.value = chromaticAbberationValue;
+            vignette.intensity.value = vigetteValue;
+            bloom.intensity.value = bloomValue;
+            Camera.main.fieldOfView = fov;
 
             // TIMER
             currentTime += Time.deltaTime;
+
+            // Fully charged
+            if (currentTime >= maxCharge && !playedParticles)
+            {
+                chargeParticleSystem.GetComponent<ParticleSystem>().Play();
+                cannonChargeImage.color = new Color(0.4f, 1f, 0.4f);
+                playedParticles = true;
+            }
+
         }
     }
 
