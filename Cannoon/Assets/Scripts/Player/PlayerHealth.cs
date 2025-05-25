@@ -36,6 +36,10 @@ public class PlayerHealth : MonoBehaviour
     public bool canTakeDamage;
     public float damageInvincibilityCooldown;
 
+    [Header("Audio")]
+    public AudioSource playerAudio;
+    public AudioClip hitSound;
+
     [Header("Other")]
     private GameManager gameManager;
     private EndlessMode endlessMode;
@@ -129,7 +133,13 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Taking Damage");
             health -= damage;
             health = Mathf.Clamp(health, 0, numOfHearts);
+
+            // effects
             StartCoroutine(cannon.GetComponent<DamageFlash>().FlashWhite());
+
+            playerAudio.pitch = Random.Range(0.5f, 1.5f);
+            playerAudio.PlayOneShot(hitSound, 1f * gameManager.audioVolume);
+            playerAudio.pitch = 1;
 
             StartCoroutine(Invincibility(damageInvincibilityCooldown));
         }

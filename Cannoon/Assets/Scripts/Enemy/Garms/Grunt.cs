@@ -18,12 +18,16 @@ public class Grunt : MonoBehaviour
     [Tooltip("How close the player needs to be for this enemy to use this attack")]
     public float playerDistance;
 
+    [Header("Audio")]
+    public AudioClip attackSound;
+
     IEnumerator Attack(float cooldown)
     {
-        canAttack = false;
         StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(attackAnimation.length));
+        enemyScript.enemyAudio.PlayOneShot(attackSound, 1f * enemyScript.gameManager.audioVolume);
         animator.SetBool("isAttacking", true);
         enemyAiScript.canTurn = false;
+        canAttack = false;
 
         // stop animation
         yield return new WaitForSeconds(attackAnimation.length);

@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("Players total deaths")]
     public int globalDeaths;
 
+    [Header("Settings")]
+    public float audioVolume; // value from 0 -> 1
 
     [Header("Difficulty")]
     public Difficulty difficulty;

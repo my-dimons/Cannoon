@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject playerSprite;
@@ -60,11 +59,21 @@ public class PlayerMovement : MonoBehaviour
     public float bobAmount;
     public float bobTime;
 
+    [Header("Audio")]
+    public AudioSource playerAudio;
+    public AudioClip groundPoundSound;
+    public AudioClip[] runningSounds;
 
-    Rigidbody2D rb;
+    [Header("Particles")]
+    public GameObject groundPoundParticles;
+    public Vector3 groundPoundParticlesSpawningPos;
+
+
 
     [Header("Other")]
     PlayerHealth playerHealthScript;
+    GameManager gameManager;
+    Rigidbody2D rb;
 
     IEnumerator GroundPoundJumpBoostTimer()
     {
@@ -78,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         playerHealthScript = GetComponent<PlayerHealth>();
         playerAnimator = playerSprite.GetComponent<Animator>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         speed = baseSpeed;
         jumpForce = baseJumpForce;
 
@@ -104,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         FacingDirection();
 
         // Update animation params
-        playerAnimator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+        playerAnimator.SetFloat("xVelocity", Mathf.Abs(rb.velocity.x));
     }
 
     IEnumerator CannonMovement()
@@ -125,6 +135,13 @@ public class PlayerMovement : MonoBehaviour
         //left & right movement
         float horizontalInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(horizontalInput * speed, rb.velocity.y);
+        if (rb.velocity.x != 0 && onGround && !playerAudio.isPlaying)
+        {
+            int i = Random.Range(0, runningSounds.Length);
+            playerAudio.pitch = Random.Range(0.5f, 1.5f);
+            playerAudio.PlayOneShot(runningSounds[i], 1.75f * gameManager.audioVolume);
+            playerAudio.pitch = 1;
+        }
     }
 
     // when FALLING increase the gravity by a set amount
@@ -164,6 +181,12 @@ public class PlayerMovement : MonoBehaviour
     {
         // add downward force
         rb.AddForce(new Vector2(0, -groundPoundForce), ForceMode2D.Impulse);
+        GameObject groundPoundParticle = Instantiate(groundPoundParticles, transform.position - groundPoundParticlesSpawningPos, groundPoundParticles.transform.rotation);
+        groundPoundParticle.GetComponent<ParticleSystem>().Play();
+
+        playerAudio.pitch = Random.Range(0.75f, 1.25f);
+        playerAudio.PlayOneShot(groundPoundSound, 2f * gameManager.audioVolume);
+        playerAudio.pitch = 1f;
 
         // apply ground pound jump boost
         if (canApplyGroundPoundJumpBoost)

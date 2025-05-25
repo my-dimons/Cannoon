@@ -10,6 +10,7 @@ TagManager:
   - PlayerEnemyCollisions
   - EndlessModeGameManager
   - EssenceManager
+  - UpgradeManager
   layers:
   - Default
   - TransparentFX

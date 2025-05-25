@@ -34,9 +34,13 @@ public class Enemy : MonoBehaviour
     [Header("Damage")]
     public GameObject damageText;
 
+    [Header("Sounds")]
+    public AudioSource enemyAudio;
+    public AudioClip hitSound;
+
 
     //OTHER: Referenced in start
-    GameManager gameManager;
+    [HideInInspector] public GameManager gameManager;
     EndlessMode endlessModeScript;
     // Start is called before the first frame update
     void Start()
@@ -97,6 +101,8 @@ public class Enemy : MonoBehaviour
 
         // flash white
         StartCoroutine(GetComponent<FollowEnemyAI>().enemySprite.GetComponent<DamageFlash>().FlashWhite());
+        // SFX
+        enemyAudio.PlayOneShot(hitSound, 1f * gameManager.audioVolume);
 
         // damage text
         Vector3 spawnPos = new Vector3(

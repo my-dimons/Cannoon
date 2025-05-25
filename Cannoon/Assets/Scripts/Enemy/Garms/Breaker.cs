@@ -27,6 +27,10 @@ public class Breaker : MonoBehaviour
     Animator animator;
     bool isAttacking;
 
+    [Header("Audio")]
+    public AudioClip attackingSound;
+    public AudioClip throwingSound;
+
     [Header("DEBUGGING")]
     public bool visualizeGroundSpikeRaycast;
     public bool debugLogPlayerDistance;
@@ -110,6 +114,9 @@ public class Breaker : MonoBehaviour
             spawnedSpike.GetComponent<DestroyAfterTime>().destroyTime = groundSpikeAnimation.length - earlyTime;
             spawnedSpike.transform.GetChild(0).transform.localScale = enemyAiScript.enemySprite.localScale;
 
+            // SFX
+            enemyScript.enemyAudio.PlayOneShot(attackingSound, 1f * enemyScript.gameManager.audioVolume);
+
             isAttacking = false;
             enemyAiScript.canTurn = true;
 
@@ -145,6 +152,7 @@ public class Breaker : MonoBehaviour
         }
 
         GameObject spawnedSpike = Instantiate(spike, spawningPosition, spike.transform.rotation);
+        enemyScript.enemyAudio.PlayOneShot(throwingSound, 1f * enemyScript.gameManager.audioVolume);
         spawnedSpike.GetComponent<Bullet>().sprite.transform.localScale = enemyAiScript.enemySprite.localScale;
 
         yield return new WaitForSeconds(throwingAnimation.length / 2);

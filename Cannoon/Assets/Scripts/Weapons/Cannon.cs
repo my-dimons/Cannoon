@@ -1,13 +1,10 @@
 using System.Collections;
-using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using UnityEditor.AnimatedValues;
 
 public class Cannon : MonoBehaviour
 {
@@ -35,6 +32,7 @@ public class Cannon : MonoBehaviour
     */
 
     [Header("Rotation & Shooting")]
+    public bool canShoot;
     public GameObject cannonRotationObj;
     public GameObject bulletSpawnObj;
     bool cannonFacingRight;
@@ -65,10 +63,15 @@ public class Cannon : MonoBehaviour
     private float baseVigette;
     private float baseBloom;
 
+    [Header("Audio")]
+    public AudioSource cannonAudio;
+    public AudioClip chargedSound;
+    public AudioClip shootingSound;
+
     [Header("OTHER")]
     bool charging;
-    public bool canShoot;
 
+    GameManager gameManager;
     PlayerHealth playerHealthScript;
 
     public IEnumerator BulletShootingCooldown()
@@ -81,6 +84,7 @@ public class Cannon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         playerHealthScript = player.GetComponent<PlayerHealth>();
         volume = postProcessing.GetComponent<Volume>();
         animator = GetComponent<Animator>();
@@ -136,10 +140,11 @@ public class Cannon : MonoBehaviour
 
             ShootBullet(force, damage);
 
-            // reset timer
-            timerActive = false;
-            currentTime = 0;
-
+            // sound
+            float audioVolume = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
+            cannonAudio.pitch = Random.Range(0.65f, 1.35f);
+            cannonAudio.PlayOneShot(shootingSound, audioVolume / 1.25f * gameManager.audioVolume);
+            cannonAudio.pitch = 1f;
             // reset shooting effects
             Camera.main.fieldOfView = baseFov;
             volume.profile.TryGet(out ChromaticAberration chromaticAbberation);
@@ -150,6 +155,10 @@ public class Cannon : MonoBehaviour
             bloom.intensity.value = baseBloom;
             playedParticles = false;
             cannonChargeImage.color = Color.white;
+
+            // reset timer
+            timerActive = false;
+            currentTime = 0;
         }
 
         // Advances timer, fills the charge meter, and applies shooting effects
@@ -184,6 +193,9 @@ public class Cannon : MonoBehaviour
                 chargeParticleSystem.GetComponent<ParticleSystem>().Play();
                 cannonChargeImage.color = new Color(0.4f, 1f, 0.4f);
                 playedParticles = true;
+
+                // sound
+                cannonAudio.PlayOneShot(chargedSound, 1f * gameManager.audioVolume);
             }
 
         }
