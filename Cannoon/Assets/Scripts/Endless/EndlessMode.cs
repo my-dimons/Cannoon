@@ -7,6 +7,7 @@ public class EndlessMode : MonoBehaviour
 {
     public GameObject player;
     GameManager gameManager;
+    UpgradeManager upgradeManager;
 
     [Header("Text")] // info text
 
@@ -62,6 +63,7 @@ public class EndlessMode : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        upgradeManager = GameObject.FindGameObjectWithTag("UpgradeManager").GetComponent<UpgradeManager>();
         foreach (Transform child in enemySpawnLocationsParent.transform)
         {
             enemySpawnLocations.Add(child.gameObject);
@@ -92,6 +94,11 @@ public class EndlessMode : MonoBehaviour
         // trigger player invincibility
         StartCoroutine(player.GetComponent<PlayerHealth>().Invincibility(playerInvincibility + timeBetweenWaves));
 
+
+        // update upgrade manager bar ticks
+        if (wave != 0)
+        upgradeManager.upgradeTicks += 1;
+
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;
         waveCountdownText.text = secondsUntilNextWave.ToString();
@@ -111,10 +118,9 @@ public class EndlessMode : MonoBehaviour
         if (increasingDifficulty)
         {
             // DON'T activate on first wave
-            if (wave != 1)
+            if (wave != 0)
                 IncreaseDifficulty();
         }
-
 
         // spawning enemy process
         SpawnEnemies();

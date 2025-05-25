@@ -109,7 +109,7 @@ MonoBehaviour:
   health: 0
   minWave: 6
   maxWave: 60
-  waveOverride: 1
+  waveOverride: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: -6713069565147208574}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}
