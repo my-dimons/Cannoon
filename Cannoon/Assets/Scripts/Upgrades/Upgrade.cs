@@ -6,7 +6,7 @@ using UnityEngine;
 public class Upgrade : MonoBehaviour
 {
     public GameObject particles;
-    GameObject description;
+    public GameObject description;
     UpgradeManager upgradeManagerScript;
     // Start is called before the first frame update
     void Start()
@@ -17,9 +17,14 @@ public class Upgrade : MonoBehaviour
         PlayParticles();
     }
 
-    private void OnMouseOver()
+    public void EnteringHover()
     {
         description.SetActive(true);
+    }
+
+    public void ExitingHover()
+    {
+        description.SetActive(false);
     }
 
     public void Pick()
@@ -32,6 +37,7 @@ public class Upgrade : MonoBehaviour
 
     void PlayParticles()
     {
-        Instantiate(particles, transform.parent);
+        GameObject particle = Instantiate(particles, transform.parent);
+        particle.GetComponent<RectTransform>().localPosition = this.GetComponent<RectTransform>().localPosition;
     }
 }
