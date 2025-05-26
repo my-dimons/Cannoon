@@ -78,14 +78,31 @@ public class EndlessMode : MonoBehaviour
         // checks how many enemies are left
         enemiesLeft = enemyParentObject.transform.childCount;
 
-        // starts first round
+        // Starts next wave
         if (enemiesLeft <= 0 && !advancingToNextWave && wavesStarted)
-            StartCoroutine(NextWave());
+        {
+            if (wave != 0 && !upgradeManager.appliedUpgradeTick)
+            {
+                upgradeManager.upgradeTicks += 1;
+                upgradeManager.appliedUpgradeTick = true;
+
+                if (upgradeManager.upgradeTicks == upgradeManager.upgradeWaves)
+                {
+                    upgradeManager.pauseWaves = true;
+                    StartCoroutine(upgradeManager.SpawnUpgrades());
+                }
+            }
+
+            // if the wave is the upgrade wave, starting the next wave is managed on UpgradeManager.cs
+            if (!upgradeManager.pauseWaves) 
+                StartCoroutine(NextWave());
+        }
     }
 
     IEnumerator NextWave()
     {
         advancingToNextWave = true;
+        upgradeManager.appliedUpgradeTick = false;
         advancingWaveTexts.SetActive(true);
         currentWaveText.text = "Wave  " + wave;
 
@@ -93,11 +110,6 @@ public class EndlessMode : MonoBehaviour
         player.GetComponent<PlayerHealth>().Heal(1);
         // trigger player invincibility
         StartCoroutine(player.GetComponent<PlayerHealth>().Invincibility(playerInvincibility + timeBetweenWaves));
-
-
-        // update upgrade manager bar ticks
-        if (wave != 0)
-        upgradeManager.upgradeTicks += 1;
 
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;

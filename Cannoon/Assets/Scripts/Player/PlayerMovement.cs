@@ -64,11 +64,6 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip groundPoundSound;
     public AudioClip[] runningSounds;
 
-    [Header("Particles")]
-    public GameObject groundPoundParticles;
-    public Vector3 groundPoundParticlesSpawningPos;
-
-
 
     [Header("Other")]
     PlayerHealth playerHealthScript;
@@ -181,8 +176,8 @@ public class PlayerMovement : MonoBehaviour
     {
         // add downward force
         rb.AddForce(new Vector2(0, -groundPoundForce), ForceMode2D.Impulse);
-        GameObject groundPoundParticle = Instantiate(groundPoundParticles, transform.position - groundPoundParticlesSpawningPos, groundPoundParticles.transform.rotation);
-        groundPoundParticle.GetComponent<ParticleSystem>().Play();
+
+
 
         playerAudio.pitch = Random.Range(0.75f, 1.25f);
         playerAudio.PlayOneShot(groundPoundSound, 2f * gameManager.audioVolume);

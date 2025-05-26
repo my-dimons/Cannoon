@@ -8,6 +8,9 @@ public class PlayerJumpDetection : MonoBehaviour
     [Tooltip("Slight delay of being able to jump once the player hits the ground")]
     PlayerMovement playerScript;
 
+    public GameObject groundPoundParticles;
+    public Vector3 groundPoundParticlesSpawningPos;
+
     // when the player hits the ground, make them move slower for a set time
     IEnumerator SlowPlayerOnLanding()
     {
@@ -36,6 +39,10 @@ public class PlayerJumpDetection : MonoBehaviour
             if (!playerScript.onGround)
             {
                 StartCoroutine(SlowPlayerOnLanding());
+
+                // particles
+                GameObject groundPoundParticle = Instantiate(groundPoundParticles, transform.position - groundPoundParticlesSpawningPos, groundPoundParticles.transform.rotation);
+                groundPoundParticle.GetComponent<ParticleSystem>().Play();
             }
             // reset players jump when hitting the ground
             if (!playerScript.canJump)

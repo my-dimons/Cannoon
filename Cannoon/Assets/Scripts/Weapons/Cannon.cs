@@ -90,8 +90,11 @@ public class Cannon : MonoBehaviour
         animator = GetComponent<Animator>();
 
         cannonFacingRight = true;
-        baseVigette = volume.GetComponent<Vignette>().intensity.value;
-        baseVigette = volume.GetComponent<Bloom>().intensity.value;
+
+        volume.profile.TryGet(out Bloom bloom);
+        volume.profile.TryGet(out Vignette vignette);
+        baseVigette = vignette.intensity.value;
+        baseBloom = bloom.intensity.value;
     }
     void Update()
     {
@@ -145,6 +148,7 @@ public class Cannon : MonoBehaviour
             cannonAudio.pitch = Random.Range(0.65f, 1.35f);
             cannonAudio.PlayOneShot(shootingSound, audioVolume / 1.25f * gameManager.audioVolume);
             cannonAudio.pitch = 1f;
+
             // reset shooting effects
             Camera.main.fieldOfView = baseFov;
             volume.profile.TryGet(out ChromaticAberration chromaticAbberation);
@@ -169,10 +173,11 @@ public class Cannon : MonoBehaviour
             // CHARGE METER FILL
             float fill = Mathf.Lerp(0, 1, time);
             cannonChargeImage.fillAmount = fill;
+
             // Shooting effects
             float fov = Mathf.Lerp(baseFov, maxFov, time);
             float chromaticAbberationValue = Mathf.Lerp(0, 0.15f, time);
-            float vigetteValue = Mathf.Lerp(baseVigette, 0.36f, time);
+            float vigetteValue = Mathf.Lerp(baseVigette, 0.45f, time);
             float bloomValue = Mathf.Lerp(baseBloom, 14, time);
 
             volume.profile.TryGet(out ChromaticAberration chromaticAbberation);

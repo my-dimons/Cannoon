@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int globalDeaths;
 
     [Header("Settings")]
+    [Range(0f, 1f)]
     public float audioVolume; // value from 0 -> 1
 
     [Header("Difficulty")]

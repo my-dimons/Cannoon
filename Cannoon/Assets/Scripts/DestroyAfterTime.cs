@@ -15,7 +15,6 @@ public class DestroyAfterTime : MonoBehaviour
     {
         beingDestroyed = true;
         yield return new WaitForSeconds(destroyTime);
-        Debug.Log("DESTORYING");
         Destroy(gameObject);
     }
 }
