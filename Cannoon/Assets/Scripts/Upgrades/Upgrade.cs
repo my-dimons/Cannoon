@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Upgrade : MonoBehaviour
@@ -22,6 +19,7 @@ public class Upgrade : MonoBehaviour
     public void EnteringHover()
     {
         description.SetActive(true);
+        upgradeManagerScript.audio.PlayOneShot(upgradeManagerScript.hoverSound, 1f * upgradeManagerScript.gameManager.audioVolume);
     }
 
     public void ExitingHover()

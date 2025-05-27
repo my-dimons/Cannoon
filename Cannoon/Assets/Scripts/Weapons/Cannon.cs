@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class Cannon : MonoBehaviour
 {
@@ -22,7 +20,14 @@ public class Cannon : MonoBehaviour
     public float bulletCooldown;
     [Tooltip("Time untill the shot bullet gets deleted (in Seconds)")]
     public float bulletLifetime;
+
+    [Header("Critical Hits")]
+    public Color baseChargeColor;
+    public Color criticalChargeColor;
     public float criticalStrikeChance;
+    float critDamageMult = 1;
+    float critPowerMult = 1;
+    float critSizeMult = 1;
 
     [Header("Rotation & Shooting")]
     public bool canShoot;
@@ -58,7 +63,9 @@ public class Cannon : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource cannonAudio;
-    public AudioClip chargedSound;
+    public AudioSource chargeAudio;
+    public AudioClip normalChargedSound;
+    public AudioClip critChargedSound;
     public AudioClip shootingSound;
 
     [Header("OTHER")]
@@ -104,7 +111,7 @@ public class Cannon : MonoBehaviour
     private void Shooting()
     {
         // Start timer and make charge meter appear
-        if (Input.GetMouseButtonDown(0) && canShoot && !charging )
+        if (Input.GetMouseButtonDown(0) && canShoot && !charging)
         {
             timerActive = true;
             charging = true;
@@ -131,16 +138,15 @@ public class Cannon : MonoBehaviour
             Mathf.Clamp(currentTime, minCharge, maxCharge);
 
             // bullet stats
-            float force = Mathf.Lerp(minPower, maxPower, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
-            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
+            float force = Mathf.Lerp(minPower, maxPower * critPowerMult, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
+            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage * critDamageMult, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
 
-            ShootBullet(force, damage);
+            ShootBullet(force, damage, critSizeMult);
 
             // sound
             float audioVolume = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
-            cannonAudio.pitch = Random.Range(0.65f, 1.35f);
+            cannonAudio.pitch = Random.Range(0.85f, 1.15f);
             cannonAudio.PlayOneShot(shootingSound, audioVolume / 1.25f * gameManager.audioVolume);
-            cannonAudio.pitch = 1f;
 
             // reset shooting effects
             Camera.main.fieldOfView = baseFov;
@@ -184,27 +190,60 @@ public class Cannon : MonoBehaviour
 
             // TIMER
             currentTime += Time.deltaTime;
+            
 
             // Fully charged
             if (currentTime >= maxCharge && !playedParticles)
             {
-                chargeParticleSystem.GetComponent<ParticleSystem>().Play();
-                cannonChargeImage.color = new Color(0.4f, 1f, 0.4f);
-                playedParticles = true;
+                float gambling = Random.Range(0, 100);
 
-                // sound
-                cannonAudio.PlayOneShot(chargedSound, 1f * gameManager.audioVolume);
+                // CRITICAL HIT
+                if (gambling < criticalStrikeChance)
+                {
+                    // stats
+                    critDamageMult = 1.5f;
+                    critPowerMult = 1.25f;
+                    critSizeMult = 1.35f;
+
+                    // colors
+                    ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
+                    cannonChargeImage.color = criticalChargeColor;
+                    main.startColor = criticalChargeColor;
+
+                    // sound
+                    chargeAudio.PlayOneShot(critChargedSound, 1f * gameManager.audioVolume);
+                } 
+                // NOT critical hit :(
+                else
+                {
+                    // stats
+                    critDamageMult = 1;
+                    critPowerMult = 1;
+                    critSizeMult = 1;
+
+                    // colors
+                    ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
+                    cannonChargeImage.color = baseChargeColor;
+                    main.startColor = baseChargeColor;
+
+                    // sound
+                    chargeAudio.PlayOneShot(normalChargedSound, 1f * gameManager.audioVolume);
+                }
+
+                chargeParticleSystem.GetComponent<ParticleSystem>().Play();
+                playedParticles = true;
             }
 
         }
     }
 
-    public void ShootBullet(float force, float damage)
+    public void ShootBullet(float force, float damage, float sizeMult)
     {
         Vector2 spawnPos;
         spawnPos = new Vector2(bulletSpawnObj.transform.position.x, bulletSpawnObj.transform.position.y);
 
         GameObject prefab = Instantiate(cannonball, spawnPos, cannonRotationObj.transform.rotation);
+        prefab.transform.localScale = new Vector3(prefab.transform.localScale.x * sizeMult, prefab.transform.localScale.y * sizeMult, 1f);
         prefab.GetComponent<Bullet>().SetStats(0, damage, bulletLifetime, true);
         prefab.GetComponent<Rigidbody2D>().AddForce(prefab.transform.right * force, ForceMode2D.Impulse);
 

@@ -85,6 +85,7 @@ public class EndlessMode : MonoBehaviour
             {
                 upgradeManager.upgradeTicks += 1;
                 upgradeManager.appliedUpgradeTick = true;
+                upgradeManager.UpdateUpgradeBars();
 
                 if (upgradeManager.upgradeTicks == upgradeManager.upgradeWaves)
                 {

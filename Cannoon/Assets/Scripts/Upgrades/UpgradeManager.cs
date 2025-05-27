@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,18 +19,28 @@ public class UpgradeManager : MonoBehaviour
     public GameObject parentUpgradeOrb;
     public GameObject[] upgradeOrbs;
     public List<GameObject> spawnedUpgradeOrbs;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
+    [Header("Specific Upgrade Orbs")]
+    public GameObject criticalChanceOrb;
+
+    [Header("Audio")]
+    public AudioSource audio;
+    public AudioClip upgradesSpawningSound;
+    public AudioClip selectionSound;
+    public AudioClip hoverSound;
+
+    [Header("Other")]
+    Cannon cannonScript;
+    [HideInInspector] public GameManager gameManager;
+
+    private void Start()
     {
+        cannonScript = GameObject.FindGameObjectWithTag("Cannon").GetComponent<Cannon>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         UpdateUpgradeBars();
     }
 
-    void UpdateUpgradeBars()
+    public void UpdateUpgradeBars()
     {
         for (int i = 0; i < upgradeBars.Length; i++)
         {
@@ -50,19 +59,29 @@ public class UpgradeManager : MonoBehaviour
     public IEnumerator SpawnUpgrades()
     {
         upgradeBars[upgradeWaves - 1].gameObject.GetComponent<Animator>().SetBool("isFilled", true);
+        UpdateUpgradeBars();
 
-        List<GameObject> availableUpgradeOrbs = new List<GameObject>();
+        // base upgrade orbs
+        List<GameObject> availableUpgradeOrbs = new();
         for (int i = 0;i < upgradeOrbs.Length; i++)
             availableUpgradeOrbs.Add(upgradeOrbs[i]);
 
-        yield return new WaitForSeconds(2);
-        upgradeTicks = 0;
+        // more fine selection
+        if (cannonScript.criticalStrikeChance >= 100)
+        {
+            availableUpgradeOrbs.Remove(criticalChanceOrb);
+        }
 
-        List<GameObject> pickedUpgrades = new List<GameObject>();
+        yield return new WaitForSeconds(1);
+
+        audio.PlayOneShot(upgradesSpawningSound, 1f * gameManager.audioVolume);
+
+        upgradeTicks = 0;
+        List<GameObject> pickedUpgrades = new();
         // pick 2 random upgrades
         for (int i = 0;i < 2; i++)
         {
-            int num = Random.Range(0, upgradeOrbs.Length);
+            int num = Random.Range(0, availableUpgradeOrbs.Count);
             pickedUpgrades.Add(availableUpgradeOrbs[num]);
             availableUpgradeOrbs.Remove(availableUpgradeOrbs[num]);
         }
@@ -74,11 +93,16 @@ public class UpgradeManager : MonoBehaviour
         spawnedObj2.GetComponent<RectTransform>().localPosition = new Vector3(-300, 0, 0);
         spawnedUpgradeOrbs.Add(spawnedObj1);
         spawnedUpgradeOrbs.Add(spawnedObj2);
+
+        availableUpgradeOrbs.Clear();
+
+        UpdateUpgradeBars();
     }
 
     public void FinishPickingUpgrades()
     {
         pauseWaves = false;
+        audio.PlayOneShot(selectionSound, 1f * gameManager.audioVolume);
 
         for (int i = 0; i < spawnedUpgradeOrbs.Count; i++)
             Destroy(spawnedUpgradeOrbs[i]);

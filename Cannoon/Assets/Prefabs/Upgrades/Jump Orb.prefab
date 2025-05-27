@@ -171,7 +171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
-  description: {fileID: 0}
   particleColor: {r: 0.37254903, g: 0.8980392, b: 0.3137255, a: 1}
 --- !u!114 &8422494620477652670
 MonoBehaviour:
@@ -230,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c301f7241c28f8241b114f76f6e54ae9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeightIncrease: 20
+  jumpHeightIncrease: 10
   speedIncrease: 0
 --- !u!1 &6175446284790453035
 GameObject:
@@ -297,7 +296,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +20% Jump Height
+  m_text: +10% Jump Height
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}

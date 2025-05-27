@@ -171,7 +171,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
-  description: {fileID: 0}
   particleColor: {r: 1, g: 0.47843137, b: 0.47843137, a: 1}
 --- !u!114 &6600220081682407091
 MonoBehaviour:
@@ -230,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691a00d116e1a89469347425b0962cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageIncrease: 20
+  damageIncrease: 12
   chargeSpeed: 0
   criticalChanceIncrease: 0
 --- !u!1 &4416051574500743006
@@ -298,7 +297,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +20% Damage
+  m_text: +12% Damage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}

@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Pathfinding;
+using System.Collections;
+using UnityEngine;
 
 public class FlyingEnemyAI : MonoBehaviour
 {

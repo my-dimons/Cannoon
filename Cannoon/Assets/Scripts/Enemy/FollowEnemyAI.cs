@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Pathfinding;
 using System;
+using System.Collections;
+using UnityEngine;
 
 // This is a basic enemy AI that allows an enemy to follow a player and jump when needed (with animations)
 // Enemy will rotate (Flips X) towards target
@@ -123,7 +122,6 @@ public class FollowEnemyAI : MonoBehaviour
 
         // Jumping
         // Tries to jump when the enemy is not moving and there is a wall infront of the enemy, raycast checks for wall
-        RaycastHit hit;
         if (enemyScript.canJump && this.rb.velocity.normalized.magnitude == 0 && !enemyScript.frozen &&
         (Physics2D.Raycast(transform.position, Vector3.right, jumpCheckDistance, layerMask) || Physics2D.Raycast(transform.position, Vector3.left, jumpCheckDistance, layerMask)))
         {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageUpgrade : MonoBehaviour
@@ -19,7 +17,7 @@ public class DamageUpgrade : MonoBehaviour
     }
     public void ChangeStats()
     {
-        cannonScript.criticalStrikeChance += cannonScript.criticalStrikeChance / 100 * criticalChanceIncrease;
+        cannonScript.criticalStrikeChance += criticalChanceIncrease;
         cannonScript.maxBulletDamage += cannonScript.maxBulletDamage / 100 * damageIncrease;
         cannonScript.maxCharge += cannonScript.maxCharge / 100 * chargeSpeed;
         upgradeScript.Pick();
