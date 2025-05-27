@@ -363,10 +363,10 @@ MonoBehaviour:
   canMove: 0
   onGround: 0
   canDealDamage: 0
-  baseHealth: 65
+  baseHealth: 80
   health: 0
   minWave: 15
-  maxWave: 100
+  maxWave: 999
   waveOverride: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: -4094405100645005896}

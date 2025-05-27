@@ -237,7 +237,7 @@ MonoBehaviour:
   enemySprite: {fileID: 5314557678417610450}
   animator: {fileID: 0}
   spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
-  baseSpeed: 900
+  baseSpeed: 1300
   speed: 0
   facingRight: 0
   canTurn: 1
@@ -269,7 +269,7 @@ MonoBehaviour:
   canMove: 0
   onGround: 0
   canDealDamage: 0
-  baseHealth: 20
+  baseHealth: 30
   health: 0
   minWave: 0
   maxWave: 20
@@ -277,6 +277,7 @@ MonoBehaviour:
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 6386185745361134167}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}
+  gameManager: {fileID: 0}
 --- !u!50 &2635776926402615599
 Rigidbody2D:
   serializedVersion: 4

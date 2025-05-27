@@ -50,13 +50,22 @@ public class UpgradeManager : MonoBehaviour
     public IEnumerator SpawnUpgrades()
     {
         upgradeBars[upgradeWaves - 1].gameObject.GetComponent<Animator>().SetBool("isFilled", true);
+
+        List<GameObject> availableUpgradeOrbs = new List<GameObject>();
+        for (int i = 0;i < upgradeOrbs.Length; i++)
+            availableUpgradeOrbs.Add(upgradeOrbs[i]);
+
         yield return new WaitForSeconds(2);
         upgradeTicks = 0;
 
         List<GameObject> pickedUpgrades = new List<GameObject>();
         // pick 2 random upgrades
         for (int i = 0;i < 2; i++)
-            pickedUpgrades.Add(upgradeOrbs[Random.Range(0, upgradeOrbs.Length)]);
+        {
+            int num = Random.Range(0, upgradeOrbs.Length);
+            pickedUpgrades.Add(availableUpgradeOrbs[num]);
+            availableUpgradeOrbs.Remove(availableUpgradeOrbs[num]);
+        }
 
         // spawn upgrades
         GameObject spawnedObj1 = Instantiate(pickedUpgrades[0], parentUpgradeOrb.transform);
@@ -65,7 +74,6 @@ public class UpgradeManager : MonoBehaviour
         spawnedObj2.GetComponent<RectTransform>().localPosition = new Vector3(-300, 0, 0);
         spawnedUpgradeOrbs.Add(spawnedObj1);
         spawnedUpgradeOrbs.Add(spawnedObj2);
-
     }
 
     public void FinishPickingUpgrades()

@@ -6,7 +6,9 @@ using UnityEngine;
 public class Upgrade : MonoBehaviour
 {
     public GameObject particles;
-    public GameObject description;
+    public Color particleColor;
+
+    GameObject description;
     UpgradeManager upgradeManagerScript;
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,11 @@ public class Upgrade : MonoBehaviour
     void PlayParticles()
     {
         GameObject particle = Instantiate(particles, transform.parent);
+
+        // change color
+        ParticleSystem.MainModule main = particle.GetComponent<ParticleSystem>().main;
+        main.startColor = particleColor;
+
         particle.GetComponent<RectTransform>().localPosition = this.GetComponent<RectTransform>().localPosition;
     }
 }

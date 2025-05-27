@@ -119,11 +119,11 @@ public class Enemy : MonoBehaviour
         Color damageColor;
         switch (damage)
         {
-            case >= 50:
-                damageColor = new Color(0.84f, 0.41f, 0.41f);
+            case >= 100:
+                damageColor = new Color(0.31f, 0.72f, 0.93f);
                 break;
-            case >= 40:
-                damageColor = new Color(0.45f, 0.84f, 0.41f);
+            case >= 50:
+                damageColor = new Color(0.93f, 0.38f, 0.31f);
                 break;
             case >= 35:
                 damageColor = new Color(0.81f, 0.84f, 0.4f);

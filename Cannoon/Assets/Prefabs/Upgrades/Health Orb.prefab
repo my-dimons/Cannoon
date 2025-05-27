@@ -306,6 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
   description: {fileID: 0}
+  particleColor: {r: 0.37254903, g: 0.8980392, b: 0.3137255, a: 1}
 --- !u!114 &5935204753454052567
 MonoBehaviour:
   m_ObjectHideFlags: 0

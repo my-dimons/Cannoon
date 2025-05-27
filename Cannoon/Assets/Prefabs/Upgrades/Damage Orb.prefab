@@ -172,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
   description: {fileID: 0}
+  particleColor: {r: 1, g: 0.47843137, b: 0.47843137, a: 1}
 --- !u!114 &6600220081682407091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5062842220240379725
 RectTransform:
   m_ObjectHideFlags: 0

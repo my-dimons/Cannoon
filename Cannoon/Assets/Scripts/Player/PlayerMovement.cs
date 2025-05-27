@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpLandingSpeedTime;
 
     [Header("Ground Pound")]
+    public bool groundPoundEnabled;
     public float groundPoundForce;
     [Tooltip("(%) when the player ground pounds, what percentage of the jump force is added to the jump")]
     public float groundPoundJumpPercentage;
@@ -99,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
             Movement();
 
             // Ground Pound
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !onGround)
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !onGround && groundPoundEnabled)
                 GroundPound();
             // Jumping
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
@@ -176,8 +177,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // add downward force
         rb.AddForce(new Vector2(0, -groundPoundForce), ForceMode2D.Impulse);
-
-
 
         playerAudio.pitch = Random.Range(0.75f, 1.25f);
         playerAudio.PlayOneShot(groundPoundSound, 2f * gameManager.audioVolume);
