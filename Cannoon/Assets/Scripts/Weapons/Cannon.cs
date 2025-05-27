@@ -22,14 +22,7 @@ public class Cannon : MonoBehaviour
     public float bulletCooldown;
     [Tooltip("Time untill the shot bullet gets deleted (in Seconds)")]
     public float bulletLifetime;
-
-    /*
-    [Header("Special Stats")]
-    public bool canPierce;
-    public int pierceAmount;
-    public bool canBounce;
-    public int bounceAmount;
-    */
+    public float criticalStrikeChance;
 
     [Header("Rotation & Shooting")]
     public bool canShoot;

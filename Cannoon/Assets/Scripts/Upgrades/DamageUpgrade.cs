@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class DamageUpgrade : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // IN PERCENTS
+    public float damageIncrease;
+    public float chargeSpeed;
+    public float criticalChanceIncrease;
 
-    // Update is called once per frame
-    void Update()
+    Cannon cannonScript;
+    Upgrade upgradeScript;
+
+    private void Start()
     {
-        
+        cannonScript = GameObject.FindGameObjectWithTag("Cannon").GetComponent<Cannon>();
+        upgradeScript = GetComponent<Upgrade>();
+    }
+    public void ChangeStats()
+    {
+        cannonScript.criticalStrikeChance += cannonScript.criticalStrikeChance / 100 * criticalChanceIncrease;
+        cannonScript.maxBulletDamage += cannonScript.maxBulletDamage / 100 * damageIncrease;
+        cannonScript.maxCharge += cannonScript.maxCharge / 100 * chargeSpeed;
+        upgradeScript.Pick();
     }
 }

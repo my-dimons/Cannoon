@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementUpgrades : MonoBehaviour
+public class MovementUpgrade : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float jumpHeightIncrease;
+    public float speedIncrease;
+    PlayerMovement playerMovementScript;
+    Upgrade upgradeScript;
+
+    private void Start()
     {
-        
+        playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+        upgradeScript = GetComponent<Upgrade>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeStats()
     {
-        
+        playerMovementScript.baseJumpForce += playerMovementScript.baseJumpForce / 100 * jumpHeightIncrease;
+        playerMovementScript.baseSpeed += playerMovementScript.baseSpeed / 100 * speedIncrease;
+        upgradeScript.Pick();
     }
 }

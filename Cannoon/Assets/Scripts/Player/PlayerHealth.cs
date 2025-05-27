@@ -25,8 +25,6 @@ public class PlayerHealth : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
     public bool invincible;
-    [Tooltip("Used for damage flash")]
-    public GameObject cannon;
 
     [Tooltip("players max amount of hearts")]
     public int numOfHearts;
@@ -43,6 +41,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Other")]
     private GameManager gameManager;
     private EndlessMode endlessMode;
+    private GameObject cannon;
     public IEnumerator Invincibility(float time)
     {
         canTakeDamage = false;
@@ -54,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         endlessMode = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
+        cannon = GameObject.FindGameObjectWithTag("Cannon");
 
         canTakeDamage = true;
         health = numOfHearts;
