@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5b188f22f187d47b3cf8e3b949e073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackingCooldown: 6.5
+  attackingCooldown: 5
   canAttack: 0
   sprite: {fileID: 231307460574426387}
   spikeSpeed: 25

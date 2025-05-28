@@ -19,7 +19,7 @@ public class Upgrade : MonoBehaviour
     public void EnteringHover()
     {
         description.SetActive(true);
-        upgradeManagerScript.audio.PlayOneShot(upgradeManagerScript.hoverSound, 1f * upgradeManagerScript.gameManager.audioVolume);
+        upgradeManagerScript.upgradeAudio.PlayOneShot(upgradeManagerScript.hoverSound, 1f * upgradeManagerScript.gameManager.audioVolume);
     }
 
     public void ExitingHover()

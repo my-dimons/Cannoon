@@ -55,7 +55,7 @@ MonoBehaviour:
   enemySprite: {fileID: 3629104447951525173}
   animator: {fileID: 0}
   spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
-  baseSpeed: 400
+  baseSpeed: 550
   speed: 0
   facingRight: 0
   canTurn: 1

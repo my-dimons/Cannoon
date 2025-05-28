@@ -15,6 +15,12 @@ public class GameManager : MonoBehaviour
     [Header("Settings")]
     [Range(0f, 1f)]
     public float audioVolume; // value from 0 -> 1
+    [Range(0f, 1.5f)]
+    public float musicVolume;
+
+    [Header("Music")]
+    public AudioSource musicSource;
+    public AudioClip[] musicTracks;
 
     [Header("Difficulty")]
     public Difficulty difficulty;
@@ -26,7 +32,6 @@ public class GameManager : MonoBehaviour
         hard = 120,
         impossible = 200
     }
-
 
     // Loads a specified SCENE
     public void LoadLevel(string scene)
@@ -40,5 +45,20 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Quitting Game");
+    }
+
+    private void Update()
+    {
+        musicSource.volume = musicVolume;
+        if (!musicSource.isPlaying)
+        {
+            PlayMusicTrack();
+        }    
+    }
+
+    public void PlayMusicTrack()
+    {
+        int track = Random.Range(0, musicTracks.Length);
+        musicSource.PlayOneShot(musicTracks[track]);
     }
 }

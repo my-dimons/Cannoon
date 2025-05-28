@@ -18,6 +18,7 @@ public class EndlessMode : MonoBehaviour
     [Header("Waves")]
     [Tooltip("Current wave")]
     public int wave;
+    public int healthRegen;
     [Tooltip("How many enemies are remaining?")]
     public int enemiesLeft;
     [Tooltip("Z Offset of spawning enemies (To have enemies be behind the ground slightly)")]
@@ -108,7 +109,7 @@ public class EndlessMode : MonoBehaviour
         currentWaveText.text = "Wave  " + wave;
 
         // heal player (by 1 heart)
-        player.GetComponent<PlayerHealth>().Heal(1);
+        player.GetComponent<PlayerHealth>().Heal(healthRegen);
         // trigger player invincibility
         StartCoroutine(player.GetComponent<PlayerHealth>().Invincibility(playerInvincibility + timeBetweenWaves));
 

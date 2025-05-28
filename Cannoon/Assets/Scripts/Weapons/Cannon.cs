@@ -16,6 +16,8 @@ public class Cannon : MonoBehaviour
     public float minBulletDamage;
     [Tooltip("Maximum damage shot bullets do")]
     public float maxBulletDamage;
+    [Tooltip("Is a random number from 0 -> thisVar which is a percent of the damage the shot did")]
+    public float bonusDamagePercentage;
     [Tooltip("Time inbetween shooting (In Seconds)")]
     public float bulletCooldown;
     [Tooltip("Time untill the shot bullet gets deleted (in Seconds)")]
@@ -48,7 +50,7 @@ public class Cannon : MonoBehaviour
     public GameObject cannonChargeCanvas;
 
     public bool timerActive;
-    private float currentTime;
+    private float chargeTime;
 
     [Header("Shooting Effects")]
     public GameObject postProcessing;
@@ -135,16 +137,21 @@ public class Cannon : MonoBehaviour
             animator.SetBool("isLoading", false);
 
             // clamp time
-            Mathf.Clamp(currentTime, minCharge, maxCharge);
+            Mathf.Clamp(chargeTime, minCharge, maxCharge);
 
             // bullet stats
-            float force = Mathf.Lerp(minPower, maxPower * critPowerMult, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
-            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage * critDamageMult, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
-
-            ShootBullet(force, damage, critSizeMult);
+            float force = Mathf.Lerp(minPower, maxPower * critPowerMult, Mathf.InverseLerp(minCharge, maxCharge, chargeTime));
+            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage * critDamageMult, Mathf.InverseLerp(minCharge, maxCharge, chargeTime));
+            float extraDamage;
+            // fully charged
+            if (chargeTime >= maxCharge)
+                extraDamage = Random.Range(0, damage / 100 * bonusDamagePercentage);
+            else
+                extraDamage = 0;
+            ShootBullet(force, damage + extraDamage, critSizeMult);
 
             // sound
-            float audioVolume = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, currentTime));
+            float audioVolume = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, chargeTime));
             cannonAudio.pitch = Random.Range(0.85f, 1.15f);
             cannonAudio.PlayOneShot(shootingSound, audioVolume / 1.25f * gameManager.audioVolume);
 
@@ -161,13 +168,13 @@ public class Cannon : MonoBehaviour
 
             // reset timer
             timerActive = false;
-            currentTime = 0;
+            chargeTime = 0;
         }
 
         // Advances timer, fills the charge meter, and applies shooting effects
         if (timerActive && canShoot && charging)
         {
-            float time = Mathf.InverseLerp(minCharge, maxCharge, currentTime);
+            float time = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
 
             // CHARGE METER FILL
             float fill = Mathf.Lerp(0, 1, time);
@@ -189,11 +196,11 @@ public class Cannon : MonoBehaviour
             Camera.main.fieldOfView = fov;
 
             // TIMER
-            currentTime += Time.deltaTime;
+            chargeTime += Time.deltaTime;
             
 
             // Fully charged
-            if (currentTime >= maxCharge && !playedParticles)
+            if (chargeTime >= maxCharge && !playedParticles)
             {
                 float gambling = Random.Range(0, 100);
 
@@ -203,7 +210,7 @@ public class Cannon : MonoBehaviour
                     // stats
                     critDamageMult = 1.5f;
                     critPowerMult = 1.25f;
-                    critSizeMult = 1.35f;
+                    critSizeMult = 1.55f;
 
                     // colors
                     ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;

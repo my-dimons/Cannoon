@@ -24,7 +24,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject criticalChanceOrb;
 
     [Header("Audio")]
-    public AudioSource audio;
+    public AudioSource upgradeAudio;
     public AudioClip upgradesSpawningSound;
     public AudioClip selectionSound;
     public AudioClip hoverSound;
@@ -74,7 +74,7 @@ public class UpgradeManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        audio.PlayOneShot(upgradesSpawningSound, 1f * gameManager.audioVolume);
+        upgradeAudio.PlayOneShot(upgradesSpawningSound, 1f * gameManager.audioVolume);
 
         upgradeTicks = 0;
         List<GameObject> pickedUpgrades = new();
@@ -102,7 +102,7 @@ public class UpgradeManager : MonoBehaviour
     public void FinishPickingUpgrades()
     {
         pauseWaves = false;
-        audio.PlayOneShot(selectionSound, 1f * gameManager.audioVolume);
+        upgradeAudio.PlayOneShot(selectionSound, 1f * gameManager.audioVolume);
 
         for (int i = 0; i < spawnedUpgradeOrbs.Count; i++)
             Destroy(spawnedUpgradeOrbs[i]);
