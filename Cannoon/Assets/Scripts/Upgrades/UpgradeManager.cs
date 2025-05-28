@@ -21,6 +21,9 @@ public class UpgradeManager : MonoBehaviour
     public List<GameObject> spawnedUpgradeOrbs;
 
     [Header("Specific Upgrade Orbs")]
+    public GameObject chargeUpgradeOrb;
+    public GameObject healthUpgradeOrb;
+    public GameObject regenUpgradeOrb;
     public GameObject criticalChanceOrb;
 
     [Header("Audio")]
@@ -31,12 +34,16 @@ public class UpgradeManager : MonoBehaviour
 
     [Header("Other")]
     Cannon cannonScript;
+    GameObject player;
+    EndlessMode endlessModeScript;
     [HideInInspector] public GameManager gameManager;
 
     private void Start()
     {
         cannonScript = GameObject.FindGameObjectWithTag("Cannon").GetComponent<Cannon>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
+        player = GameObject.FindGameObjectWithTag("Player");
         UpdateUpgradeBars();
     }
 
@@ -67,10 +74,18 @@ public class UpgradeManager : MonoBehaviour
             availableUpgradeOrbs.Add(upgradeOrbs[i]);
 
         // more fine selection
+        // max crit chance
         if (cannonScript.criticalStrikeChance >= 100)
-        {
             availableUpgradeOrbs.Remove(criticalChanceOrb);
-        }
+        // max health
+        if (player.GetComponent<PlayerHealth>().numOfHearts >= player.GetComponent<PlayerHealth>().hearts.Length)
+            availableUpgradeOrbs.Remove(healthUpgradeOrb);
+        // max regen
+        if (endlessModeScript.healthRegen >= player.GetComponent<PlayerHealth>().hearts.Length - 1)
+            availableUpgradeOrbs.Remove(regenUpgradeOrb);
+        // charge time
+        if (cannonScript.maxCharge <= 0.1f)
+            availableUpgradeOrbs.Remove(chargeUpgradeOrb); 
 
         yield return new WaitForSeconds(1);
 

@@ -40,12 +40,14 @@ public class Enemy : MonoBehaviour
     //OTHER: Referenced in start
     [HideInInspector] public GameManager gameManager;
     EndlessMode endlessModeScript;
+    FollowEnemyAI enemyAi;
     // Start is called before the first frame update
     void Start()
     {
         endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player");
+        enemyAi = GetComponent<FollowEnemyAI>();
         target = player.transform;
 
         ApplyDifficultyRating(true);
@@ -89,6 +91,7 @@ public class Enemy : MonoBehaviour
         if (start)
         {
             health = baseHealth * endlessModeScript.difficultyMultiplier;
+            enemyAi.baseSpeed = enemyAi.baseSpeed * endlessModeScript.difficultyMultiplier;
         }
     }
 
@@ -117,6 +120,9 @@ public class Enemy : MonoBehaviour
         Color damageColor;
         switch (damage)
         {
+            case >= 300:
+                damageColor = new Color(0.84f, 0.44f, 0.9f);
+                break;
             case >= 100:
                 damageColor = new Color(0.31f, 0.72f, 0.93f);
                 break;

@@ -129,6 +129,11 @@ public class Cannon : MonoBehaviour
         // Stop timer and shoot bullet (bullet stats depend on hold time), and make charge meter disappear
         else if (Input.GetMouseButtonUp(0) && canShoot && charging)
         {
+            // crit stats
+            critDamageMult = 1;
+            critPowerMult = 1;
+            critSizeMult = 1;
+
             charging = false;
             // charge meter
             cannonChargeCanvas.SetActive(false);
@@ -223,11 +228,6 @@ public class Cannon : MonoBehaviour
                 // NOT critical hit :(
                 else
                 {
-                    // stats
-                    critDamageMult = 1;
-                    critPowerMult = 1;
-                    critSizeMult = 1;
-
                     // colors
                     ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
                     cannonChargeImage.color = baseChargeColor;
