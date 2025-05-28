@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2619340425909537381}
   - component: {fileID: 8452061209117489522}
   m_Layer: 0
-  m_Name: Bouncing Cannonball
+  m_Name: Base Cannonball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,8 +51,11 @@ MonoBehaviour:
   damage: 0
   distanceFromShooter: 0
   bulletLife: 0
+  NoSpeedBulletLife: 0
   playerBullet: 0
   sprite: {fileID: 8804019123250546921}
+  destroyingParticles: {fileID: 5501264201421926971, guid: a79baf26eaaa22e488e1b0d60433a3eb, type: 3}
+  lookWhereTraveling: 1
 --- !u!50 &2619340425909537381
 Rigidbody2D:
   serializedVersion: 4
@@ -112,7 +115,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00017944351, y: 0.0006958209}
+  m_Offset: {x: 0.0008669272, y: 0.0003770478}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -123,7 +126,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.10914882, y: 0.10298269}
+  m_Size: {x: 0.05884985, y: 0.056868643}
   m_EdgeRadius: 0
 --- !u!1 &8804019123250546921
 GameObject:
@@ -198,7 +201,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1764995b7f9a7d04aad21f9f7898531f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97c16c34abd7a6143a65d959afb3379e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

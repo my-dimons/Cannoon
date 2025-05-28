@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
     public float NoSpeedBulletLife;
     public bool playerBullet;
     public GameObject sprite;
+    public GameObject destroyingParticles;
+    public bool lookWhereTraveling;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +40,17 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // moves bullet
         transform.Translate(speed * Time.deltaTime * Vector3.right);
+    }
+
+    private void FixedUpdate()
+    {
+        if (lookWhereTraveling)
+        {
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            rb.MoveRotation(Quaternion.LookRotation(rb.velocity));
+        }
     }
 
     private void DespawnBullet()
@@ -56,16 +66,20 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    { 
+    {
         // collides with ground
         if (other.gameObject.CompareTag("Ground"))
+        {
+            PlayParticles();
             Destroy(gameObject);
+        }
 
         if (playerBullet)
         {
             // collides with enemy
             if (other.gameObject.CompareTag("Enemy"))
             {
+                PlayParticles();
                 GameObject enemy = other.gameObject;
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
@@ -78,11 +92,21 @@ public class Bullet : MonoBehaviour
             // collides with player
             if (other.gameObject.CompareTag("Player"))
             {
+                PlayParticles();
                 GameObject player = other.gameObject;
                 PlayerHealth playerHealthScript = player.GetComponent<PlayerHealth>();
                 playerHealthScript.TakeDamage(damage);
                 Destroy(gameObject);
             }
+        }
+    }
+
+    void PlayParticles()
+    {
+        if (destroyingParticles != null)
+        {
+            GameObject particles = Instantiate(destroyingParticles, transform.position, destroyingParticles.transform.rotation);
+            particles.GetComponent<ParticleSystem>().Play();
         }
     }
 }

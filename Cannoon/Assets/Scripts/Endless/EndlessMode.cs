@@ -155,14 +155,16 @@ public class EndlessMode : MonoBehaviour
 
         // how many enemies to spawn (using difficulty rating)
         float amount;
-        if (wave < 15)
+        if (wave <= 20)
             amount = wave / 3.5f;
-        else if (wave < 25)
-            amount = wave / 3f;
-        else if (wave < 40)
-            amount = wave / 2f;
+        else if (wave <= 36)
+            amount = wave / 4.5f;
+        else if (wave <= 40)
+            amount = wave / 5.5f;
+        else if (wave <= 100)
+            amount = wave / 8.5f;
         else
-            amount = wave / 1f;
+            amount = wave / 10f;
         amount = Random.Range(amount * minSpawningRandomness, amount * maxSpawningRandomness);
         amount = Mathf.RoundToInt(amount);
         amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);
