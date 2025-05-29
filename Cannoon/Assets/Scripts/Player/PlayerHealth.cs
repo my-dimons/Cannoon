@@ -14,11 +14,6 @@ public class PlayerHealth : MonoBehaviour
     public GameObject postProcessing;
     public bool dead;
 
-    [Header("Respawning")]
-    public Vector2 spawnPoint;
-    public int respawnTime;
-    public Button respawnButton;
-
     [Header("Health")]
     public Image[] hearts;
     public Sprite fullHeart;
@@ -76,9 +71,8 @@ public class PlayerHealth : MonoBehaviour
     }
     void Death()
     {
+        gameManager.EnableDeathScreen();
         // VARS
-        TextMeshProUGUI respawnButtonText = this.respawnButton.GetComponentInChildren<TextMeshProUGUI>();
-
         Volume volume = postProcessing.GetComponent<Volume>();
 
         volume.profile.TryGet(out ColorAdjustments colorAdjustments);
@@ -97,27 +91,6 @@ public class PlayerHealth : MonoBehaviour
         colorAdjustments.saturation.value = -50f;
         // increase vignette strength
         vignette.intensity.value = 0.5f;
-
-        // Respawning
-        StartCoroutine(respawnButton());
-        // makes the respawn button interactable after a certain amount of time
-        IEnumerator respawnButton()
-        {
-            this.respawnButton.interactable = false;
-
-            // Countdown untill you're able to respawn
-            for (int i = 0; i < respawnTime; i++)
-            {
-                int time = respawnTime - i;
-                respawnButtonText.text = time.ToString();
-                yield return new WaitForSeconds(1);
-            }
-
-            // Can Respawn
-            this.respawnButton.interactable = true;
-            respawnButtonText.text = "Respawn";
-        }
-
 
         void DisablePlayer()
         {
@@ -147,14 +120,6 @@ public class PlayerHealth : MonoBehaviour
     {
         health += healingAmount;
         health = Mathf.Clamp(health, 0, numOfHearts);
-    }
-
-    public void Respawn()
-    {
-        transform.position = spawnPoint;
-        endlessMode.wave = 0;
-        endlessMode.difficultyMultiplier = 1;
-        endlessMode.wavesStarted = true;
     }
 
     private void UpdateHearts()

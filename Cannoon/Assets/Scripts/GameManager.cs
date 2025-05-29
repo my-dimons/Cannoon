@@ -1,6 +1,8 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // most game stats, difficulty, and the current level
 public class GameManager : MonoBehaviour
@@ -12,6 +14,7 @@ public class GameManager : MonoBehaviour
     public int currentKills;
     [Tooltip("Players total deaths")]
     public int globalDeaths;
+    public float timePlayed;
 
     [Header("Settings")]
     [Range(0f, 1f)]
@@ -25,8 +28,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip musicCurrentlyPlaying;
     public float musicTransitionTime;
 
+    [Header("Pause Menu")]
+    public static GameObject pauseMenu;
+    public static Slider musicVolumeSlider;
+    public static Slider SfxVolumeSlider;
+    public static GameObject quitButton;
+    public static GameObject resumeButton;
+
+    [Header("Death Screen")]
+    public static GameObject deathScreen;
+    public static GameObject deathQuitButton;
+    public static GameObject deathRespawnButton;
+    public static GameObject deathWaveText;
+    public static GameObject deathTimeText;
+    public static GameObject deathKillsText;
+
+    bool pauseMenuEnabled;
+
     [Header("Difficulty")]
     public Difficulty difficulty;
+
+    public static GameManager Instance;
     // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it as a percentage value)
     public enum Difficulty
     {
@@ -36,11 +58,11 @@ public class GameManager : MonoBehaviour
         impossible = 200
     }
 
-    // Loads a specified SCENE
-    public void LoadLevel(string scene)
+    // reloads the main scene
+    public void Respawn()
     {
-        SceneManager.LoadScene(scene);
-        Debug.Log("Loading " + scene);
+        SceneManager.LoadScene("Main Scene");
+        Debug.Log("Respawning");
     }
 
     // Closes the application
@@ -52,7 +74,66 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        timePlayed += Time.deltaTime;
         musicSource.volume = musicVolume;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!pauseMenuEnabled)
+                PauseGame();
+            else
+                ResumeGame();
+        }
+    }
+    private void Awake()
+    {
+        // pause menu vars
+        pauseMenu = GameObject.Find("Pause Menu");
+        musicVolumeSlider = pauseMenu.transform.Find("Music Volume Slider").GetComponent<Slider>();
+        SfxVolumeSlider = pauseMenu.transform.Find("SFX Volume Slider").GetComponent<Slider>();
+        quitButton = pauseMenu.transform.Find("Quit Button").gameObject;
+        resumeButton = pauseMenu.transform.Find("Resume Button").gameObject;
+
+        // death screen vars
+        deathScreen = GameObject.Find("Death Screen");
+        deathQuitButton = deathScreen.transform.Find("Quit Button").gameObject;
+        deathRespawnButton = deathScreen.transform.Find("Respawn Button").gameObject;
+        deathWaveText = deathScreen.transform.Find("Wave").gameObject;
+        deathTimeText = deathScreen.transform.Find("Time").gameObject;
+        deathKillsText = deathScreen.transform.Find("Kills").gameObject;
+
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+  
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        currentKills = 0;
+        timePlayed = 0;
+
+        Time.timeScale = 1;
+        quitButton.GetComponent<Button>().onClick.AddListener(Quit);
+        deathQuitButton.GetComponent<Button>().onClick.AddListener(Quit);
+        deathRespawnButton.GetComponent<Button>().onClick.AddListener(Respawn);
+        resumeButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
+
+        musicVolumeSlider.onValueChanged.AddListener((v) =>
+        {
+            Instance.musicVolume = v;
+        });
+        SfxVolumeSlider.onValueChanged.AddListener((v) =>
+        {
+            Instance.soundVolume = v;
+        });
+        musicVolumeSlider.value = Instance.musicVolume;
+        SfxVolumeSlider.value = Instance.soundVolume;
     }
 
     private void Start()
@@ -69,5 +150,30 @@ public class GameManager : MonoBehaviour
         musicCurrentlyPlaying = null;
         yield return new WaitForSeconds(musicTransitionTime);
         StartCoroutine(PlayMusicTrack());
+    }
+
+    public void PauseGame()
+    {
+        pauseMenu.GetComponent<RectTransform>().localPosition = new(0, 0, 0);
+        Time.timeScale = 0;
+        pauseMenuEnabled = true;
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenu.GetComponent<RectTransform>().localPosition = new(0, 2000, 0);
+        Time.timeScale = 1;
+        pauseMenuEnabled = false;
+    }
+
+    public void EnableDeathScreen()
+    {
+        deathScreen.GetComponent<RectTransform>().localPosition = new(0, 0, 0);
+        deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
+
+        var ts = System.TimeSpan.FromSeconds(timePlayed);
+        deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", ts.TotalMinutes, ts.Seconds);
+        deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
+        Time.timeScale = 0;
     }
 }

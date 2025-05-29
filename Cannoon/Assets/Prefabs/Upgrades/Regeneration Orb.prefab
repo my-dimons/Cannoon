@@ -368,9 +368,10 @@ MonoBehaviour:
   speedIncrease: 0
   damageIncrease: 0
   chargeSpeedIncrease: 0
-  criticalChanceIncrease: 0
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
+  criticalChanceIncrease: 0
+  criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
-  health: 1
-  regen: 0
+  health: 0
+  regen: 1
