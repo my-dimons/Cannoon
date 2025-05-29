@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -27,9 +28,11 @@ public class Cannon : MonoBehaviour
     public Color baseChargeColor;
     public Color criticalChargeColor;
     public float criticalStrikeChance;
-    float critDamageMult = 1;
+    [HideInInspector] public float baseCritDamageMult = 1;
+    float critDamageMult;
     float critPowerMult = 1;
-    float critSizeMult = 1;
+    [HideInInspector] public float baseSizeMult = 1;
+    float sizeMult;
 
     [Header("Rotation & Shooting")]
     public bool canShoot;
@@ -92,6 +95,7 @@ public class Cannon : MonoBehaviour
         animator = GetComponent<Animator>();
 
         cannonFacingRight = true;
+        sizeMult = baseSizeMult;
 
         volume.profile.TryGet(out Bloom bloom);
         volume.profile.TryGet(out Vignette vignette);
@@ -115,6 +119,9 @@ public class Cannon : MonoBehaviour
         // Start timer and make charge meter appear
         if (Input.GetMouseButtonDown(0) && canShoot && !charging)
         {
+            if (chargeTime < 0.1f)
+                chargeTime = 0.1f;
+
             timerActive = true;
             charging = true;
 
@@ -129,12 +136,8 @@ public class Cannon : MonoBehaviour
         // Stop timer and shoot bullet (bullet stats depend on hold time), and make charge meter disappear
         else if (Input.GetMouseButtonUp(0) && canShoot && charging)
         {
-            // crit stats
-            critDamageMult = 1;
-            critPowerMult = 1;
-            critSizeMult = 1;
-
             charging = false;
+
             // charge meter
             cannonChargeCanvas.SetActive(false);
 
@@ -153,12 +156,17 @@ public class Cannon : MonoBehaviour
                 extraDamage = Random.Range(0, damage / 100 * bonusDamagePercentage);
             else
                 extraDamage = 0;
-            ShootBullet(force, damage + extraDamage, critSizeMult);
+            ShootBullet(force, damage + extraDamage, sizeMult);
+
+            // crit stats
+            critDamageMult = baseCritDamageMult;
+            sizeMult = baseSizeMult;
+            critPowerMult = 1;
 
             // sound
             float audioVolume = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, chargeTime));
             cannonAudio.pitch = Random.Range(0.85f, 1.15f);
-            cannonAudio.PlayOneShot(shootingSound, audioVolume / 1.25f * gameManager.audioVolume);
+            cannonAudio.PlayOneShot(shootingSound, audioVolume / 1.25f * gameManager.soundVolume);
 
             // reset shooting effects
             Camera.main.fieldOfView = baseFov;
@@ -213,9 +221,9 @@ public class Cannon : MonoBehaviour
                 if (gambling < criticalStrikeChance)
                 {
                     // stats
-                    critDamageMult = 1.5f;
-                    critPowerMult = 1.25f;
-                    critSizeMult = 1.55f;
+                    critDamageMult = baseCritDamageMult * 1.5f;
+                    critPowerMult *= 1.25f;
+                    sizeMult = baseSizeMult * 1.55f;
 
                     // colors
                     ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
@@ -223,7 +231,7 @@ public class Cannon : MonoBehaviour
                     main.startColor = criticalChargeColor;
 
                     // sound
-                    chargeAudio.PlayOneShot(critChargedSound, 1f * gameManager.audioVolume);
+                    chargeAudio.PlayOneShot(critChargedSound, 1f * gameManager.soundVolume);
                 } 
                 // NOT critical hit :(
                 else
@@ -234,7 +242,7 @@ public class Cannon : MonoBehaviour
                     main.startColor = baseChargeColor;
 
                     // sound
-                    chargeAudio.PlayOneShot(normalChargedSound, 1f * gameManager.audioVolume);
+                    chargeAudio.PlayOneShot(normalChargedSound, 1f * gameManager.soundVolume);
                 }
 
                 chargeParticleSystem.GetComponent<ParticleSystem>().Play();

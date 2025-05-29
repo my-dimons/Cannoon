@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -165.91913}
-  m_SizeDelta: {x: 453.579, y: 145.8384}
+  m_AnchoredPosition: {x: 0, y: -359.38934}
+  m_SizeDelta: {x: 663.8595, y: 532.7788}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1374027475484157130
 CanvasRenderer:
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+15% Movement Speed
+  m_text: '+ Movement Speed
 
 '
   m_isRightToLeft: 0
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 4905005995920931363}
   - component: {fileID: 5172448904296877027}
   - component: {fileID: 8329484854095752229}
-  - component: {fileID: 7225863370615555403}
+  - component: {fileID: 5407891722380802521}
   m_Layer: 5
   m_Name: Movement Orb
   m_TagString: Untagged
@@ -261,9 +261,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7225863370615555403}
-        m_TargetAssemblyTypeName: MovementUpgrade, Assembly-CSharp
-        m_MethodName: ChangeStats
+      - m_Target: {fileID: 5407891722380802521}
+        m_TargetAssemblyTypeName: UpgradeStats, Assembly-CSharp
+        m_MethodName: IncreaseStats
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -306,6 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3ea42a388d6494cb41d2db19fd6816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  specialUpgrade: 0
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
   particleColor: {r: 0.37254903, g: 0.8980392, b: 0.3137255, a: 1}
 --- !u!114 &8329484854095752229
@@ -353,7 +354,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &7225863370615555403
+--- !u!114 &5407891722380802521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -362,8 +363,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7213867182949716314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c301f7241c28f8241b114f76f6e54ae9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7877240c0691b3a4cb46d546da429921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
-  speedIncrease: 15
+  speedIncrease: 5
+  damageIncrease: 0
+  chargeSpeedIncrease: 0
+  sizeMultIncrease: 0
+  bulletSpeedIncrease: 0
+  criticalChanceIncrease: 0
+  criticalDamageMultIncrease: 0
+  waveDifficultyIncrease: 0
+  health: 0
+  regen: 0

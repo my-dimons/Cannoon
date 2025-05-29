@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,13 +15,15 @@ public class GameManager : MonoBehaviour
 
     [Header("Settings")]
     [Range(0f, 1f)]
-    public float audioVolume; // value from 0 -> 1
-    [Range(0f, 1.5f)]
+    public float soundVolume; // value from 0 -> 1
+    [Range(0f, 1f)]
     public float musicVolume;
 
     [Header("Music")]
     public AudioSource musicSource;
     public AudioClip[] musicTracks;
+    [SerializeField] private AudioClip musicCurrentlyPlaying;
+    public float musicTransitionTime;
 
     [Header("Difficulty")]
     public Difficulty difficulty;
@@ -50,15 +53,21 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         musicSource.volume = musicVolume;
-        if (!musicSource.isPlaying)
-        {
-            PlayMusicTrack();
-        }    
     }
 
-    public void PlayMusicTrack()
+    private void Start()
+    {
+        StartCoroutine(PlayMusicTrack());
+    }
+
+    IEnumerator PlayMusicTrack()
     {
         int track = Random.Range(0, musicTracks.Length);
         musicSource.PlayOneShot(musicTracks[track]);
+        musicCurrentlyPlaying = musicTracks[track];
+        yield return new WaitForSeconds(musicTracks[track].length);
+        musicCurrentlyPlaying = null;
+        yield return new WaitForSeconds(musicTransitionTime);
+        StartCoroutine(PlayMusicTrack());
     }
 }

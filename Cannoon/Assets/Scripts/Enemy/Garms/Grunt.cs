@@ -21,7 +21,7 @@ public class Grunt : MonoBehaviour
     IEnumerator Attack(float cooldown)
     {
         StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(attackAnimation.length));
-        enemyScript.enemyAudio.PlayOneShot(attackSound, 1f * enemyScript.gameManager.audioVolume);
+        enemyScript.enemyAudio.PlayOneShot(attackSound, 1f * enemyScript.gameManager.soundVolume);
         animator.SetBool("isAttacking", true);
         enemyAiScript.canTurn = false;
         canAttack = false;

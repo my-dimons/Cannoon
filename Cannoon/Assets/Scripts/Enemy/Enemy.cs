@@ -91,7 +91,7 @@ public class Enemy : MonoBehaviour
         if (start)
         {
             health = baseHealth * endlessModeScript.difficultyMultiplier;
-            enemyAi.baseSpeed = enemyAi.baseSpeed * endlessModeScript.difficultyMultiplier;
+            enemyAi.baseSpeed *= Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.75f, 1, Mathf.Infinity);
         }
     }
 
@@ -103,14 +103,14 @@ public class Enemy : MonoBehaviour
         // flash white
         StartCoroutine(GetComponent<FollowEnemyAI>().enemySprite.GetComponent<DamageFlash>().FlashWhite());
         // SFX
-        enemyAudio.PlayOneShot(hitSound, 1f * gameManager.audioVolume);
+        enemyAudio.PlayOneShot(hitSound, 1f * gameManager.soundVolume);
 
         // damage text
-        Vector3 spawnPos = new Vector3(
+        Vector3 spawnPos = new (
             transform.position.x + Random.Range(-1f, 1f),
             transform.position.y + Random.Range(0.1f, 1f),
             0);
-        Vector2 force = new Vector2(
+        Vector2 force = new (
             Random.Range(-100, 100),
             Random.Range(300, 500));
         GameObject text = Instantiate(damageText, spawnPos, Quaternion.identity);

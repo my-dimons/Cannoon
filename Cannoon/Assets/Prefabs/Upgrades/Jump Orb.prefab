@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1801034534740127188}
   - component: {fileID: 8981663088999290368}
   - component: {fileID: 8422494620477652670}
-  - component: {fileID: 9111151414238882920}
+  - component: {fileID: 6392689892601261468}
   m_Layer: 5
   m_Name: Jump Orb
   m_TagString: Untagged
@@ -125,9 +125,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9111151414238882920}
-        m_TargetAssemblyTypeName: MovementUpgrade, Assembly-CSharp
-        m_MethodName: ChangeStats
+      - m_Target: {fileID: 6392689892601261468}
+        m_TargetAssemblyTypeName: UpgradeStats, Assembly-CSharp
+        m_MethodName: IncreaseStats
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3ea42a388d6494cb41d2db19fd6816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  specialUpgrade: 0
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
   particleColor: {r: 0.37254903, g: 0.8980392, b: 0.3137255, a: 1}
 --- !u!114 &8422494620477652670
@@ -217,7 +218,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &9111151414238882920
+--- !u!114 &6392689892601261468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -226,11 +227,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 406895723084412160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c301f7241c28f8241b114f76f6e54ae9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7877240c0691b3a4cb46d546da429921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeightIncrease: 10
+  jumpHeightIncrease: 3
   speedIncrease: 0
+  damageIncrease: 0
+  chargeSpeedIncrease: 0
+  sizeMultIncrease: 0
+  bulletSpeedIncrease: 0
+  criticalChanceIncrease: 0
+  criticalDamageMultIncrease: 0
+  waveDifficultyIncrease: 0
+  health: 0
+  regen: 0
 --- !u!1 &6175446284790453035
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,8 +275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -165.91913}
-  m_SizeDelta: {x: 453.579, y: 145.8384}
+  m_AnchoredPosition: {x: 0, y: -359.38934}
+  m_SizeDelta: {x: 663.8595, y: 532.7788}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5951190486637054149
 CanvasRenderer:
@@ -296,7 +306,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +10% Jump Height
+  m_text: + Jump Height
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}

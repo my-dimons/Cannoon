@@ -89,7 +89,7 @@ public class UpgradeManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        upgradeAudio.PlayOneShot(upgradesSpawningSound, 1f * gameManager.audioVolume);
+        upgradeAudio.PlayOneShot(upgradesSpawningSound, 1f * gameManager.soundVolume);
 
         upgradeTicks = 0;
         List<GameObject> pickedUpgrades = new();
@@ -117,7 +117,7 @@ public class UpgradeManager : MonoBehaviour
     public void FinishPickingUpgrades()
     {
         pauseWaves = false;
-        upgradeAudio.PlayOneShot(selectionSound, 1f * gameManager.audioVolume);
+        upgradeAudio.PlayOneShot(selectionSound, 1f * gameManager.soundVolume);
 
         for (int i = 0; i < spawnedUpgradeOrbs.Count; i++)
             Destroy(spawnedUpgradeOrbs[i]);

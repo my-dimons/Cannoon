@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
         {
             int i = Random.Range(0, runningSounds.Length);
             playerAudio.pitch = Random.Range(0.5f, 1.5f);
-            playerAudio.PlayOneShot(runningSounds[i], 1.75f * gameManager.audioVolume);
+            playerAudio.PlayOneShot(runningSounds[i], 1.75f * gameManager.soundVolume);
             playerAudio.pitch = 1;
         }
     }
@@ -178,7 +178,7 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(new Vector2(0, -groundPoundForce), ForceMode2D.Impulse);
 
         playerAudio.pitch = Random.Range(0.75f, 1.25f);
-        playerAudio.PlayOneShot(groundPoundSound, 2f * gameManager.audioVolume);
+        playerAudio.PlayOneShot(groundPoundSound, 2f * gameManager.soundVolume);
         playerAudio.pitch = 1f;
 
         // apply ground pound jump boost

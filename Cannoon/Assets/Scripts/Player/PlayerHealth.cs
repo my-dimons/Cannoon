@@ -137,7 +137,7 @@ public class PlayerHealth : MonoBehaviour
             StartCoroutine(cannon.GetComponent<DamageFlash>().FlashWhite());
 
             playerAudio.pitch = Random.Range(0.5f, 1.5f);
-            playerAudio.PlayOneShot(hitSound, 1f * gameManager.audioVolume);
+            playerAudio.PlayOneShot(hitSound, 1f * gameManager.soundVolume);
             playerAudio.pitch = 1;
 
             StartCoroutine(Invincibility(damageInvincibilityCooldown));
