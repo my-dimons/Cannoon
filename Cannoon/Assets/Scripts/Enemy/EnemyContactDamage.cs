@@ -14,12 +14,12 @@ public class EnemyContactDamage : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        // This object is an enemy
+        // This object is not an enemy (Projectile, etc.)
         if (collision.gameObject.CompareTag("PlayerEnemyCollisions") && notEnemy)
         {
             collision.transform.parent.parent.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
-        // This object is not an enemy (Projectile, etc.)
+        // This object is an enemy
         else if (collision.gameObject.CompareTag("PlayerEnemyCollisions") && enemyScript.canDealDamage && !notEnemy)
         {
             enemyScript.player.GetComponent<PlayerHealth>().TakeDamage(damage);

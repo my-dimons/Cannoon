@@ -110,7 +110,6 @@ public class FollowEnemyAI : MonoBehaviour
         }
 
 
-
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         float forceX = direction.x * speed * Time.deltaTime;
 
@@ -137,6 +136,7 @@ public class FollowEnemyAI : MonoBehaviour
             currentWaypoint++;
         }
 
+        // flips the enemy to face the proper direction
         if (target.transform.position.x >= transform.position.x && canTurn)
         {
             enemySprite.localScale = new Vector3(-1f, 1f, 1f);

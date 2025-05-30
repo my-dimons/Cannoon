@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public bool canMove;
     public bool onGround;
     public bool canDealDamage;
+    public bool canTakeDamage = true;
 
     [Header("Health")]
     [Tooltip("The base HP this enemy has")]
@@ -62,16 +63,17 @@ public class Enemy : MonoBehaviour
         // if health is below 0: kill this enemy
         if (health <= 0)
         {
-            KillEnemy();
+            Death();
         }
 
         ApplyDifficultyRating(false);
     }
 
-    private void KillEnemy()
+    private void Death()
     {
         GetComponent<FollowEnemyAI>().animator.SetBool("isDying", true);
         canDealDamage = false;
+        canTakeDamage = false;
 
         StartCoroutine(DestroyEnemy(deathAnimation.length));
         StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(deathAnimation.length));
@@ -116,6 +118,7 @@ public class Enemy : MonoBehaviour
         GameObject text = Instantiate(damageText, spawnPos, Quaternion.identity);
         text.GetComponent<TextMeshPro>().text = Mathf.RoundToInt(damage).ToString();
         text.GetComponent<Rigidbody2D>().AddForce(force);
+
         // text color
         Color damageColor;
         switch (damage)

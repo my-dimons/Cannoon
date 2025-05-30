@@ -77,7 +77,7 @@ public class Bullet : MonoBehaviour
         if (playerBullet)
         {
             // collides with enemy
-            if (other.gameObject.CompareTag("Enemy"))
+            if (other.gameObject.CompareTag("Enemy") && other.GetComponent<Enemy>().canTakeDamage)
             {
                 PlayParticles();
                 GameObject enemy = other.gameObject;
