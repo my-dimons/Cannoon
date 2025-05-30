@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
     {
         deathScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
         deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
-
+        
         TimeSpan time = TimeSpan.FromSeconds(timePlayed);
         deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + time.Minutes.ToString() + ":" + time.Seconds.ToString();
         deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
