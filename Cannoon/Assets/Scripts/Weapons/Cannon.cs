@@ -107,9 +107,12 @@ public class Cannon : MonoBehaviour
         if (!playerHealthScript.dead)
         {
             FlipCannonSprite();
-            RotateCannonTowardsMouse();
 
-            Shooting();
+            if (!gameManager.pauseMenuEnabled)
+            {
+                RotateCannonTowardsMouse();
+                Shooting();
+            }
         }
     }
 
@@ -119,22 +122,92 @@ public class Cannon : MonoBehaviour
         // Start timer and make charge meter appear
         if (Input.GetMouseButtonDown(0) && canShoot && !charging)
         {
-            if (chargeTime < 0.1f)
-                chargeTime = 0.1f;
-
-            timerActive = true;
-            charging = true;
-
-            // animation
-            animator.SetBool("isLoading", true);
-            animator.SetFloat("loadingMultiplier", loadingAnimation.length / maxCharge);
-
-            // charge meter
-            cannonChargeCanvas.SetActive(true);
+            StartShooting();
         }
 
         // Stop timer and shoot bullet (bullet stats depend on hold time), and make charge meter disappear
         else if (Input.GetMouseButtonUp(0) && canShoot && charging)
+        {
+            Shoot();
+        }
+
+        // Advances timer, fills the charge meter, and applies shooting effects
+        if (timerActive && canShoot && charging)
+        {
+            ChargingShot();
+        }
+
+        void ChargingShot()
+        {
+            float time = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
+
+            // CHARGE METER FILL
+            float fill = Mathf.Lerp(0, 1, time);
+            cannonChargeImage.fillAmount = fill;
+
+            // Shooting effects
+            float fov = Mathf.Lerp(baseFov, maxFov, time);
+            float chromaticAbberationValue = Mathf.Lerp(0, 0.15f, time);
+            float vigetteValue = Mathf.Lerp(baseVigette, 0.45f, time);
+            float bloomValue = Mathf.Lerp(baseBloom, 14, time);
+
+            volume.profile.TryGet(out ChromaticAberration chromaticAbberation);
+            volume.profile.TryGet(out Vignette vignette);
+            volume.profile.TryGet(out Bloom bloom);
+
+            chromaticAbberation.intensity.value = chromaticAbberationValue;
+            vignette.intensity.value = vigetteValue;
+            bloom.intensity.value = bloomValue;
+            Camera.main.fieldOfView = fov;
+
+            // TIMER
+            chargeTime += Time.deltaTime;
+
+
+            // Fully charged
+            if (chargeTime >= maxCharge && !playedParticles)
+            {
+                FullyChargedShot();
+            }
+
+            void FullyChargedShot()
+            {
+                float gambling = Random.Range(0, 100);
+
+                // CRITICAL HIT
+                if (gambling < criticalStrikeChance)
+                {
+                    // stats
+                    critDamageMult = baseCritDamageMult * 1.5f;
+                    critPowerMult *= 1.25f;
+                    sizeMult = baseSizeMult * 1.55f;
+
+                    // colors
+                    ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
+                    cannonChargeImage.color = criticalChargeColor;
+                    main.startColor = criticalChargeColor;
+
+                    // sound
+                    chargeAudio.PlayOneShot(critChargedSound, 1f * gameManager.soundVolume);
+                }
+                // NOT critical hit :(
+                else
+                {
+                    // colors
+                    ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
+                    cannonChargeImage.color = baseChargeColor;
+                    main.startColor = baseChargeColor;
+
+                    // sound
+                    chargeAudio.PlayOneShot(normalChargedSound, 1f * gameManager.soundVolume);
+                }
+
+                chargeParticleSystem.GetComponent<ParticleSystem>().Play();
+                playedParticles = true;
+            }
+        }
+
+        void Shoot()
         {
             charging = false;
 
@@ -184,73 +257,24 @@ public class Cannon : MonoBehaviour
             chargeTime = 0;
         }
 
-        // Advances timer, fills the charge meter, and applies shooting effects
-        if (timerActive && canShoot && charging)
+        void StartShooting()
         {
-            float time = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
+            if (chargeTime < 0.1f)
+                chargeTime = 0.1f;
 
-            // CHARGE METER FILL
-            float fill = Mathf.Lerp(0, 1, time);
-            cannonChargeImage.fillAmount = fill;
+            timerActive = true;
+            charging = true;
 
-            // Shooting effects
-            float fov = Mathf.Lerp(baseFov, maxFov, time);
-            float chromaticAbberationValue = Mathf.Lerp(0, 0.15f, time);
-            float vigetteValue = Mathf.Lerp(baseVigette, 0.45f, time);
-            float bloomValue = Mathf.Lerp(baseBloom, 14, time);
+            // animation
+            animator.SetBool("isLoading", true);
+            animator.SetFloat("loadingMultiplier", loadingAnimation.length / maxCharge);
 
-            volume.profile.TryGet(out ChromaticAberration chromaticAbberation);
-            volume.profile.TryGet(out Vignette vignette);
-            volume.profile.TryGet(out Bloom bloom);
-
-            chromaticAbberation.intensity.value = chromaticAbberationValue;
-            vignette.intensity.value = vigetteValue;
-            bloom.intensity.value = bloomValue;
-            Camera.main.fieldOfView = fov;
-
-            // TIMER
-            chargeTime += Time.deltaTime;
-            
-
-            // Fully charged
-            if (chargeTime >= maxCharge && !playedParticles)
-            {
-                float gambling = Random.Range(0, 100);
-
-                // CRITICAL HIT
-                if (gambling < criticalStrikeChance)
-                {
-                    // stats
-                    critDamageMult = baseCritDamageMult * 1.5f;
-                    critPowerMult *= 1.25f;
-                    sizeMult = baseSizeMult * 1.55f;
-
-                    // colors
-                    ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
-                    cannonChargeImage.color = criticalChargeColor;
-                    main.startColor = criticalChargeColor;
-
-                    // sound
-                    chargeAudio.PlayOneShot(critChargedSound, 1f * gameManager.soundVolume);
-                } 
-                // NOT critical hit :(
-                else
-                {
-                    // colors
-                    ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;
-                    cannonChargeImage.color = baseChargeColor;
-                    main.startColor = baseChargeColor;
-
-                    // sound
-                    chargeAudio.PlayOneShot(normalChargedSound, 1f * gameManager.soundVolume);
-                }
-
-                chargeParticleSystem.GetComponent<ParticleSystem>().Play();
-                playedParticles = true;
-            }
-
+            // charge meter
+            cannonChargeCanvas.SetActive(true);
         }
     }
+
+
 
     public void ShootBullet(float force, float damage, float sizeMult)
     {

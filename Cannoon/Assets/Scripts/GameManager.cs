@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -35,6 +36,11 @@ public class GameManager : MonoBehaviour
     public static GameObject quitButton;
     public static GameObject resumeButton;
 
+    [Header("Credit Screen")]
+    public static GameObject creditsButton;
+    public static GameObject creditScreen;
+    public static GameObject disableCreditsButton;
+
     [Header("Death Screen")]
     public static GameObject deathScreen;
     public static GameObject deathQuitButton;
@@ -43,7 +49,8 @@ public class GameManager : MonoBehaviour
     public static GameObject deathTimeText;
     public static GameObject deathKillsText;
 
-    bool pauseMenuEnabled;
+    public bool pauseMenuEnabled;
+    public bool creditScreenEnabled;
 
     [Header("Difficulty")]
     public Difficulty difficulty;
@@ -77,7 +84,7 @@ public class GameManager : MonoBehaviour
         timePlayed += Time.deltaTime;
         musicSource.volume = musicVolume;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !creditScreenEnabled)
         {
             if (!pauseMenuEnabled)
                 PauseGame();
@@ -94,6 +101,7 @@ public class GameManager : MonoBehaviour
         quitButton = pauseMenu.transform.Find("Quit Button").gameObject;
         resumeButton = pauseMenu.transform.Find("Resume Button").gameObject;
 
+
         // death screen vars
         deathScreen = GameObject.Find("Death Screen");
         deathQuitButton = deathScreen.transform.Find("Quit Button").gameObject;
@@ -101,6 +109,11 @@ public class GameManager : MonoBehaviour
         deathWaveText = deathScreen.transform.Find("Wave").gameObject;
         deathTimeText = deathScreen.transform.Find("Time").gameObject;
         deathKillsText = deathScreen.transform.Find("Kills").gameObject;
+
+        // credit screen vars
+        creditScreen = GameObject.Find("Credit Screen");
+        disableCreditsButton = creditScreen.transform.Find("Close Credit Screen").gameObject;
+        creditsButton = pauseMenu.transform.Find("Credits Button").gameObject;
 
         if (Instance != null)
         {
@@ -123,6 +136,8 @@ public class GameManager : MonoBehaviour
         deathQuitButton.GetComponent<Button>().onClick.AddListener(Quit);
         deathRespawnButton.GetComponent<Button>().onClick.AddListener(Respawn);
         resumeButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
+        creditsButton.GetComponent<Button>().onClick.AddListener(EnableCreditScreen);
+        disableCreditsButton.GetComponent<Button>().onClick.AddListener(DisableCreditScreen);
 
         musicVolumeSlider.onValueChanged.AddListener((v) =>
         {
@@ -132,6 +147,7 @@ public class GameManager : MonoBehaviour
         {
             Instance.soundVolume = v;
         });
+
         musicVolumeSlider.value = Instance.musicVolume;
         SfxVolumeSlider.value = Instance.soundVolume;
     }
@@ -143,7 +159,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayMusicTrack()
     {
-        int track = Random.Range(0, musicTracks.Length);
+        int track = UnityEngine.Random.Range(0, musicTracks.Length);
         musicSource.PlayOneShot(musicTracks[track]);
         musicCurrentlyPlaying = musicTracks[track];
         yield return new WaitForSeconds(musicTracks[track].length);
@@ -154,7 +170,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        pauseMenu.GetComponent<RectTransform>().localPosition = new(0, 0, 0);
+        pauseMenu.GetComponent<RectTransform>().localPosition = Vector3.zero;
         Time.timeScale = 0;
         pauseMenuEnabled = true;
     }
@@ -168,12 +184,27 @@ public class GameManager : MonoBehaviour
 
     public void EnableDeathScreen()
     {
-        deathScreen.GetComponent<RectTransform>().localPosition = new(0, 0, 0);
+        deathScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
         deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
 
-        var ts = System.TimeSpan.FromSeconds(timePlayed);
-        deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", ts.TotalMinutes, ts.Seconds);
+        TimeSpan time = TimeSpan.FromSeconds(timePlayed);
+        deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + time.Minutes.ToString() + ":" + time.Seconds.ToString();
         deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
-        Time.timeScale = 0;
+        UnityEngine.Time.timeScale = 0;
+    }
+
+    public void EnableCreditScreen()
+    {
+        Debug.Log("enableing credits");
+        pauseMenu.GetComponent<RectTransform>().localPosition = new(0, 2000, 0);
+        creditScreenEnabled = true;
+        creditScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
+    }
+
+    public void DisableCreditScreen()
+    {
+        pauseMenu.GetComponent<RectTransform>().localPosition = Vector3.zero;
+        creditScreen.GetComponent<RectTransform>().localPosition = new(0, 2000, 0);
+        creditScreenEnabled = false;
     }
 }
