@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Other")]
     private GameManager gameManager;
     private EndlessMode endlessMode;
-    private GameObject cannon;
+    [HideInInspector] public GameObject cannon;
     public IEnumerator Invincibility(float time)
     {
         canTakeDamage = false;

@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class Cannon : MonoBehaviour
 {
     public GameObject player;
-    public GameObject cannonball;
     public AnimationClip loadingAnimation;
     Animator animator;
 
@@ -24,6 +23,12 @@ public class Cannon : MonoBehaviour
     [Tooltip("Time untill the shot bullet gets deleted (in Seconds)")]
     public float bulletLifetime;
 
+    [Header("Special Stats")]
+    public int bounces;
+    public int pierces;
+    public bool explodingBullets;
+    public bool autofire;
+
     [Header("Critical Hits")]
     public Color baseChargeColor;
     public Color criticalChargeColor;
@@ -31,15 +36,17 @@ public class Cannon : MonoBehaviour
     [HideInInspector] public float baseCritDamageMult = 1;
     float critDamageMult;
     float critPowerMult = 1;
-    [HideInInspector] public float baseSizeMult = 1;
+    public float baseSizeMult = 1;
     float sizeMult;
 
     [Header("Rotation & Shooting")]
     public bool canShoot;
+    bool charging;
     public GameObject cannonRotationObj;
     public GameObject bulletSpawnObj;
     bool cannonFacingRight;
 
+    public float chargeLimit;
     [Tooltip("Minimun hold time for shooting (In Seconds)")]
     public float minCharge;
     [Tooltip("Maximum hold time for shooting (In Seconds)")]
@@ -54,6 +61,13 @@ public class Cannon : MonoBehaviour
 
     public bool timerActive;
     private float chargeTime;
+
+    [Header("Cannonballs")]
+    public GameObject baseCannonball;
+    public GameObject piercingCannonball;
+    public GameObject bouncingCannonball;
+    public GameObject piercingBouncingCannonball;
+    public GameObject activeCannonball;
 
     [Header("Shooting Effects")]
     public GameObject postProcessing;
@@ -73,8 +87,6 @@ public class Cannon : MonoBehaviour
     public AudioClip critChargedSound;
     public AudioClip shootingSound;
 
-    [Header("OTHER")]
-    bool charging;
 
     GameManager gameManager;
     PlayerHealth playerHealthScript;
@@ -120,7 +132,7 @@ public class Cannon : MonoBehaviour
     private void Shooting()
     {
         // Start timer and make charge meter appear
-        if (Input.GetMouseButtonDown(0) && canShoot && !charging)
+        if (Input.GetMouseButton(0) && canShoot && !charging)
         {
             StartShooting();
         }
@@ -139,6 +151,17 @@ public class Cannon : MonoBehaviour
 
         void ChargingShot()
         {
+            // TIMER
+            chargeTime += Time.deltaTime;
+
+            // autofire
+            if (chargeTime >= maxCharge + Mathf.Lerp(0.2f, 1, Mathf.InverseLerp(chargeLimit, 1, maxCharge)) && autofire)
+            {
+                Debug.Log(Mathf.Lerp(0.2f, 0.8f, Mathf.InverseLerp(0, 1, maxCharge)));
+                Shoot();
+                return;
+            }
+
             float time = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
 
             // CHARGE METER FILL
@@ -160,8 +183,6 @@ public class Cannon : MonoBehaviour
             bloom.intensity.value = bloomValue;
             Camera.main.fieldOfView = fov;
 
-            // TIMER
-            chargeTime += Time.deltaTime;
 
 
             // Fully charged
@@ -259,8 +280,8 @@ public class Cannon : MonoBehaviour
 
         void StartShooting()
         {
-            if (chargeTime < 0.1f)
-                chargeTime = 0.1f;
+            if (chargeTime < chargeLimit)
+                chargeTime = chargeLimit;
 
             timerActive = true;
             charging = true;
@@ -281,9 +302,20 @@ public class Cannon : MonoBehaviour
         Vector2 spawnPos;
         spawnPos = new Vector2(bulletSpawnObj.transform.position.x, bulletSpawnObj.transform.position.y);
 
-        GameObject prefab = Instantiate(cannonball, spawnPos, cannonRotationObj.transform.rotation);
+        // select cannonball
+        if (pierces > 0 && bounces > 0)
+            activeCannonball = piercingBouncingCannonball;
+        else if (pierces > 0)
+            activeCannonball = piercingCannonball;
+        else if (bounces > 0)
+            activeCannonball = bouncingCannonball;
+        else
+            activeCannonball = baseCannonball;
+
+        GameObject prefab = Instantiate(activeCannonball, spawnPos, cannonRotationObj.transform.rotation);
+        GameObject prefabChild = prefab.transform.Find("collisions").gameObject;
         prefab.transform.localScale = new Vector3(prefab.transform.localScale.x * sizeMult, prefab.transform.localScale.y * sizeMult, 1f);
-        prefab.GetComponent<Bullet>().SetStats(0, damage, bulletLifetime, true);
+        prefabChild.GetComponent<Cannonball>().SetStats(damage, bulletLifetime, bounces, pierces, explodingBullets);
         prefab.GetComponent<Rigidbody2D>().AddForce(prefab.transform.right * force, ForceMode2D.Impulse);
 
         StartCoroutine(BulletShootingCooldown());

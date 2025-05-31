@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+3 Temperary Hearts '
+  m_text: +0.25s Damage Immunity
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 7344564492861357744}
   - component: {fileID: 1112429091066007681}
   m_Layer: 5
-  m_Name: Temp Health Upgrade
+  m_Name: Immunity Upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 215647966, guid: 771c488a25f1b6a4d9a65902547e233c, type: 3}
+  m_Sprite: {fileID: 1875381711, guid: 771c488a25f1b6a4d9a65902547e233c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -368,9 +368,16 @@ MonoBehaviour:
   speedIncrease: 0
   damageIncrease: 0
   chargeSpeedIncrease: 0
-  criticalChanceIncrease: 0
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
+  criticalChanceIncrease: 0
+  criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
   health: 0
   regen: 0
+  bounces: 0
+  pierces: 0
+  immunityIncrease: 0.25
+  unlockAutofire: 0
+  explodingBullets: 0
+  spawnUpgradesIncrease: 0

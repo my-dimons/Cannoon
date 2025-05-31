@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -8,11 +9,13 @@ public class UpgradeStats : MonoBehaviour
     [Header("Movement")]
     public float jumpHeightIncrease;
     public float speedIncrease;
+
     [Header("Damage")]
     public float damageIncrease;
     public float chargeSpeedIncrease;
     public float sizeMultIncrease;
     public float bulletSpeedIncrease;
+
     [Header("Criticals")]
     public float criticalChanceIncrease;
     public float criticalDamageMultIncrease;
@@ -24,8 +27,17 @@ public class UpgradeStats : MonoBehaviour
     public int health;
     public int regen;
 
+    [Header("Special")]
+    public int bounces;
+    public int pierces;
+    public float immunityIncrease;
+    public bool unlockAutofire;
+    public bool explodingBullets;
+    public int spawnUpgradesIncrease;
+
     PlayerMovement playerMovementScript;
     PlayerHealth playerHealthScript;
+    UpgradeManager upgradeManager;
     EndlessMode endlessModeScript;
     Upgrade upgradeScript;
     Cannon cannonScript;
@@ -33,6 +45,7 @@ public class UpgradeStats : MonoBehaviour
     void Start()
     {
         endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
+        upgradeManager = GameObject.FindGameObjectWithTag("UpgradeManager").GetComponent<UpgradeManager>();
         playerMovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         playerHealthScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         cannonScript = GameObject.FindGameObjectWithTag("Cannon").GetComponent<Cannon>();
@@ -61,6 +74,17 @@ public class UpgradeStats : MonoBehaviour
         // health
         playerHealthScript.numOfHearts += health;
         endlessModeScript.healthRegen += regen;
+
+        // special
+        cannonScript.bounces += bounces;
+        cannonScript.pierces += pierces;
+        upgradeManager.upgrades += spawnUpgradesIncrease;
+        playerHealthScript.damageInvincibilityCooldown += immunityIncrease;
+        if (!cannonScript.explodingBullets)
+            cannonScript.explodingBullets = explodingBullets;
+        if (!cannonScript.autofire)
+            cannonScript.autofire = unlockAutofire;
+
         upgradeScript.Pick();
     }
 }

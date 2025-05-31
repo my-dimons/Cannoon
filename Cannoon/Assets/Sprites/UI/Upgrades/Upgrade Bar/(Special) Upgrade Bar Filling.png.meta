@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 771c488a25f1b6a4d9a65902547e233c
+guid: e8c4fc4ff97cd404a99856e1414668c4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Temp Hearts Upgrade_0
+      name: (Special) Upgrade Bar Filling_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 18
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a480302066f753469c4e08d453be8a9
-      internalID: 215647966
+      spriteID: abf987a8ece08ff4d83d6c0733ff71a3
+      internalID: -932553794
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Temp Hearts Upgrade_1
+      name: (Special) Upgrade Bar Filling_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 18
         y: 0
-        width: 16
-        height: 16
+        width: 18
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,8 +158,134 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a30728ff593c0e7448e82633cc94fe8e
-      internalID: -644035201
+      spriteID: 20b380b8fcf5f6c44918399295cb7755
+      internalID: -850233384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: (Special) Upgrade Bar Filling_2
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2013928e2d38a3e459c0358d69512c60
+      internalID: -225126513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: (Special) Upgrade Bar Filling_3
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbc0af9c6de5db1408ca7f30744dce4e
+      internalID: -2101160234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: (Special) Upgrade Bar Filling_4
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1238c7868299bb44886d8ba257804ec0
+      internalID: 1252245824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: (Special) Upgrade Bar Filling_5
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19e61e27846bd554fb0571143b9e10f7
+      internalID: 1359868261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: (Special) Upgrade Bar Filling_6
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9321025d91277524b8123a65eb4cec23
+      internalID: 1781421349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: (Special) Upgrade Bar Filling_7
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 0
+        width: 18
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 490dfe40001a7ae4391f8f0103ac08de
+      internalID: 1294754635
       vertices: []
       indices: 
       edges: []
@@ -175,8 +301,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Temp Hearts Upgrade_0: 215647966
-      Temp Hearts Upgrade_1: -644035201
+      (Special) Upgrade Bar Filling_0: -932553794
+      (Special) Upgrade Bar Filling_1: -850233384
+      (Special) Upgrade Bar Filling_2: -225126513
+      (Special) Upgrade Bar Filling_3: -2101160234
+      (Special) Upgrade Bar Filling_4: 1252245824
+      (Special) Upgrade Bar Filling_5: 1359868261
+      (Special) Upgrade Bar Filling_6: 1781421349
+      (Special) Upgrade Bar Filling_7: 1294754635
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

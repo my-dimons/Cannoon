@@ -16,7 +16,7 @@ public class Teleporter : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Collision");
+            Debug.Log("Teleporting Player");
             player.transform.position = teleportationObject.transform.position;
             endlessModeScript.wavesStarted = true;
         }

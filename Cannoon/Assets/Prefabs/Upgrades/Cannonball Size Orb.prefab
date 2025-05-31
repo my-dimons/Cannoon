@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -233,13 +233,20 @@ MonoBehaviour:
   jumpHeightIncrease: 0
   speedIncrease: 0
   damageIncrease: 2
-  chargeSpeedIncrease: 0.2
-  criticalChanceIncrease: 0
+  chargeSpeedIncrease: 0.1
   sizeMultIncrease: 0.1
   bulletSpeedIncrease: 0
+  criticalChanceIncrease: 0
+  criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
   health: 0
   regen: 0
+  bounces: 0
+  pierces: 0
+  immunityIncrease: 0
+  unlockAutofire: 0
+  explodingBullets: 0
+  spawnUpgradesIncrease: 0
 --- !u!1 &5045525951149598098
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +316,7 @@ MonoBehaviour:
 
     +2 Damage
 
-    + 0.2s Charge Speed'
+    + 0.1s Charge Speed'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}

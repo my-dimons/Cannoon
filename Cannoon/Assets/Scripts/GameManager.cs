@@ -188,14 +188,14 @@ public class GameManager : MonoBehaviour
         deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
         
         TimeSpan time = TimeSpan.FromSeconds(timePlayed);
-        deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + time.Minutes.ToString() + ":" + time.Seconds.ToString();
+        deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", time.Minutes.ToString(), time.Seconds.ToString());
+        Debug.Log(time.Seconds.ToString());
         deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
-        UnityEngine.Time.timeScale = 0;
+        Time.timeScale = 0;
     }
 
     public void EnableCreditScreen()
     {
-        Debug.Log("enableing credits");
         pauseMenu.GetComponent<RectTransform>().localPosition = new(0, 2000, 0);
         creditScreenEnabled = true;
         creditScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
