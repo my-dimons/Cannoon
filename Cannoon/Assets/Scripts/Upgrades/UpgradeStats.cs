@@ -35,6 +35,10 @@ public class UpgradeStats : MonoBehaviour
     public bool explodingBullets;
     public int spawnUpgradesIncrease;
 
+    [Header("Difficulty Increase")]
+    public int increaseUpgradeBar;
+    public float increaseDifficultyIncreasePercent;
+
     PlayerMovement playerMovementScript;
     PlayerHealth playerHealthScript;
     UpgradeManager upgradeManager;
@@ -78,12 +82,17 @@ public class UpgradeStats : MonoBehaviour
         // special
         cannonScript.bounces += bounces;
         cannonScript.pierces += pierces;
-        upgradeManager.upgrades += spawnUpgradesIncrease;
+        upgradeManager.baseUpgrades += spawnUpgradesIncrease;
         playerHealthScript.damageInvincibilityCooldown += immunityIncrease;
         if (!cannonScript.explodingBullets)
             cannonScript.explodingBullets = explodingBullets;
         if (!cannonScript.autofire)
             cannonScript.autofire = unlockAutofire;
+
+        // difficulty
+        endlessModeScript.difficultyMultiplierIncrease += endlessModeScript.difficultyMultiplierIncrease / 100 * increaseDifficultyIncreasePercent;
+        upgradeManager.baseUpgradeWaves += increaseUpgradeBar;
+        upgradeManager.UpdateUpgradeBars();
 
         upgradeScript.Pick();
     }

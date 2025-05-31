@@ -184,7 +184,6 @@ public class Cannon : MonoBehaviour
             Camera.main.fieldOfView = fov;
 
 
-
             // Fully charged
             if (chargeTime >= maxCharge && !playedParticles)
             {
@@ -280,9 +279,8 @@ public class Cannon : MonoBehaviour
 
         void StartShooting()
         {
-            if (chargeTime < chargeLimit)
-                chargeTime = chargeLimit;
-
+            if (maxCharge < chargeLimit)
+                maxCharge = chargeLimit;
             timerActive = true;
             charging = true;
 
@@ -294,8 +292,6 @@ public class Cannon : MonoBehaviour
             cannonChargeCanvas.SetActive(true);
         }
     }
-
-
 
     public void ShootBullet(float force, float damage, float sizeMult)
     {

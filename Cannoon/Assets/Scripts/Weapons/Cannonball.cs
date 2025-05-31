@@ -59,26 +59,10 @@ public class Cannonball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // collides with ground
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            PlayParticles();
-            if (bounces > 0)
-            {
-                bounces -= 1;
-            }
-            else
-            {
-                if (explode)
-                    SpawnExplosion();
-                Destroy(transform.parent.gameObject);
-            }
-        }
         // collides with enemy
         if (other.gameObject.CompareTag("Enemy") && other.GetComponent<Enemy>().canTakeDamage)
         {
             PlayParticles();
-
             if (pierces > 0)
             {
                 GameObject enemy = other.gameObject;
@@ -95,6 +79,22 @@ public class Cannonball : MonoBehaviour
 
                 if (explode)
                     SpawnExplosion();
+            }
+        }
+
+        // collides with ground
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            PlayParticles();
+            if (bounces <= 0)
+            {
+                if (explode)
+                    SpawnExplosion();
+                Destroy(transform.parent.gameObject);
+            }
+            else
+            {
+                bounces -= 1;
             }
         }
     }

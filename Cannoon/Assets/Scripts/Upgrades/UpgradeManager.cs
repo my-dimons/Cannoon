@@ -6,19 +6,22 @@ using UnityEngine.UI;
 public class UpgradeManager : MonoBehaviour
 {
     public bool pauseWaves;
+    public int baseUpgrades;
     public int upgrades;
     public float spawningRange;
-    [HideInInspector] public bool appliedUpgradeTick;
+    public bool appliedUpgradeTick;
 
     [Tooltip("How many waves for each upgrade")]
     public int baseUpgradeWaves;
     [Tooltip("How many base upgrade selections between special upgrade selection")]
     public int specialUpgradeWaves;
+    public int difficultyIncreaseWaves;
 
     [Header("Upgrade Bars")]
     public Image[] upgradeBars;
     public int upgradeTicks;
-    int specialUpgradeTicks;
+    public int specialUpgradeTicks;
+    public int difficultyIncreaseTicks;
 
     [Header("Upgrade Orbs")]
     public GameObject parentUpgradeOrb;
@@ -34,6 +37,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject upgradeOrb;
     public GameObject explosionOrb;
     public GameObject autofireOrb;
+    public GameObject difficultyIncreaseOrb;
 
     [Header("Audio")]
     public AudioSource upgradeAudio;
@@ -61,24 +65,35 @@ public class UpgradeManager : MonoBehaviour
         for (int i = 0; i < upgradeBars.Length; i++)
         {
             Animator anim = upgradeBars[i].GetComponent<Animator>();
+            // difficulty upgrade fill
+            if (i < upgradeTicks && (difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
+            {
+                anim.SetBool("isFilled", true);
+                anim.SetBool("isDifficult", true);
+            } else if (i >= upgradeTicks && (difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
+            {
+                anim.SetBool("isFilled", false);
+            }
+
             // special upgrade fill
-            if (i < upgradeTicks && (specialUpgradeTicks + 1 == specialUpgradeWaves))
+            if (i < upgradeTicks && (specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
             {
                 anim.SetBool("isFilled", true);
                 anim.SetBool("isSpecial", true);
             }
-            else if (i >= upgradeTicks && (specialUpgradeTicks + 1 == specialUpgradeWaves))
+            else if (i >= upgradeTicks && (specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
             {
                 anim.SetBool("isFilled", false);
             }
 
             // normal upgrade fill
-            if (i < upgradeTicks && !(specialUpgradeTicks + 1 == specialUpgradeWaves))
+            if (i < upgradeTicks && !(specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
             {
                 anim.SetBool("isFilled", true);
                 anim.SetBool("isSpecial", false);
+                anim.SetBool("isDifficult", false);
             }
-            else if (i >= upgradeTicks && !(specialUpgradeTicks + 1 == specialUpgradeWaves))
+            else if (i >= upgradeTicks && !(specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
                 anim.SetBool("isFilled", false);
 
             // disable upgrade bars depending on set amount
@@ -92,33 +107,44 @@ public class UpgradeManager : MonoBehaviour
     public IEnumerator SpawnUpgrades()
     {
         bool specialWave = false;
+        bool difficultWave = false;
         upgradeBars[baseUpgradeWaves - 1].gameObject.GetComponent<Animator>().SetBool("isFilled", true);
         UpdateUpgradeBars();
 
-        if (specialUpgradeTicks < specialUpgradeWaves)
+        if (difficultyIncreaseTicks <= difficultyIncreaseWaves)
         {
-            Debug.Log("Not special wave");
+            difficultWave = false;
+            difficultyIncreaseTicks += 1;
+        }
+        if (difficultyIncreaseTicks == difficultyIncreaseWaves)
+        {
+            difficultWave = true;
+            difficultyIncreaseTicks = 0;
+        }
+
+        // special wave
+        if (specialUpgradeTicks <= specialUpgradeWaves && !difficultWave)
+        {
             specialWave = false;
             specialUpgradeTicks += 1;
         }
-        if (specialUpgradeTicks >= specialUpgradeWaves)
+        if (specialUpgradeTicks == specialUpgradeWaves)
         {
             specialWave = true;
             specialUpgradeTicks = 0;
-            Debug.Log("SPECIAL WAVE");
         }
 
         // select upgrade orbs
         List<GameObject> availableUpgradeOrbs = new();
-        availableUpgradeOrbs = SelectUpgrades(availableUpgradeOrbs, specialWave);
+        availableUpgradeOrbs = SelectUpgrades(availableUpgradeOrbs, specialWave, difficultWave);
 
         yield return new WaitForSeconds(1);
 
         upgradeAudio.PlayOneShot(upgradesSpawningSound, 1f * gameManager.soundVolume);
 
         upgradeTicks = 0;
-
-        upgrades = Mathf.Clamp(upgrades, 1, availableUpgradeOrbs.Count-1);
+        
+        upgrades = Mathf.Clamp(baseUpgrades, 1, availableUpgradeOrbs.Count);
         List<GameObject> pickedUpgrades = new();
         // pick 2 random upgrades
         for (int i = 0; i < upgrades; i++)
@@ -130,9 +156,13 @@ public class UpgradeManager : MonoBehaviour
 
         for (int i = 0; i < pickedUpgrades.Count; i++)
         {
+            Debug.Log("Spawning Upgrades");
+
             float spawnRangeLength = spawningRange * 2;
             float distinceBetweenUpgrades = spawnRangeLength / (pickedUpgrades.Count - 1);
             Vector3 spawnPos = new(-spawningRange + (distinceBetweenUpgrades * i), 0, 0);
+            if (availableUpgradeOrbs.Count == 0)
+                spawnPos = Vector3.zero;
 
             GameObject spawnObj = Instantiate(pickedUpgrades[i], parentUpgradeOrb.transform);
             spawnObj.GetComponent<RectTransform>().localPosition = spawnPos;
@@ -144,8 +174,13 @@ public class UpgradeManager : MonoBehaviour
         UpdateUpgradeBars();
     }
 
-    private List<GameObject> SelectUpgrades(List<GameObject> availableUpgradeOrbs, bool specialWave)
+    private List<GameObject> SelectUpgrades(List<GameObject> availableUpgradeOrbs, bool specialWave, bool difficultWave)
     {
+        if (difficultWave)
+        {
+            availableUpgradeOrbs.Add(difficultyIncreaseOrb);
+            return availableUpgradeOrbs;
+        }
         if (!specialWave)
         {
             for (int i = 0; i < upgradeOrbs.Length; i++)
