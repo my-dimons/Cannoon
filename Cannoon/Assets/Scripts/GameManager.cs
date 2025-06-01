@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
         deathScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
         deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
         
-        TimeSpan time = TimeSpan.FromSeconds(timePlayed);
+        TimeSpan time = TimeSpan.FromSeconds(Mathf.RoundToInt(timePlayed));
         deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", time.Minutes.ToString(), time.Seconds.ToString());
         deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
         Time.timeScale = 0;
