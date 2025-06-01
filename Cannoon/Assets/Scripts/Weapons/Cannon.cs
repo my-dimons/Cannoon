@@ -157,9 +157,8 @@ public class Cannon : MonoBehaviour
             chargeTime += Time.deltaTime;
 
             // autofire
-            if (chargeTime >= maxCharge + Mathf.Lerp(0.2f, 1, Mathf.InverseLerp(chargeLimit, 1, maxCharge)) && autofire)
+            if (chargeTime >= maxCharge + Mathf.Lerp(0.1f, 0.6f, Mathf.InverseLerp(chargeLimit, 1, maxCharge)) && autofire)
             {
-                Debug.Log(Mathf.Lerp(0.2f, 0.8f, Mathf.InverseLerp(0, 1, maxCharge)));
                 Shoot();
                 return;
             }

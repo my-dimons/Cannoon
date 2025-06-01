@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public AudioClip[] musicTracks;
     public AudioClip musicCurrentlyPlaying;
     public float musicTransitionTime;
+    public bool playingMusic;
 
     [Header("Pause Menu")]
     public static GameObject pauseMenu;
@@ -93,6 +94,11 @@ public class GameManager : MonoBehaviour
             else
                 ResumeGame();
         }
+
+        if (!playingMusic)
+        {
+            StartCoroutine(PlayMusicTrack());
+        }
     }
     private void Awake()
     {
@@ -126,7 +132,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-  
+   
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         StartCoroutine(PlayMusicTrack());
@@ -156,13 +162,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayMusicTrack()
     {
+        playingMusic = true;
         int track = UnityEngine.Random.Range(0, musicTracks.Length);
         musicSource.PlayOneShot(musicTracks[track]);
         musicCurrentlyPlaying = musicTracks[track];
         yield return new WaitForSeconds(musicTracks[track].length);
+        musicSource.Stop();
         musicCurrentlyPlaying = null;
         yield return new WaitForSeconds(musicTransitionTime);
-        StartCoroutine(PlayMusicTrack());
+        playingMusic = false;
     }
 
     public void PauseGame()
@@ -194,6 +202,7 @@ public class GameManager : MonoBehaviour
         deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
         
         TimeSpan time = TimeSpan.FromSeconds(Mathf.RoundToInt(timePlayed));
+        Debug.Log("Time: " + time.Seconds.ToString());
         deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", time.Minutes.ToString(), time.Seconds.ToString());
         deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
         Time.timeScale = 0;

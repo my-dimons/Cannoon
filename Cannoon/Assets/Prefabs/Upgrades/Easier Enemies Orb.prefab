@@ -264,7 +264,7 @@ MonoBehaviour:
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
   criticalDamageMultIncrease: 0
-  waveDifficultyIncrease: -0.175
+  waveDifficultyIncrease: -0.2
   health: 0
   regen: 0
   bounces: 0

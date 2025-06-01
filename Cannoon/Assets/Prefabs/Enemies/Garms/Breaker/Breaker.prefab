@@ -367,7 +367,7 @@ MonoBehaviour:
   canTakeDamage: 1
   baseHealth: 80
   health: 0
-  minWave: 18
+  minWave: 25
   maxWave: 999
   waveOverride: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}

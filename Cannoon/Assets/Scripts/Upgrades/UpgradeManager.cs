@@ -34,6 +34,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject healthUpgradeOrb;
     public GameObject regenUpgradeOrb;
     public GameObject criticalChanceOrb;
+    public GameObject criticalDamageOrb;
     public GameObject upgradeOrb;
     public GameObject explosionOrb;
     public GameObject autofireOrb;
@@ -190,6 +191,9 @@ public class UpgradeManager : MonoBehaviour
             // max crit chance
             if (cannonScript.criticalStrikeChance >= 100)
                 availableUpgradeOrbs.Remove(criticalChanceOrb);
+            // crit damage
+            if (cannonScript.criticalStrikeChance < 40)
+                availableUpgradeOrbs.Remove(criticalDamageOrb);
             // max health
             if (player.GetComponent<PlayerHealth>().numOfHearts >= player.GetComponent<PlayerHealth>().hearts.Length)
                 availableUpgradeOrbs.Remove(healthUpgradeOrb);
