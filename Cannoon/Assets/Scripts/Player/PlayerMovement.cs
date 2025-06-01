@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource playerAudio;
+    public AudioClip hittingGround;
     public AudioClip groundPoundSound;
     public AudioClip[] runningSounds;
 
@@ -136,9 +137,8 @@ public class PlayerMovement : MonoBehaviour
         if (rb.velocity.x != 0 && onGround && !playerAudio.isPlaying)
         {
             int i = Random.Range(0, runningSounds.Length);
-            playerAudio.pitch = Random.Range(0.5f, 1.5f);
+            playerAudio.pitch = Random.Range(0.75f, 1.25f);
             playerAudio.PlayOneShot(runningSounds[i], 1.75f * gameManager.soundVolume);
-            playerAudio.pitch = 1;
         }
     }
 

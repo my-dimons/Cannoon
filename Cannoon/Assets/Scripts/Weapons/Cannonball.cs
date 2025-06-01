@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class Cannonball : MonoBehaviour
 {
@@ -8,12 +9,18 @@ public class Cannonball : MonoBehaviour
     public float distanceFromShooter;
     public float bulletLife;
     public GameObject destroyingParticles;
+    public Color particleColor;
 
     [Header("Special")]
     public int bounces;
     public int pierces;
     public bool explode;
     public GameObject bulletExplosion;
+
+    [Header("Audio")]
+    public AudioSource sound;
+    public AudioClip bounceSfx;
+    public AudioClip explosionSfx;
 
     // Start is called before the first frame update
     void Start()
@@ -75,10 +82,9 @@ public class Cannonball : MonoBehaviour
                 GameObject enemy = other.gameObject;
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(damage);
-                Destroy(transform.parent.gameObject);
-
                 if (explode)
                     SpawnExplosion();
+                Destroy(transform.parent.gameObject);
             }
         }
 
@@ -95,6 +101,7 @@ public class Cannonball : MonoBehaviour
             else
             {
                 bounces -= 1;
+                sound.PlayOneShot(bounceSfx, 0.3f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
             }
         }
     }
@@ -104,6 +111,9 @@ public class Cannonball : MonoBehaviour
         if (destroyingParticles != null)
         {
             GameObject particles = Instantiate(destroyingParticles, transform.position, destroyingParticles.transform.rotation);
+
+            MainModule main = particles.GetComponent<ParticleSystem>().main;
+            main.startColor = particleColor;
             particles.GetComponent<ParticleSystem>().Play();
         }
     }
@@ -114,6 +124,7 @@ public class Cannonball : MonoBehaviour
         {
             GameObject explosion = Instantiate(bulletExplosion, transform.position, bulletExplosion.transform.rotation);
 
+            explosion.GetComponent<AudioSource>().PlayOneShot(explosionSfx, 0.5f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
             explosion.transform.GetChild(0).GetComponent<ContactDamage>().damage = damage / 2;
             explosion.transform.localScale = new(bulletExplosion.transform.localScale.x * transform.parent.localScale.x, bulletExplosion.transform.localScale.y * transform.parent.localScale.y, 1);
         }
