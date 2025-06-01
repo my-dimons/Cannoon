@@ -101,7 +101,6 @@ public class GameManager : MonoBehaviour
         quitButton = pauseMenu.transform.Find("Quit Button").gameObject;
         resumeButton = pauseMenu.transform.Find("Resume Button").gameObject;
 
-
         // death screen vars
         deathScreen = GameObject.Find("Death Screen");
         deathQuitButton = deathScreen.transform.Find("Quit Button").gameObject;
