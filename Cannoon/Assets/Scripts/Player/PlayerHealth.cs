@@ -108,6 +108,7 @@ public class PlayerHealth : MonoBehaviour
 
             // effects
             StartCoroutine(cannon.GetComponent<DamageFlash>().FlashWhite());
+            StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.3f));
 
             playerAudio.pitch = Random.Range(0.5f, 1.5f);
             playerAudio.PlayOneShot(hitSound, 1f * gameManager.soundVolume);

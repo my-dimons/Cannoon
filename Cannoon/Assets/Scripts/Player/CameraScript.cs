@@ -1,15 +1,27 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    public GameObject player;
-    public Vector3 positionAdjustments;
+    Vector3 pos;
 
-    private void LateUpdate()
+    public AnimationCurve curve;
+    public bool screenshaking;
+    private void Start()
     {
-        // Follows Player
-        transform.position = new Vector3(player.transform.position.x + positionAdjustments.x,
-            player.transform.position.y + positionAdjustments.y,
-            player.transform.position.z + positionAdjustments.z);
+        pos = transform.localPosition;
+    }
+    public IEnumerator Screenshake(float duration)
+    {
+        float elapsedTime = 0;
+
+        while (elapsedTime < duration && !GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().dead)
+        {
+            elapsedTime += Time.deltaTime;
+            float strength = curve.Evaluate(elapsedTime / duration);
+            transform.localPosition = pos + Random.insideUnitSphere * strength;
+            yield return null;
+        }
+        transform.localPosition = pos;
     }
 }

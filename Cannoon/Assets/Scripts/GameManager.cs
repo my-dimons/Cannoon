@@ -23,10 +23,12 @@ public class GameManager : MonoBehaviour
     [Range(0f, 1f)]
     public float musicVolume;
 
-    [Header("Music")]
+    [Header("Music/Sfx")]
     public AudioSource musicSource;
+    public AudioSource audioSource;
+    public AudioClip deathSfx;
     public AudioClip[] musicTracks;
-    [SerializeField] private AudioClip musicCurrentlyPlaying;
+    public AudioClip musicCurrentlyPlaying;
     public float musicTransitionTime;
 
     [Header("Pause Menu")]
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
   
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        StartCoroutine(PlayMusicTrack());
         currentKills = 0;
         timePlayed = 0;
 
@@ -151,11 +154,6 @@ public class GameManager : MonoBehaviour
         SfxVolumeSlider.value = Instance.soundVolume;
     }
 
-    private void Start()
-    {
-        StartCoroutine(PlayMusicTrack());
-    }
-
     IEnumerator PlayMusicTrack()
     {
         int track = UnityEngine.Random.Range(0, musicTracks.Length);
@@ -169,26 +167,34 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        pauseMenu.GetComponent<RectTransform>().localPosition = Vector3.zero;
-        Time.timeScale = 0;
-        pauseMenuEnabled = true;
+        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().dead)
+        {
+            pauseMenu.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            Time.timeScale = 0;
+            pauseMenuEnabled = true;
+        }
     }
 
     public void ResumeGame()
     {
         pauseMenu.GetComponent<RectTransform>().localPosition = new(0, 2000, 0);
-        Time.timeScale = 1;
         pauseMenuEnabled = false;
+        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().dead)
+            Time.timeScale = 1;
     }
 
     public void EnableDeathScreen()
     {
+        // audio
+        audioSource.PlayOneShot(deathSfx, 1 * soundVolume);
+        musicSource.Stop();
+
+        // ui
         deathScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
         deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
         
         TimeSpan time = TimeSpan.FromSeconds(timePlayed);
         deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", time.Minutes.ToString(), time.Seconds.ToString());
-        Debug.Log(time.Seconds.ToString());
         deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
         Time.timeScale = 0;
     }

@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -201,6 +200,7 @@ public class Cannon : MonoBehaviour
 
             void FullyChargedShot()
             {
+                StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(Mathf.Lerp(0, 0.12f, time)));
                 float gambling = Random.Range(0, 100);
 
                 // CRITICAL HIT
@@ -239,6 +239,7 @@ public class Cannon : MonoBehaviour
         void Shoot()
         {
             charging = false;
+            float time = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
 
             // reset player speed
             playerMovementScript.speed = playerMovementScript.baseSpeed;
@@ -248,13 +249,14 @@ public class Cannon : MonoBehaviour
 
             // animation
             animator.SetBool("isLoading", false);
+            StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(Mathf.Lerp(0, 0.5f, time)));
 
             // clamp time
             Mathf.Clamp(chargeTime, minCharge, maxCharge);
 
             // bullet stats
-            float force = Mathf.Lerp(minPower, maxPower * critPowerMult, Mathf.InverseLerp(minCharge, maxCharge, chargeTime));
-            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage * critDamageMult, Mathf.InverseLerp(minCharge, maxCharge, chargeTime));
+            float force = Mathf.Lerp(minPower, maxPower * critPowerMult, time);
+            float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage * critDamageMult, time);
             float extraDamage;
             // fully charged
             if (chargeTime >= maxCharge)
