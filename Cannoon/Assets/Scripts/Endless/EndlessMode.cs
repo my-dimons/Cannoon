@@ -108,8 +108,9 @@ public class EndlessMode : MonoBehaviour
         advancingWaveTexts.SetActive(true);
         currentWaveText.text = "Wave  " + wave;
 
-        // heal player (by 1 heart)
-        player.GetComponent<PlayerHealth>().Heal(healthRegen);
+        // heal player every other round
+        if (wave % 2 == 0)
+            player.GetComponent<PlayerHealth>().Heal(healthRegen);
         // trigger player invincibility
         StartCoroutine(player.GetComponent<PlayerHealth>().Invincibility(playerInvincibility + timeBetweenWaves));
 

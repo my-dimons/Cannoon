@@ -105,6 +105,7 @@ MonoBehaviour:
   canMove: 0
   onGround: 0
   canDealDamage: 0
+  canTakeDamage: 1
   baseHealth: 40
   health: 0
   minWave: 4
@@ -505,6 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   notEnemy: 0
+  isPlayer: 0
 --- !u!95 &370613018770531434
 Animator:
   serializedVersion: 5
@@ -558,7 +560,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.047069266, y: -1.6512063}
+  m_Offset: {x: -0.08388746, y: -1.6811211}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -569,7 +571,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.78987515, y: 0.6975875}
+  m_Size: {x: 0.71623874, y: 0.6377578}
   m_EdgeRadius: 0
 --- !u!114 &1526130640147612096
 MonoBehaviour:

@@ -41,7 +41,7 @@ public class Cannon : MonoBehaviour
 
     [Header("Rotation & Shooting")]
     public bool canShoot;
-    bool charging;
+    public bool charging;
     public GameObject cannonRotationObj;
     public GameObject bulletSpawnObj;
     bool cannonFacingRight;
@@ -90,6 +90,7 @@ public class Cannon : MonoBehaviour
 
     GameManager gameManager;
     PlayerHealth playerHealthScript;
+    PlayerMovement playerMovementScript;
 
     public IEnumerator BulletShootingCooldown()
     {
@@ -102,12 +103,14 @@ public class Cannon : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        playerMovementScript = player.GetComponent<PlayerMovement>();
         playerHealthScript = player.GetComponent<PlayerHealth>();
         volume = postProcessing.GetComponent<Volume>();
         animator = GetComponent<Animator>();
 
         cannonFacingRight = true;
         sizeMult = baseSizeMult;
+        critDamageMult = baseCritDamageMult;
 
         volume.profile.TryGet(out Bloom bloom);
         volume.profile.TryGet(out Vignette vignette);
@@ -183,6 +186,12 @@ public class Cannon : MonoBehaviour
             bloom.intensity.value = bloomValue;
             Camera.main.fieldOfView = fov;
 
+            // slow player down based on charge time
+            float speed = playerMovementScript.baseSpeed * Mathf.Lerp(1, 0.55f, time);
+            if (playerMovementScript.onGround)
+                playerMovementScript.speed = speed;
+            else
+                playerMovementScript.speed = speed / playerMovementScript.airSpeedDivisor;
 
             // Fully charged
             if (chargeTime >= maxCharge && !playedParticles)
@@ -230,6 +239,9 @@ public class Cannon : MonoBehaviour
         void Shoot()
         {
             charging = false;
+
+            // reset player speed
+            playerMovementScript.speed = playerMovementScript.baseSpeed;
 
             // charge meter
             cannonChargeCanvas.SetActive(false);

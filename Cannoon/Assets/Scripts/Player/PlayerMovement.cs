@@ -67,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Other")]
     PlayerHealth playerHealthScript;
+    Cannon cannonScript;
     GameManager gameManager;
     Rigidbody2D rb;
 
@@ -83,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         playerHealthScript = GetComponent<PlayerHealth>();
         playerAnimator = playerSprite.GetComponent<Animator>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        cannonScript = cannon.transform.Find("Cannon").GetComponent<Cannon>();
         speed = baseSpeed;
         jumpForce = baseJumpForce;
 
@@ -95,7 +97,8 @@ public class PlayerMovement : MonoBehaviour
         GravityMultiplier();
         if (!playerHealthScript.dead)
         {
-            InAir();
+            if (!cannonScript.charging)
+                InAir();
             Movement();
 
             // Ground Pound
