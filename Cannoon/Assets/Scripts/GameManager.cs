@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [Header("Global Player Stats")]
+    public int waveHighscore;
     [Tooltip("Players total kills")]
     public int globalKills;
     [Tooltip("Amount of kills the player has on the current stage")]
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
     public static GameObject deathWaveText;
     public static GameObject deathTimeText;
     public static GameObject deathKillsText;
+    public static GameObject deathWaveHighscore;
 
     public bool pauseMenuEnabled;
     public bool creditScreenEnabled;
@@ -102,7 +104,6 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        // pause menu vars
         pauseMenu = GameObject.Find("Pause Menu");
         musicVolumeSlider = pauseMenu.transform.Find("Music Volume Slider").GetComponent<Slider>();
         SfxVolumeSlider = pauseMenu.transform.Find("SFX Volume Slider").GetComponent<Slider>();
@@ -116,11 +117,13 @@ public class GameManager : MonoBehaviour
         deathWaveText = deathScreen.transform.Find("Wave").gameObject;
         deathTimeText = deathScreen.transform.Find("Time").gameObject;
         deathKillsText = deathScreen.transform.Find("Kills").gameObject;
+        deathWaveHighscore = deathScreen.transform.Find("Wave Highscore").gameObject;
 
         // credit screen vars
         creditScreen = GameObject.Find("Credit Screen");
         disableCreditsButton = creditScreen.transform.Find("Close Credit Screen").gameObject;
         creditsButton = pauseMenu.transform.Find("Credits Button").gameObject;
+
 
         if (Instance != null)
         {
@@ -162,6 +165,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PlayMusicTrack()
     {
+        Debug.Log("Playing music");
+        musicSource.Stop();
         playingMusic = true;
         int track = UnityEngine.Random.Range(0, musicTracks.Length);
         musicSource.PlayOneShot(musicTracks[track]);
@@ -193,17 +198,24 @@ public class GameManager : MonoBehaviour
 
     public void EnableDeathScreen()
     {
+        // set highscore
+        if (GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave > waveHighscore)
+            waveHighscore = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave;
+
         // audio
         audioSource.PlayOneShot(deathSfx, 1 * soundVolume);
         musicSource.Stop();
 
-        // ui
+        // wave text
         deathScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
         deathWaveText.GetComponent<TextMeshProUGUI>().text = "Wave " + GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave.ToString();
+        deathWaveHighscore.GetComponent<TextMeshProUGUI>().text = "Highscore: " + waveHighscore;
         
+        // timer text
         TimeSpan time = TimeSpan.FromSeconds(Mathf.RoundToInt(timePlayed));
-        Debug.Log("Time: " + time.Seconds.ToString());
-        deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", time.Minutes.ToString(), time.Seconds.ToString());
+        deathTimeText.GetComponent<TextMeshProUGUI>().text = "Time: " + string.Format("{0:00}:{1:00}", time.Minutes, time.Seconds);
+
+        // kills text
         deathKillsText.GetComponent<TextMeshProUGUI>().text = currentKills.ToString() + " Kills";
         Time.timeScale = 0;
     }

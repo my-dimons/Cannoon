@@ -1,10 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
 
 public class Cannonball : MonoBehaviour
 {
+    public float baseDamage;
     public float damage;
     public float distanceFromShooter;
     public float bulletLife;
@@ -14,6 +14,7 @@ public class Cannonball : MonoBehaviour
     [Header("Special")]
     public int bounces;
     public int pierces;
+    public float pierceDamageDecrease;
     public bool explode;
     public GameObject bulletExplosion;
 
@@ -26,6 +27,7 @@ public class Cannonball : MonoBehaviour
     void Start()
     {
         StartCoroutine(BulletLife(bulletLife));
+        damage = baseDamage;
     }
 
     IEnumerator BulletLife(float life)
@@ -57,7 +59,7 @@ public class Cannonball : MonoBehaviour
     }
     public void SetStats(float newDamage, float life, int bounce, int pierce, bool explosion)
     {
-        damage = newDamage;
+        baseDamage = newDamage;
         bulletLife = life;
         bounces = bounce;
         pierces = pierce;
@@ -74,14 +76,16 @@ public class Cannonball : MonoBehaviour
             {
                 GameObject enemy = other.gameObject;
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
+                damage /= pierceDamageDecrease;
+
                 enemyScript.TakeDamage(damage);
-                pierces -= 1;
+                pierces--;
             }
             else
             {
                 GameObject enemy = other.gameObject;
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
-                enemyScript.TakeDamage(damage);
+                enemyScript.TakeDamage(baseDamage);
                 if (explode)
                     SpawnExplosion();
                 Destroy(transform.parent.gameObject);
@@ -100,7 +104,7 @@ public class Cannonball : MonoBehaviour
             }
             else
             {
-                bounces -= 1;
+                bounces--;
                 sound.PlayOneShot(bounceSfx, 0.3f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
             }
         }
@@ -125,7 +129,7 @@ public class Cannonball : MonoBehaviour
             GameObject explosion = Instantiate(bulletExplosion, transform.position, bulletExplosion.transform.rotation);
 
             explosion.GetComponent<AudioSource>().PlayOneShot(explosionSfx, 0.5f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
-            explosion.transform.GetChild(0).GetComponent<ContactDamage>().damage = damage / 2;
+            explosion.transform.GetChild(0).GetComponent<ContactDamage>().damage = baseDamage / 2;
             explosion.transform.localScale = new(bulletExplosion.transform.localScale.x * transform.parent.localScale.x, bulletExplosion.transform.localScale.y * transform.parent.localScale.y, 1);
         }
     }

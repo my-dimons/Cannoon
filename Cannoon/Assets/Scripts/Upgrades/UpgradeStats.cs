@@ -37,6 +37,7 @@ public class UpgradeStats : MonoBehaviour
 
     [Header("Difficulty Increase")]
     public int increaseUpgradeBar;
+    public float difficultyUpgradeTicksDivisor;
     public float increaseDifficultyIncreasePercent;
 
     PlayerMovement playerMovementScript;
@@ -89,9 +90,11 @@ public class UpgradeStats : MonoBehaviour
         if (!cannonScript.autofire)
             cannonScript.autofire = unlockAutofire;
 
-        // difficulty
+        // difficulty upgrade
         endlessModeScript.difficultyMultiplierIncrease += endlessModeScript.difficultyMultiplierIncrease / 100 * increaseDifficultyIncreasePercent;
         upgradeManager.baseUpgradeWaves += increaseUpgradeBar;
+        if (difficultyUpgradeTicksDivisor != 0)
+            upgradeManager.difficultyIncreaseTicks = Mathf.RoundToInt(upgradeManager.difficultyIncreaseTicks / difficultyUpgradeTicksDivisor);
         upgradeManager.UpdateUpgradeBars();
 
         upgradeScript.Pick();

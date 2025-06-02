@@ -366,8 +366,8 @@ MonoBehaviour:
   canTakeDamage: 1
   baseHealth: 35
   health: 0
-  minWave: 6
-  maxWave: 40
+  minWave: 12
+  maxWave: 45
   waveOverride: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 4331834884875909915}

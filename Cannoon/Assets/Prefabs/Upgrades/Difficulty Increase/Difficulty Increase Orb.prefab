@@ -408,7 +408,8 @@ MonoBehaviour:
   explodingBullets: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 1
-  increaseDifficultyIncreasePercent: 75
+  difficultyUpgradeTicksDivisor: 1.75
+  increaseDifficultyIncreasePercent: 160
 --- !u!114 &-4650767951175980063
 MonoBehaviour:
   m_ObjectHideFlags: 0

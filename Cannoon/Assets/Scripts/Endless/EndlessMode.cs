@@ -158,14 +158,14 @@ public class EndlessMode : MonoBehaviour
         float amount;
         if (wave <= 20)
             amount = wave / 3.5f;
-        else if (wave <= 36)
-            amount = wave / 3f;
-        else if (wave <= 40)
-            amount = wave / 2.8f;
-        else if (wave <= 100)
-            amount = wave / 5.5f;
+        else if (wave <= 60)
+            amount = wave / 3.8f;
+        else if (wave <= 120)
+            amount = wave / 4.3f;
+        else if (wave <= 250)
+            amount = wave / 5.0f;
         else
-            amount = wave / 10f;
+            amount = wave / 7.6f;
         amount = Random.Range(amount * minSpawningRandomness, amount * maxSpawningRandomness);
         amount = Mathf.RoundToInt(amount);
         amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);

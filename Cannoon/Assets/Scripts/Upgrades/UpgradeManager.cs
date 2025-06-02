@@ -71,31 +71,25 @@ public class UpgradeManager : MonoBehaviour
             {
                 anim.SetBool("isFilled", true);
                 anim.SetBool("isDifficult", true);
-            } else if (i >= upgradeTicks && (difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
-            {
-                anim.SetBool("isFilled", false);
             }
-
             // special upgrade fill
-            if (i < upgradeTicks && (specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
+            else if (i < upgradeTicks && (specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
             {
                 anim.SetBool("isFilled", true);
                 anim.SetBool("isSpecial", true);
             }
-            else if (i >= upgradeTicks && (specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
-            {
-                anim.SetBool("isFilled", false);
-            }
-
             // normal upgrade fill
             if (i < upgradeTicks && !(specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
             {
                 anim.SetBool("isFilled", true);
+            }
+
+            if (i >= upgradeTicks)
+            {
+                anim.SetBool("isFilled", false);
                 anim.SetBool("isSpecial", false);
                 anim.SetBool("isDifficult", false);
             }
-            else if (i >= upgradeTicks && !(specialUpgradeTicks + 1 == specialUpgradeWaves) && !(difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
-                anim.SetBool("isFilled", false);
 
             // disable upgrade bars depending on set amount
             if (i < baseUpgradeWaves)
@@ -216,7 +210,7 @@ public class UpgradeManager : MonoBehaviour
                 availableUpgradeOrbs.Remove(upgradeOrb);
         }
 
-
+        Debug.Log(availableUpgradeOrbs);
         return availableUpgradeOrbs;
     }
 

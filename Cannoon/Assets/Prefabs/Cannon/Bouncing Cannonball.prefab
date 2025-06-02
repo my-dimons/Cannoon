@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84dfbc2993c49974e9dc33d9e2a01741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDamage: 0
   damage: 0
   distanceFromShooter: 0
   bulletLife: 0
@@ -210,6 +211,7 @@ MonoBehaviour:
   particleColor: {r: 0.21568628, g: 0.5803922, b: 0.43137255, a: 1}
   bounces: 0
   pierces: 0
+  pierceDamageDecrease: 1.25
   explode: 0
   bulletExplosion: {fileID: 5703763689973283350, guid: a08b98e02bb0fe440a82b13a67bb4158, type: 3}
   sound: {fileID: 8436993121181201225}
