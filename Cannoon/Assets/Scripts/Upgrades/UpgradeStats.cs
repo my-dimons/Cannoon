@@ -83,7 +83,7 @@ public class UpgradeStats : MonoBehaviour
         // special
         cannonScript.bounces += bounces;
         cannonScript.pierces += pierces;
-        upgradeManager.baseUpgrades += spawnUpgradesIncrease;
+        upgradeManager.upgrades += spawnUpgradesIncrease;
         playerHealthScript.damageInvincibilityCooldown += immunityIncrease;
         if (!cannonScript.explodingBullets)
             cannonScript.explodingBullets = explodingBullets;

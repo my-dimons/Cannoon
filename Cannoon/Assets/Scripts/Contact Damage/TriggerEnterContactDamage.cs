@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ContactDamage : MonoBehaviour
+public class TriggerEnterContactDamage : MonoBehaviour
 {
     [Header("Stats")]
     public float damage;

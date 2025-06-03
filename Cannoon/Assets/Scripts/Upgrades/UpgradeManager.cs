@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UpgradeManager : MonoBehaviour
 {
     public bool pauseWaves;
-    public int baseUpgrades;
     public int upgrades;
     public float spawningRange;
     public bool appliedUpgradeTick;
@@ -66,6 +65,7 @@ public class UpgradeManager : MonoBehaviour
         for (int i = 0; i < upgradeBars.Length; i++)
         {
             Animator anim = upgradeBars[i].GetComponent<Animator>();
+
             // difficulty upgrade fill
             if (i < upgradeTicks && (difficultyIncreaseTicks + 1 == difficultyIncreaseWaves))
             {
@@ -139,10 +139,10 @@ public class UpgradeManager : MonoBehaviour
 
         upgradeTicks = 0;
         
-        upgrades = Mathf.Clamp(baseUpgrades, 1, availableUpgradeOrbs.Count);
+        int spawnUpgrades = Mathf.Clamp(upgrades, 1, availableUpgradeOrbs.Count);
         List<GameObject> pickedUpgrades = new();
-        // pick 2 random upgrades
-        for (int i = 0; i < upgrades; i++)
+        // pick random upgrades
+        for (int i = 0; i < spawnUpgrades; i++)
         {
             int num = Random.Range(0, availableUpgradeOrbs.Count);
             pickedUpgrades.Add(availableUpgradeOrbs[num]);
@@ -156,9 +156,10 @@ public class UpgradeManager : MonoBehaviour
             float spawnRangeLength = spawningRange * 2;
             float distinceBetweenUpgrades = spawnRangeLength / (pickedUpgrades.Count - 1);
             Vector3 spawnPos = new(-spawningRange + (distinceBetweenUpgrades * i), 0, 0);
-            if (availableUpgradeOrbs.Count == 0)
+            if (pickedUpgrades.Count <= 1)
                 spawnPos = Vector3.zero;
 
+            Debug.Log("Upgrade Pos: " +  spawnPos);
             GameObject spawnObj = Instantiate(pickedUpgrades[i], parentUpgradeOrb.transform);
             spawnObj.GetComponent<RectTransform>().localPosition = spawnPos;
             spawnedUpgradeOrbs.Add(spawnObj);
@@ -176,12 +177,13 @@ public class UpgradeManager : MonoBehaviour
             availableUpgradeOrbs.Add(difficultyIncreaseOrb);
             return availableUpgradeOrbs;
         }
-        if (!specialWave)
+        if (!specialWave && !difficultWave)
         {
             for (int i = 0; i < upgradeOrbs.Length; i++)
                 availableUpgradeOrbs.Add(upgradeOrbs[i]);
 
             // more fine selection
+
             // max crit chance
             if (cannonScript.criticalStrikeChance >= 100)
                 availableUpgradeOrbs.Remove(criticalChanceOrb);
@@ -195,9 +197,10 @@ public class UpgradeManager : MonoBehaviour
             if (endlessModeScript.healthRegen >= player.GetComponent<PlayerHealth>().hearts.Length - 1)
                 availableUpgradeOrbs.Remove(regenUpgradeOrb);
             // charge time
-            if (cannonScript.maxCharge <= 0.1f)
+            if (cannonScript.maxCharge <= cannonScript.chargeLimit)
                 availableUpgradeOrbs.Remove(chargeUpgradeOrb);
-        } else
+        } 
+        if (specialWave)
         {
             for (int i = 0; i < specialUpgradeOrbs.Length; i++)
                 availableUpgradeOrbs.Add(specialUpgradeOrbs[i]);
@@ -210,7 +213,6 @@ public class UpgradeManager : MonoBehaviour
                 availableUpgradeOrbs.Remove(upgradeOrb);
         }
 
-        Debug.Log(availableUpgradeOrbs);
         return availableUpgradeOrbs;
     }
 
