@@ -68,10 +68,21 @@ public class Cannonball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<Enemy>().destroyBullet)
+        {
+            PlayParticles();
+
+            Debug.Log("destroying bb ullet");
+            if (explode)
+                SpawnExplosion();
+            Destroy(transform.parent.gameObject);
+            
+        }
         // collides with enemy
         if (other.gameObject.CompareTag("Enemy") && other.GetComponent<Enemy>().canTakeDamage)
         {
             PlayParticles();
+
             if (pierces > 0)
             {
                 GameObject enemy = other.gameObject;

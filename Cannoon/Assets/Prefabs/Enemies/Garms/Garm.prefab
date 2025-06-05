@@ -267,12 +267,15 @@ MonoBehaviour:
   deathAnimation: {fileID: 7400000, guid: 1dee10d8798324f49897fc84bd3d4f51, type: 2}
   frozen: 0
   canJump: 0
-  canMove: 0
+  canMove: 1
   onGround: 0
-  canDealDamage: 0
+  canDealDamage: 1
   canTakeDamage: 1
+  destroyBullet: 0
+  maxHealth: 0
   baseHealth: 30
   health: 0
+  healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 0
   maxWave: 20
   waveOverride: 0

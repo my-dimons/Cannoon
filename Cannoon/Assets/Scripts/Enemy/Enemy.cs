@@ -15,13 +15,16 @@ public class Enemy : MonoBehaviour
     public bool canMove;
     public bool onGround;
     public bool canDealDamage;
-    public bool canTakeDamage = true;
+    public bool canTakeDamage;
 
+    public bool destroyBullet;
     [Header("Health")]
+    public float maxHealth;
     [Tooltip("The base HP this enemy has")]
     public float baseHealth;
     [Tooltip("The current HP this enemy has")]
     public float health;
+    public GameObject healingParticles;
 
     [Tooltip("The lowest possible wave this enemy will spawn in")]
     public float minWave;
@@ -37,7 +40,6 @@ public class Enemy : MonoBehaviour
     public AudioSource enemyAudio;
     public AudioClip hitSound;
 
-
     //OTHER: Referenced in start
     [HideInInspector] public GameManager gameManager;
     EndlessMode endlessModeScript;
@@ -52,9 +54,15 @@ public class Enemy : MonoBehaviour
         target = player.transform;
 
         ApplyDifficultyRating(true);
-        canDealDamage = true;
-        canMove = true;
         canJump = true;
+        StartCoroutine(SpawnImmunity());
+    }
+
+    IEnumerator SpawnImmunity()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(GetComponent<FollowEnemyAI>().spawningAnimation.length);
+        canTakeDamage = true;
     }
 
     // Update is called once per frame
@@ -93,6 +101,7 @@ public class Enemy : MonoBehaviour
         if (start)
         {
             health = baseHealth * endlessModeScript.difficultyMultiplier;
+            maxHealth = health;
             enemyAi.baseSpeed *= Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.75f, 1, Mathf.Infinity);
         }
     }
@@ -145,6 +154,7 @@ public class Enemy : MonoBehaviour
     public void Heal(float heal)
     {
         health += heal;
+        Instantiate(healingParticles, transform);
     }
     
     void IncrementKills(int kills)

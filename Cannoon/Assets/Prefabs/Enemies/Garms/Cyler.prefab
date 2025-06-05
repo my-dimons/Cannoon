@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3087585520868415586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.84, y: 4.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -84,12 +84,15 @@ MonoBehaviour:
   deathAnimation: {fileID: 7400000, guid: cf230da77684ab749b6293db7aa54c2a, type: 2}
   frozen: 0
   canJump: 0
-  canMove: 0
+  canMove: 1
   onGround: 0
-  canDealDamage: 0
+  canDealDamage: 1
   canTakeDamage: 1
+  destroyBullet: 0
+  maxHealth: 0
   baseHealth: 150
   health: 0
+  healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 38
   maxWave: 999
   waveOverride: 0

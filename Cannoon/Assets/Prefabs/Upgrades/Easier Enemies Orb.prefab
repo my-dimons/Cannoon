@@ -264,7 +264,7 @@ MonoBehaviour:
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
   criticalDamageMultIncrease: 0
-  waveDifficultyIncrease: -0.2
+  waveDifficultyIncrease: -0.15
   health: 0
   regen: 0
   bounces: 0
@@ -274,6 +274,7 @@ MonoBehaviour:
   explodingBullets: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
+  difficultyUpgradeTicksDivisor: 0
   increaseDifficultyIncreasePercent: 0
 --- !u!114 &-2386994000663222288
 MonoBehaviour:
