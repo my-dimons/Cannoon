@@ -409,7 +409,7 @@ MonoBehaviour:
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 1
   difficultyUpgradeTicksDivisor: 1.75
-  increaseDifficultyIncreasePercent: 160
+  increaseDifficultyIncreasePercent: 200
 --- !u!114 &-4650767951175980063
 MonoBehaviour:
   m_ObjectHideFlags: 0

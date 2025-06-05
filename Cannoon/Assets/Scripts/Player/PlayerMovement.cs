@@ -6,27 +6,20 @@ public class PlayerMovement : MonoBehaviour
     public GameObject cannon;
     Animator playerAnimator;
     [Header("Speed")]
-    [Tooltip("The players base speed stat")]
     public float baseSpeed;
-    [Tooltip("the players current speed")]
     public float speed;
-    [Tooltip("when the player is in the air divide speed by this variable to slow the player (not in contact with any ground")]
     public float airSpeedDivisor;
 
     [Header("Jumping")]
-    [Tooltip("the base stat number of how high the player can jump")]
     public float baseJumpForce;
-    [Tooltip("players current jump force")]
     public float jumpForce;
-    [Tooltip("can the player jump")]
+    public float jumpForceLimit;
     public bool canJump;
     [Tooltip("in seconds")]
     public float coyoteJumpTime;
 
     [Header("Landing")]
-    [Tooltip("how much slower the player is after landing on the ground (divides speed by this variable)")]
     public float jumpLandingSpeedDivisor;
-    [Tooltip("the small pause time when the player lands on the ground (in seconds)")]
     public float jumpLandingSpeedTime;
 
     [Header("Ground Pound")]
@@ -50,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
     public bool fallingGravityOverride;
 
     [Header("Info")]
-    [Tooltip("is the player on the ground")]
     public bool onGround;
 
     private bool facingRight;
@@ -95,6 +87,9 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Falling gravity multiplier
+        if (jumpForce > jumpForceLimit) 
+            jumpForce = jumpForceLimit;
+
         GravityMultiplier();
         if (!playerHealthScript.dead)
         {

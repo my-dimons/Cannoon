@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: 0
+  damageIncrease: -2
   chargeSpeedIncrease: -0.2
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
@@ -274,6 +274,7 @@ MonoBehaviour:
   explodingBullets: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
+  difficultyUpgradeTicksDivisor: 0
   increaseDifficultyIncreasePercent: 0
 --- !u!114 &-5418894310080937257
 MonoBehaviour:
@@ -452,7 +453,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: -0.2s Charge time
+  m_text: '-0.2s Charge time
+
+    -2 Damage'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}

@@ -38,6 +38,8 @@ public class UpgradeManager : MonoBehaviour
     public GameObject explosionOrb;
     public GameObject autofireOrb;
     public GameObject difficultyIncreaseOrb;
+    public GameObject easierEnemies;
+    public GameObject jumpHeight;
 
     [Header("Audio")]
     public AudioSource upgradeAudio;
@@ -199,6 +201,11 @@ public class UpgradeManager : MonoBehaviour
             // charge time
             if (cannonScript.maxCharge <= cannonScript.chargeLimit)
                 availableUpgradeOrbs.Remove(chargeUpgradeOrb);
+            // easier enemies
+            if (endlessModeScript.difficultyMultiplier <= 0.75f)
+                availableUpgradeOrbs.Remove(easierEnemies);
+            if (player.GetComponent<PlayerMovement>().jumpForce > player.GetComponent<PlayerMovement>().jumpForceLimit)
+                availableUpgradeOrbs.Remove(jumpHeight);
         } 
         if (specialWave)
         {
@@ -223,6 +230,8 @@ public class UpgradeManager : MonoBehaviour
 
         for (int i = 0; i < spawnedUpgradeOrbs.Count; i++)
             Destroy(spawnedUpgradeOrbs[i]);
+
+        player.GetComponent<PlayerHealth>().Heal(endlessModeScript.healthRegen);
 
         spawnedUpgradeOrbs.Clear();
     }
