@@ -40,6 +40,9 @@ public class UpgradeManager : MonoBehaviour
     public GameObject difficultyIncreaseOrb;
     public GameObject easierEnemies;
     public GameObject jumpHeight;
+    public GameObject explodeOnBounce;
+    public GameObject explodeOnPierce;
+    public GameObject doubleJump;
 
     [Header("Audio")]
     public AudioSource upgradeAudio;
@@ -156,15 +159,12 @@ public class UpgradeManager : MonoBehaviour
 
         for (int i = 0; i < pickedUpgrades.Count; i++)
         {
-            Debug.Log("Spawning Upgrades");
-
             float spawnRangeLength = spawningRange * 2;
             float distinceBetweenUpgrades = spawnRangeLength / (pickedUpgrades.Count - 1);
             Vector3 spawnPos = new(-spawningRange + (distinceBetweenUpgrades * i), 0, 0);
             if (pickedUpgrades.Count <= 1)
                 spawnPos = Vector3.zero;
 
-            Debug.Log("Upgrade Pos: " + spawnPos);
             GameObject spawnObj = Instantiate(pickedUpgrades[i], parentUpgradeOrb.transform);
             spawnObj.GetComponent<RectTransform>().localPosition = spawnPos;
             spawnedUpgradeOrbs.Add(spawnObj);
@@ -207,6 +207,7 @@ public class UpgradeManager : MonoBehaviour
             // easier enemies
             if (endlessModeScript.difficultyMultiplier <= 0.75f)
                 availableUpgradeOrbs.Remove(easierEnemies);
+            // jump
             if (player.GetComponent<PlayerMovement>().jumpForce > player.GetComponent<PlayerMovement>().jumpForceLimit)
                 availableUpgradeOrbs.Remove(jumpHeight);
         } 
@@ -217,6 +218,14 @@ public class UpgradeManager : MonoBehaviour
 
             if (cannonScript.explodingBullets)
                 availableUpgradeOrbs.Remove(explosionOrb);
+
+            if ((!cannonScript.explodingBullets && cannonScript.bounces != 0) || cannonScript.explodeOnBounce)
+                availableUpgradeOrbs.Remove(explodeOnBounce);
+            if ((!cannonScript.explodingBullets && cannonScript.pierces != 0) || cannonScript.explodeOnPierce)
+                availableUpgradeOrbs.Remove(explodeOnPierce);
+
+            if (player.GetComponent<PlayerMovement>().doubleJump)
+                availableUpgradeOrbs.Remove(doubleJump);
             if (cannonScript.autofire)
                 availableUpgradeOrbs.Remove(autofireOrb);
             if (upgrades >= 5)

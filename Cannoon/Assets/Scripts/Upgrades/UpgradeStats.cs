@@ -33,6 +33,9 @@ public class UpgradeStats : MonoBehaviour
     public float immunityIncrease;
     public bool unlockAutofire;
     public bool explodingBullets;
+    public bool explodeOnBounce;
+    public bool explodeOnPierce;
+    public bool doubleJump;
     public int spawnUpgradesIncrease;
 
     [Header("Difficulty Increase")]
@@ -94,6 +97,12 @@ public class UpgradeStats : MonoBehaviour
             cannonScript.explodingBullets = explodingBullets;
         if (!cannonScript.autofire)
             cannonScript.autofire = unlockAutofire;
+        if (!cannonScript.explodeOnBounce)
+            cannonScript.explodeOnBounce = explodeOnBounce;
+        if (!cannonScript.explodeOnPierce)
+            cannonScript.explodeOnPierce = explodeOnPierce;
+        if (!playerMovementScript.doubleJump)
+            playerMovementScript.doubleJump = doubleJump;
 
         // difficulty upgrade
         endlessModeScript.difficultyMultiplierIncrease += endlessModeScript.difficultyMultiplierIncrease / 100 * increaseDifficultyIncreasePercent;
