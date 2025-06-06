@@ -27,12 +27,11 @@ public class Upgrade : MonoBehaviour
         description.SetActive(false);
     }
 
-    public void Pick()
+    public void Pick(bool reRoll, bool specialReRoll)
     {
-        particles.GetComponent<ParticleSystem>().Play();
         PlayParticles();
 
-        upgradeManagerScript.FinishPickingUpgrades();
+        upgradeManagerScript.FinishPickingUpgrades(reRoll, specialReRoll);
     }
 
     void PlayParticles()

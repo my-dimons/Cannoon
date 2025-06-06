@@ -48,8 +48,9 @@ public class PlayerJumpDetection : MonoBehaviour
             }
             // reset players jump when hitting the ground
             if (!playerScript.canJump)
-            {
+            { 
                 playerScript.canJump = true;
+                playerScript.canDoubleJump = true;
             }
 
             playerScript.onGround = true;

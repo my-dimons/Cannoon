@@ -40,6 +40,11 @@ public class UpgradeStats : MonoBehaviour
     public float difficultyUpgradeTicksDivisor;
     public float increaseDifficultyIncreasePercent;
 
+    [Header("Random")]
+    public bool enableCrown;
+    public bool reRoll;
+    public bool specialReRoll;
+
     PlayerMovement playerMovementScript;
     PlayerHealth playerHealthScript;
     UpgradeManager upgradeManager;
@@ -97,6 +102,10 @@ public class UpgradeStats : MonoBehaviour
             upgradeManager.difficultyIncreaseWaves = Mathf.RoundToInt(upgradeManager.difficultyIncreaseWaves / difficultyUpgradeTicksDivisor);
         upgradeManager.UpdateUpgradeBars();
 
-        upgradeScript.Pick();
+        // random
+        if (enableCrown)
+            cannonScript.crown.SetActive(true);
+
+        upgradeScript.Pick(reRoll, specialReRoll);
     }
 }

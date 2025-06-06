@@ -101,7 +101,7 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnUpgrades()
+    public void SpawnUpgrades()
     {
         bool specialWave = false;
         bool difficultWave = false;
@@ -131,16 +131,19 @@ public class UpgradeManager : MonoBehaviour
             specialUpgradeTicks = 0;
         }
 
-        // select upgrade orbs
+        StartCoroutine(SelectAndSpawnUpgrades(specialWave, difficultWave));
+    }
+
+    IEnumerator SelectAndSpawnUpgrades(bool specialWave, bool difficultWave)
+    {
+        yield return new WaitForSeconds(0.5f);
+
         List<GameObject> availableUpgradeOrbs = new();
         availableUpgradeOrbs = SelectUpgrades(availableUpgradeOrbs, specialWave, difficultWave);
-
-        yield return new WaitForSeconds(1);
-
         upgradeAudio.PlayOneShot(upgradesSpawningSound, 1f * gameManager.soundVolume);
 
         upgradeTicks = 0;
-        
+
         int spawnUpgrades = Mathf.Clamp(upgrades, 1, availableUpgradeOrbs.Count);
         List<GameObject> pickedUpgrades = new();
         // pick random upgrades
@@ -161,7 +164,7 @@ public class UpgradeManager : MonoBehaviour
             if (pickedUpgrades.Count <= 1)
                 spawnPos = Vector3.zero;
 
-            Debug.Log("Upgrade Pos: " +  spawnPos);
+            Debug.Log("Upgrade Pos: " + spawnPos);
             GameObject spawnObj = Instantiate(pickedUpgrades[i], parentUpgradeOrb.transform);
             spawnObj.GetComponent<RectTransform>().localPosition = spawnPos;
             spawnedUpgradeOrbs.Add(spawnObj);
@@ -223,16 +226,22 @@ public class UpgradeManager : MonoBehaviour
         return availableUpgradeOrbs;
     }
 
-    public void FinishPickingUpgrades()
+    public void FinishPickingUpgrades(bool reRoll, bool specialReRoll)
     {
-        pauseWaves = false;
-        upgradeAudio.PlayOneShot(selectionSound, 1f * gameManager.soundVolume);
-
+        upgradeAudio.PlayOneShot(selectionSound, 1f * gameManager.soundVolume); 
         for (int i = 0; i < spawnedUpgradeOrbs.Count; i++)
             Destroy(spawnedUpgradeOrbs[i]);
 
-        player.GetComponent<PlayerHealth>().Heal(endlessModeScript.healthRegen);
+        if (reRoll)
+        {
+            StartCoroutine(SelectAndSpawnUpgrades(specialReRoll, false));
+        } else
+        {
+            pauseWaves = false;
 
-        spawnedUpgradeOrbs.Clear();
+            player.GetComponent<PlayerHealth>().Heal(endlessModeScript.healthRegen);
+
+            spawnedUpgradeOrbs.Clear();
+        }
     }
 }

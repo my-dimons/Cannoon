@@ -16,6 +16,8 @@ public class Cannonball : MonoBehaviour
     public int pierces;
     public float pierceDamageDecrease;
     public bool explode;
+    public bool explodeOnPierce;
+    public bool explodeOnBounce;
     public GameObject bulletExplosion;
 
     [Header("Audio")]
@@ -57,13 +59,15 @@ public class Cannonball : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
-    public void SetStats(float newDamage, float life, int bounce, int pierce, bool explosion)
+    public void SetStats(float newDamage, float life, int bounce, int pierce, bool explosion, bool pierceExplode, bool bounceExplode)
     {
         baseDamage = newDamage;
         bulletLife = life;
         bounces = bounce;
         pierces = pierce;
         explode = explosion;
+        explodeOnPierce = pierceExplode;
+        explodeOnBounce = bounceExplode;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -91,6 +95,8 @@ public class Cannonball : MonoBehaviour
 
                 enemyScript.TakeDamage(damage);
                 pierces--;
+                if (explodeOnPierce && explode)
+                    SpawnExplosion();
             }
             else
             {
@@ -107,16 +113,18 @@ public class Cannonball : MonoBehaviour
         if (other.gameObject.CompareTag("Ground"))
         {
             PlayParticles();
-            if (bounces <= 0)
+            if (bounces > 0)
+            {
+                bounces--;
+                sound.PlayOneShot(bounceSfx, 0.3f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
+                if (explodeOnBounce && explode)
+                    SpawnExplosion();
+            }
+            else
             {
                 if (explode)
                     SpawnExplosion();
                 Destroy(transform.parent.gameObject);
-            }
-            else
-            {
-                bounces--;
-                sound.PlayOneShot(bounceSfx, 0.3f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
             }
         }
     }

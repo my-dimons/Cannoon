@@ -8,6 +8,7 @@ public class Cannon : MonoBehaviour
 {
     public GameObject player;
     public AnimationClip loadingAnimation;
+    public GameObject crown;
     Animator animator;
 
     [Header("Stats")]
@@ -26,6 +27,8 @@ public class Cannon : MonoBehaviour
     public int bounces;
     public int pierces;
     public bool explodingBullets;
+    public bool explodeOnPierce;
+    public bool explodeOnBounce;
     public bool autofire;
 
     [Header("Critical Hits")]
@@ -324,7 +327,7 @@ public class Cannon : MonoBehaviour
         GameObject prefab = Instantiate(activeCannonball, spawnPos, cannonRotationObj.transform.rotation);
         GameObject prefabChild = prefab.transform.Find("collisions").gameObject;
         prefab.transform.localScale = new Vector3(prefab.transform.localScale.x * sizeMult, prefab.transform.localScale.y * sizeMult, 1f);
-        prefabChild.GetComponent<Cannonball>().SetStats(damage, bulletLifetime, bounces, pierces, explodingBullets);
+        prefabChild.GetComponent<Cannonball>().SetStats(damage, bulletLifetime, bounces, pierces, explodingBullets, explodeOnPierce, explodeOnBounce);
         prefab.GetComponent<Rigidbody2D>().AddForce(prefab.transform.right * force, ForceMode2D.Impulse);
 
         StartCoroutine(BulletShootingCooldown());
@@ -338,6 +341,7 @@ public class Cannon : MonoBehaviour
             cannonFacingRight)
         {
             GetComponent<SpriteRenderer>().flipY = true;
+            crown.GetComponent<SpriteRenderer>().flipY = true;
             FlipCannonChargeCanvas();
 
             cannonFacingRight = false;
@@ -350,6 +354,7 @@ public class Cannon : MonoBehaviour
             !cannonFacingRight)
         {
             GetComponent<SpriteRenderer>().flipY = false;
+            crown.GetComponent<SpriteRenderer>().flipY = false;
 
             FlipCannonChargeCanvas();
 

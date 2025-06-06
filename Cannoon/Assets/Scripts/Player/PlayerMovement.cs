@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpForceLimit;
     public bool canJump;
+    public bool doubleJump;
+    [HideInInspector] public bool canDoubleJump;
+    public GameObject doubleJumpParticles;
     [Tooltip("in seconds")]
     public float coyoteJumpTime;
 
@@ -56,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip hittingGround;
     public AudioClip groundPoundSound;
     public AudioClip[] runningSounds;
+    public AudioClip doubleJumpSfx;
 
 
     [Header("Other")]
@@ -100,9 +104,14 @@ public class PlayerMovement : MonoBehaviour
             // Ground Pound
             if (Input.GetKeyDown(KeyCode.LeftControl) && !onGround && groundPoundEnabled)
                 GroundPound();
+
             // Jumping
-            if (Input.GetKeyDown(KeyCode.Space) && canJump)
-                Jump();
+            // double jump
+            if (Input.GetKeyDown(KeyCode.Space) && doubleJump && canDoubleJump && !canJump)
+                Jump(true);
+            // normal jump
+            else if (Input.GetKeyDown(KeyCode.Space) && canJump)
+                Jump(false);
         }
 
         FacingDirection();
@@ -154,11 +163,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void Jump()
+    private void Jump(bool doubleJump)
     {
         canJump = false;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 1;
+
+        if (doubleJump)
+        {
+            canDoubleJump = false;
+            playerAudio.PlayOneShot(doubleJumpSfx, 1f *  gameManager.soundVolume);
+            Instantiate(doubleJumpParticles, this.gameObject.transform.Find("Collisions").Find("Jump Detection").transform.position, Quaternion.identity);
+        }
+
         // add upward force
         rb.AddForce(new Vector2(rb.velocity.x, jumpForce), ForceMode2D.Impulse);
     }
