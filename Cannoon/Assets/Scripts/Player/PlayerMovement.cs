@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // clamp jump force
-        jumpForce = Mathf.Clamp(baseJumpForce, 16, 26);
+        jumpForce = Mathf.Clamp(baseJumpForce, 16, jumpForceLimit);
         Debug.Log(jumpForce);
 
         GravityMultiplier();
