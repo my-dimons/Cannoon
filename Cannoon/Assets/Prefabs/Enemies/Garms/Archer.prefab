@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 4971868249593588096}
   - component: {fileID: 4152920990100874152}
   m_Layer: 8
-  m_Name: Ranger
+  m_Name: Archer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   enemySprite: {fileID: 139804938836388076}
   animator: {fileID: 0}
   spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
-  baseSpeed: 1200
+  baseSpeed: 800
   speed: 0
   facingRight: 0
   canTurn: 1
@@ -278,7 +278,7 @@ MonoBehaviour:
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 20
-  maxWave: 120
+  maxWave: 140
   waveOverride: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 4152920990100874152}

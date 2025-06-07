@@ -370,7 +370,7 @@ MonoBehaviour:
   baseHealth: 65
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
-  minWave: 25
+  minWave: 16
   maxWave: 200
   waveOverride: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}

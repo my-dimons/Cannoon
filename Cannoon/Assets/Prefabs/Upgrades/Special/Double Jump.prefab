@@ -32,7 +32,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529859199541391934}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -256,10 +256,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7877240c0691b3a4cb46d546da429921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeightIncrease: -4
+  jumpHeightIncrease: -2
   speedIncrease: 0
   damageIncrease: 0
   chargeSpeedIncrease: 0
+  chargeLimitIncrease: 0
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
@@ -461,12 +462,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Unlocks Double Jump
 
-    -Jump Height
+    <color=#fc2d2d>- Jump Height
 
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
-  m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

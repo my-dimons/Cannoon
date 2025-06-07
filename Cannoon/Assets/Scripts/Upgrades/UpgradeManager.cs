@@ -139,7 +139,7 @@ public class UpgradeManager : MonoBehaviour
 
     IEnumerator SelectAndSpawnUpgrades(bool specialWave, bool difficultWave)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.8f);
 
         List<GameObject> availableUpgradeOrbs = new();
         availableUpgradeOrbs = SelectUpgrades(availableUpgradeOrbs, specialWave, difficultWave);
@@ -219,9 +219,9 @@ public class UpgradeManager : MonoBehaviour
             if (cannonScript.explodingBullets)
                 availableUpgradeOrbs.Remove(explosionOrb);
 
-            if ((!cannonScript.explodingBullets && cannonScript.bounces != 0) || cannonScript.explodeOnBounce)
+            if (!(cannonScript.explodingBullets && cannonScript.bounces > 0 && !cannonScript.explodeOnBounce))
                 availableUpgradeOrbs.Remove(explodeOnBounce);
-            if ((!cannonScript.explodingBullets && cannonScript.pierces != 0) || cannonScript.explodeOnPierce)
+            if (!(cannonScript.explodingBullets && cannonScript.pierces > 0 && !cannonScript.explodeOnPierce))
                 availableUpgradeOrbs.Remove(explodeOnPierce);
 
             if (player.GetComponent<PlayerMovement>().doubleJump)

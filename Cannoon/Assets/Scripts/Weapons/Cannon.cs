@@ -130,6 +130,8 @@ public class Cannon : MonoBehaviour
                 RotateCannonTowardsMouse();
                 Shooting();
             }
+
+            maxBulletDamage = Mathf.Clamp(maxBulletDamage, 0.1f, Mathf.Infinity);
         }
     }
 
@@ -211,7 +213,7 @@ public class Cannon : MonoBehaviour
                     // stats
                     critDamageMult = baseCritDamageMult * 1.5f;
                     critPowerMult *= 1.25f;
-                    sizeMult = baseSizeMult * 1.55f;
+                    sizeMult = baseSizeMult * 1.3f;
 
                     // colors
                     ParticleSystem.MainModule main = chargeParticleSystem.GetComponent<ParticleSystem>().main;

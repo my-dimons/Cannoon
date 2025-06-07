@@ -13,6 +13,7 @@ public class UpgradeStats : MonoBehaviour
     [Header("Damage")]
     public float damageIncrease;
     public float chargeSpeedIncrease;
+    public float chargeLimitIncrease;
     public float sizeMultIncrease;
     public float bulletSpeedIncrease;
 
@@ -76,6 +77,7 @@ public class UpgradeStats : MonoBehaviour
         // damage
         cannonScript.maxBulletDamage += damageIncrease;
         cannonScript.maxCharge += chargeSpeedIncrease;
+        cannonScript.chargeLimit += chargeLimitIncrease;
         cannonScript.maxPower += bulletSpeedIncrease;
         cannonScript.baseSizeMult += sizeMultIncrease;
         endlessModeScript.difficultyMultiplier += waveDifficultyIncrease;

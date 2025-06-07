@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pixeled SDF Variant Outline
+  m_Name: Pixeled SDF Variant Thin Outline
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_Parent: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
+  m_Parent: {fileID: 2100000, guid: 5e7720f40c8926a40b10fdd56ed8e07b, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - UNDERLAY_ON
@@ -23,15 +23,25 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _OutlineTex:
+        m_Texture: {fileID: 2800000, guid: d34c0a71d08e65c4a9ad4f2f8f92cf05, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Bevel: 1
+    - _BevelOffset: 0.081
+    - _OutlineSoftness: 0
     - _OutlineWidth: 0
     - _ScaleRatioA: 0.8333333
-    - _ScaleRatioC: 0.53950864
-    - _UnderlayDilate: 0.255
-    - _UnderlaySoftness: 1
+    - _ScaleRatioC: 0.33854166
+    - _UnderlayDilate: 1
+    - _UnderlayOffsetX: 1
+    - _UnderlayOffsetY: -1
+    - _UnderlaySoftness: 0
     m_Colors:
+    - _GlowColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

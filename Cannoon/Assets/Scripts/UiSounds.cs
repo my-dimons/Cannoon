@@ -21,16 +21,16 @@ public class UiSounds : MonoBehaviour
     }
     public void Click()
     {
-        sound.PlayOneShot(click, 1f * gameManager.soundVolume);
+        sound.PlayOneShot(click, 0.75f * gameManager.soundVolume);
     }
     
     public void EnteringHover()
     {
-        sound.PlayOneShot(enteringHover, 1f * gameManager.soundVolume);
+        sound.PlayOneShot(enteringHover, 0.75f * gameManager.soundVolume);
     }
 
     public void ExitingHover()
     {
-        sound.PlayOneShot(exitingHover, 1f * gameManager.soundVolume);
+        sound.PlayOneShot(exitingHover, 0.75f * gameManager.soundVolume);
     }
 }

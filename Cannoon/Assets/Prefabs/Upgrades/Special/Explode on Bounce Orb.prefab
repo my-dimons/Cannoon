@@ -32,7 +32,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140148101678788351}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -258,8 +258,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: 0
+  damageIncrease: -8
   chargeSpeedIncrease: 0
+  chargeLimitIncrease: 0
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
@@ -461,10 +462,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Bullets Explode on Bounce
 
+    <color=#fc2d2d>- 8 Damage
+
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
-  m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

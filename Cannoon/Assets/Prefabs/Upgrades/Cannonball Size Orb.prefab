@@ -260,6 +260,7 @@ MonoBehaviour:
   speedIncrease: 0
   damageIncrease: 2
   chargeSpeedIncrease: 0.1
+  chargeLimitIncrease: 0
   sizeMultIncrease: 0.1
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
@@ -272,9 +273,16 @@ MonoBehaviour:
   immunityIncrease: 0
   unlockAutofire: 0
   explodingBullets: 0
+  explodeOnBounce: 0
+  explodeOnPierce: 0
+  doubleJump: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
+  difficultyUpgradeTicksDivisor: 0
   increaseDifficultyIncreasePercent: 0
+  enableCrown: 0
+  reRoll: 0
+  specialReRoll: 0
 --- !u!114 &-4927006297881870558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,12 +462,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Bigger bullets
 
-    +2 Damage
+    <color=#5dfc3a> + 2 Damage
 
-    + 0.1s Charge Speed'
+    <color=#fc2d2d> +
+    0.1s Charge Time'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
-  m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

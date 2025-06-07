@@ -90,9 +90,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Falling gravity multiplier
-        if (jumpForce > jumpForceLimit) 
-            jumpForce = jumpForceLimit;
+        // clamp jump force
+        jumpForce = Mathf.Clamp(baseJumpForce, 16, 26);
+        Debug.Log(jumpForce);
 
         GravityMultiplier();
         if (!playerHealthScript.dead)

@@ -183,11 +183,11 @@ MonoBehaviour:
   canTakeDamage: 1
   destroyBullet: 0
   maxHealth: 0
-  baseHealth: 10
+  baseHealth: 15
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 2
-  maxWave: 12
+  maxWave: 8
   waveOverride: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: -778088673955982774}
