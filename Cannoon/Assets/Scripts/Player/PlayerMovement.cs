@@ -92,7 +92,6 @@ public class PlayerMovement : MonoBehaviour
     {
         // clamp jump force
         jumpForce = Mathf.Clamp(baseJumpForce, 16, jumpForceLimit);
-        Debug.Log(jumpForce);
 
         GravityMultiplier();
         if (!playerHealthScript.dead)

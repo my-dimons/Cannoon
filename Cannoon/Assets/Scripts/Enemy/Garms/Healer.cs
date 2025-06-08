@@ -7,6 +7,8 @@ public class Healer : MonoBehaviour
     public float cooldown;
     public bool canHeal;
     public AnimationClip healing;
+    public AudioClip healingSound;
+    public float healAnimLength;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +37,9 @@ public class Healer : MonoBehaviour
     {
         GetComponent<FollowEnemyAI>().animator.SetBool("isHealing", true);
 
-        yield return new WaitForSeconds(healing.length / 3);
+        yield return new WaitForSeconds(healAnimLength);
 
+        GetComponent<AudioSource>().PlayOneShot(healingSound, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
         Debug.Log("Healing All Enemies");
         foreach (Transform child in GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().enemyParentObject.transform)
         {

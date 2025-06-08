@@ -6,6 +6,7 @@ public class Archer : MonoBehaviour
 {
     public GameObject arrow;
     public AnimationClip attackAnim;
+    public AudioClip shootingSound;
     public Vector2 arrowSpawnPos;
     public float cooldown;
     public float attackTime;
@@ -39,7 +40,7 @@ public class Archer : MonoBehaviour
 
         yield return new WaitForSeconds(attackTime);
 
-
+        GetComponent<AudioSource>().PlayOneShot(shootingSound, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
         GetComponent<FollowEnemyAI>().animator.SetBool("isAttacking", false);
         if (GetComponent<FollowEnemyAI>().facingRight)
         {

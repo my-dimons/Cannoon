@@ -298,6 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 6991925632802432317, guid: 425ae53742911f84589953d275b13278, type: 3}
   attackAnim: {fileID: 7400000, guid: 27b6633c6cbb42446ba72e0609a9cec5, type: 2}
+  shootingSound: {fileID: 8300000, guid: ff5258502c6ddf94baacca0c27d6db4d, type: 3}
   arrowSpawnPos: {x: -1.67, y: -0.42}
   cooldown: 7
   attackTime: 0.65

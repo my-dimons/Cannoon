@@ -5,6 +5,7 @@ using UnityEngine;
 public class Rager : MonoBehaviour
 {
     public bool enraged;
+    public AudioClip enragedAudio;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class Rager : MonoBehaviour
         if (GetComponent<Enemy>().health < GetComponent<Enemy>().maxHealth && !enraged)
         {
             enraged = true;
+            GetComponent<AudioSource>().PlayOneShot(enragedAudio, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
             GetComponent<Enemy>().canMove = true;
             GetComponent<Enemy>().canDealDamage = true;
             GetComponent<FollowEnemyAI>().animator.SetBool("rage", true);

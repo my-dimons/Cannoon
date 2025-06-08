@@ -390,6 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enraged: 0
+  enragedAudio: {fileID: 8300000, guid: 622a1910d00d626428bccea1e560de79, type: 3}
 --- !u!50 &1129926473235801549
 Rigidbody2D:
   serializedVersion: 4
