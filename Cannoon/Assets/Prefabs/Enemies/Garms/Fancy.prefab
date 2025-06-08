@@ -366,7 +366,7 @@ MonoBehaviour:
   canTakeDamage: 1
   destroyBullet: 0
   maxHealth: 0
-  baseHealth: 45
+  baseHealth: 65
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 12

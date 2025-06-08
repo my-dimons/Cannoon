@@ -56,7 +56,7 @@ MonoBehaviour:
   enemySprite: {fileID: 1484923361916180028}
   animator: {fileID: 0}
   spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
-  baseSpeed: 1000
+  baseSpeed: 1350
   speed: 0
   facingRight: 0
   canTurn: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackAnimation: {fileID: 7400000, guid: 6384a2887c897cc4db2e44edd89f4f4d, type: 2}
-  attackCooldown: 4
+  attackCooldown: 3.5
   canAttack: 0
   playerDistance: 6
   attackSound: {fileID: 8300000, guid: abeb2aec07da0bc4d96567d7dac3e969, type: 3}

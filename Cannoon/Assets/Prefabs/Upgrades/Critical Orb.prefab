@@ -263,7 +263,7 @@ MonoBehaviour:
   chargeLimitIncrease: 0
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
-  criticalChanceIncrease: 20
+  criticalChanceIncrease: 33
   criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
   health: 0
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+ 20% Crit Chance
+  m_text: '+ 33% Crit Chance
 
     <color=#fc2d2d> - Crit Damage'
   m_isRightToLeft: 0

@@ -211,7 +211,7 @@ public class Cannon : MonoBehaviour
                 if (gambling < criticalStrikeChance)
                 {
                     // stats
-                    critDamageMult = baseCritDamageMult * 1.5f;
+                    critDamageMult = baseCritDamageMult * 1.25f;
                     critPowerMult *= 1.25f;
                     sizeMult = baseSizeMult * 1.3f;
 
@@ -255,10 +255,9 @@ public class Cannon : MonoBehaviour
             animator.SetBool("isLoading", false);
             StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(Mathf.Lerp(0, 0.5f, time)));
 
-            // clamp time
-            Mathf.Clamp(chargeTime, minCharge, maxCharge);
 
             // bullet stats
+            critDamageMult = Mathf.Clamp(critDamageMult, 1, Mathf.Infinity);
             float force = Mathf.Lerp(minPower, maxPower * critPowerMult, time);
             float damage = Mathf.Lerp(minBulletDamage, maxBulletDamage * critDamageMult, time);
             float extraDamage;

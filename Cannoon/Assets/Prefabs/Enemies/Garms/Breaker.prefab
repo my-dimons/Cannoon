@@ -332,7 +332,7 @@ MonoBehaviour:
   enemySprite: {fileID: 6329691901387492320}
   animator: {fileID: 0}
   spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
-  baseSpeed: 700
+  baseSpeed: 1000
   speed: 0
   facingRight: 0
   canTurn: 1
@@ -367,7 +367,7 @@ MonoBehaviour:
   canTakeDamage: 1
   destroyBullet: 0
   maxHealth: 0
-  baseHealth: 80
+  baseHealth: 130
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 35
@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5b188f22f187d47b3cf8e3b949e073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackingCooldown: 5
+  attackingCooldown: 4
   canAttack: 0
   sprite: {fileID: 231307460574426387}
   spikeSpeed: 25

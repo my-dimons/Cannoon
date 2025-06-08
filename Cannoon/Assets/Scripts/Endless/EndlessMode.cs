@@ -155,11 +155,11 @@ public class EndlessMode : MonoBehaviour
         if (wave <= 20)
             amount = wave / 3.5f;
         else if (wave <= 60)
-            amount = wave / 3.8f;
+            amount = wave / 4f;
         else if (wave <= 120)
-            amount = wave / 4.3f;
+            amount = wave / 5f;
         else if (wave <= 250)
-            amount = wave / 5.0f;
+            amount = wave / 8f;
         else
             amount = wave / 7.6f;
         amount = Random.Range(amount * minSpawningRandomness, amount * maxSpawningRandomness);
