@@ -7,9 +7,16 @@ public class CameraScript : MonoBehaviour
 
     public AnimationCurve curve;
     public bool screenshaking;
+    public Camera[] applyFov;
     private void Start()
     {
         pos = transform.localPosition;
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < applyFov.Length; i++)
+            applyFov[i].fieldOfView = Camera.main.fieldOfView;
     }
     public IEnumerator Screenshake(float duration)
     {

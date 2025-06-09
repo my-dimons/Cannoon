@@ -43,6 +43,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject explodeOnBounce;
     public GameObject explodeOnPierce;
     public GameObject doubleJump;
+    public GameObject crown;
 
     [Header("Audio")]
     public AudioSource upgradeAudio;
@@ -228,6 +229,8 @@ public class UpgradeManager : MonoBehaviour
                 availableUpgradeOrbs.Remove(doubleJump);
             if (cannonScript.autofire)
                 availableUpgradeOrbs.Remove(autofireOrb);
+            if (cannonScript.crown)
+                availableUpgradeOrbs.Remove(crown);
             if (upgrades >= 5)
                 availableUpgradeOrbs.Remove(upgradeOrb);
         }

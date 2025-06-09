@@ -178,7 +178,7 @@ public class Cannon : MonoBehaviour
             float fov = Mathf.Lerp(baseFov, maxFov, time);
             float chromaticAbberationValue = Mathf.Lerp(0, 0.15f, time);
             float vigetteValue = Mathf.Lerp(baseVigette, 0.45f, time);
-            float bloomValue = Mathf.Lerp(baseBloom, 14, time);
+            float bloomValue = Mathf.Lerp(baseBloom, 1.2f, time);
 
             volume.profile.TryGet(out ChromaticAberration chromaticAbberation);
             volume.profile.TryGet(out Vignette vignette);
