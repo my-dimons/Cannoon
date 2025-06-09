@@ -103,6 +103,7 @@ public class Enemy : MonoBehaviour
             health = baseHealth * endlessModeScript.difficultyMultiplier * gameManager.difficulty;
             maxHealth = health;
             enemyAi.baseSpeed *= Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.75f, 1, Mathf.Infinity);
+            enemyAi.baseSpeed *= gameManager.difficulty;
         }
     }
 

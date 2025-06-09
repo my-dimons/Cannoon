@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     [Header("Difficulty")]
     public float difficulty;
     GameObject difficultyMenu;
+    public float[] difficultyValues;
 
     public static GameManager Instance;
 
@@ -98,6 +99,7 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
+        difficulty = difficultyValues[0];
         pauseMenu = GameObject.Find("Pause Menu");
         musicVolumeSlider = pauseMenu.transform.Find("Music Volume Slider").GetComponent<Slider>();
         SfxVolumeSlider = pauseMenu.transform.Find("SFX Volume Slider").GetComponent<Slider>();
@@ -235,13 +237,13 @@ public class GameManager : MonoBehaviour
         switch (val)
         {
             case 0:
-                difficulty = 0.7f;
+                difficulty = difficultyValues[0];
                 break;
             case 1:
-                difficulty = 1;
+                difficulty = difficultyValues[1];
                 break;
             case 2:
-                difficulty = 1.35f;
+                difficulty = difficultyValues[2];
                 break;
             default:
                 difficulty = 1;

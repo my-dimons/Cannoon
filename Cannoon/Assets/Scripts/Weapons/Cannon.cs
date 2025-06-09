@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
@@ -139,7 +140,7 @@ public class Cannon : MonoBehaviour
     private void Shooting()
     {
         // Start timer and make charge meter appear
-        if (Input.GetMouseButton(0) && canShoot && !charging)
+        if (Input.GetMouseButton(0) && canShoot && !charging && !EventSystem.current.IsPointerOverGameObject())
         {
             StartShooting();
         }
@@ -162,7 +163,7 @@ public class Cannon : MonoBehaviour
             chargeTime += Time.deltaTime;
 
             // autofire
-            if (chargeTime >= maxCharge + Mathf.Lerp(0.1f, 0.6f, Mathf.InverseLerp(chargeLimit, 1, maxCharge)) && autofire)
+            if (chargeTime >= maxCharge + Mathf.Lerp(0.05f, 0.3f, Mathf.InverseLerp(chargeLimit, 1, maxCharge)) && autofire)
             {
                 Shoot();
                 return;
