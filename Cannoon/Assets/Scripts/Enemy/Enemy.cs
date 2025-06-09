@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour
         // apply only when the enemy spawns
         if (start)
         {
-            health = baseHealth * endlessModeScript.difficultyMultiplier;
+            health = baseHealth * endlessModeScript.difficultyMultiplier * gameManager.difficulty;
             maxHealth = health;
             enemyAi.baseSpeed *= Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.75f, 1, Mathf.Infinity);
         }

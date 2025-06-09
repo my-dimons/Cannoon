@@ -58,17 +58,11 @@ public class GameManager : MonoBehaviour
     public bool creditScreenEnabled;
 
     [Header("Difficulty")]
-    public Difficulty difficulty;
+    public float difficulty;
+    GameObject difficultyMenu;
 
     public static GameManager Instance;
-    // Numbers are the difficulty multiplier (DIVIDE BY 100, think of it as a percentage value)
-    public enum Difficulty
-    {
-        easy = 75,
-        normal = 100, // USUAL PLAYTHROUGH
-        hard = 120,
-        impossible = 200
-    }
+
 
     // reloads the main scene
     public void Respawn()
@@ -124,7 +118,6 @@ public class GameManager : MonoBehaviour
         disableCreditsButton = creditScreen.transform.Find("Close Credit Screen").gameObject;
         creditsButton = pauseMenu.transform.Find("Credits Button").gameObject;
 
-
         if (Instance != null)
         {
             Destroy(gameObject);
@@ -149,6 +142,8 @@ public class GameManager : MonoBehaviour
         resumeButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
         creditsButton.GetComponent<Button>().onClick.AddListener(EnableCreditScreen);
         disableCreditsButton.GetComponent<Button>().onClick.AddListener(DisableCreditScreen);
+        difficultyMenu = GameObject.Find("Difficulty Dropdown").gameObject;
+        difficultyMenu.GetComponent<TMP_Dropdown>().onValueChanged.AddListener(delegate { ChangeDifficulty(difficultyMenu.GetComponent<TMP_Dropdown>()); });
 
         musicVolumeSlider.onValueChanged.AddListener((v) =>
         {
@@ -232,5 +227,25 @@ public class GameManager : MonoBehaviour
         pauseMenu.GetComponent<RectTransform>().localPosition = Vector3.zero;
         creditScreen.GetComponent<RectTransform>().localPosition = new(0, 2000, 0);
         creditScreenEnabled = false;
+    }
+
+    public void ChangeDifficulty(TMP_Dropdown value)
+    {
+        float val = value.value;
+        switch (val)
+        {
+            case 0:
+                difficulty = 0.7f;
+                break;
+            case 1:
+                difficulty = 1;
+                break;
+            case 2:
+                difficulty = 1.35f;
+                break;
+            default:
+                difficulty = 1;
+                break;
+        }
     }
 }
