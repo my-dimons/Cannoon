@@ -189,5 +189,11 @@ public class FollowEnemyAI : MonoBehaviour
 
         enemyScript.frozen = false;
     }
-
+    public void DashForward(float force)
+    {
+        if (GetComponent<FollowEnemyAI>().facingRight)
+            GetComponent<Rigidbody2D>().AddForce(new(force, 0), ForceMode2D.Impulse);
+        else
+            GetComponent<Rigidbody2D>().AddForce(new(-force, 0), ForceMode2D.Impulse);
+    }
 }
