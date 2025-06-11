@@ -108,6 +108,7 @@ public class UpgradeStats : MonoBehaviour
 
         // difficulty upgrade
         endlessModeScript.difficultyMultiplierIncrease += endlessModeScript.difficultyMultiplierIncrease / 100 * increaseDifficultyIncreasePercent;
+        endlessModeScript.difficultyMultiplier += endlessModeScript.difficultyMultiplier / 100 * increaseDifficultyIncreasePercent;
         upgradeManager.baseUpgradeWaves += increaseUpgradeBar;
         if (difficultyUpgradeTicksDivisor != 0)
             upgradeManager.difficultyIncreaseWaves = Mathf.RoundToInt(upgradeManager.difficultyIncreaseWaves / difficultyUpgradeTicksDivisor);

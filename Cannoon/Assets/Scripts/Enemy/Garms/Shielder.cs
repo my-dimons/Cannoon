@@ -13,6 +13,7 @@ public class Shielder : MonoBehaviour
     {
         StartCoroutine(Cooldown());
         StartCoroutine(SpawnAnim());
+        StartCoroutine(Shield(GetComponent<FollowEnemyAI>().spawningAnimation.length));
     }
     IEnumerator Cooldown()
     {
@@ -34,14 +35,18 @@ public class Shielder : MonoBehaviour
     {
         if (canShield)
         {
-            StartCoroutine(Shield());
-            StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(shieldAnim.length + attackLength));
+            StartCoroutine(Shield(0));
         }
     }
 
-    IEnumerator Shield()
+    IEnumerator Shield(float time)
     {
+        yield return new WaitForSeconds(time);
+
+        StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(shieldAnim.length + attackLength));
+
         Enemy enemy = GetComponent<Enemy>();
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         StartCoroutine(Cooldown());
 
         GetComponent<FollowEnemyAI>().animator.SetBool("isShielded", true);

@@ -108,7 +108,6 @@ public class EndlessMode : MonoBehaviour
         advancingWaveTexts.SetActive(true);
         currentWaveText.text = "Wave  " + wave;
         // trigger player invincibility
-        StartCoroutine(player.GetComponent<PlayerHealth>().Invincibility(playerInvincibility + timeBetweenWaves));
 
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;

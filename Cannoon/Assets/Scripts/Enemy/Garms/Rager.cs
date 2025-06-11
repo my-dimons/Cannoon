@@ -6,6 +6,7 @@ public class Rager : MonoBehaviour
 {
     public bool enraged;
     public AudioClip enragedAudio;
+    public float dashForce;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +22,18 @@ public class Rager : MonoBehaviour
         if (GetComponent<Enemy>().health < GetComponent<Enemy>().maxHealth && !enraged)
         {
             enraged = true;
+            Dash(dashForce);
             GetComponent<AudioSource>().PlayOneShot(enragedAudio, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
             GetComponent<Enemy>().canMove = true;
             GetComponent<Enemy>().canDealDamage = true;
             GetComponent<FollowEnemyAI>().animator.SetBool("rage", true);
         }
+    }
+    void Dash(float force)
+    {
+        if (GetComponent<FollowEnemyAI>().facingRight)
+            GetComponent<Rigidbody2D>().AddForce(new(force, 0), ForceMode2D.Impulse);
+        else
+            GetComponent<Rigidbody2D>().AddForce(new(-force, 0), ForceMode2D.Impulse);
     }
 }

@@ -55,14 +55,16 @@ public class Enemy : MonoBehaviour
 
         ApplyDifficultyRating(true);
         canJump = true;
-        StartCoroutine(SpawnImmunity());
+        StartCoroutine(Spawning());
     }
 
-    IEnumerator SpawnImmunity()
+    IEnumerator Spawning()
     {
         canTakeDamage = false;
+        canDealDamage = false;
         yield return new WaitForSeconds(GetComponent<FollowEnemyAI>().spawningAnimation.length);
         canTakeDamage = true;
+        canDealDamage = true;
     }
 
     // Update is called once per frame
@@ -102,7 +104,7 @@ public class Enemy : MonoBehaviour
         {
             health = baseHealth * endlessModeScript.difficultyMultiplier * gameManager.difficulty;
             maxHealth = health;
-            enemyAi.baseSpeed *= Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.75f, 1, Mathf.Infinity);
+            enemyAi.baseSpeed *= Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.75f, 1, enemyAi.baseSpeed * 1.4f);
             enemyAi.baseSpeed *= gameManager.difficulty;
         }
     }

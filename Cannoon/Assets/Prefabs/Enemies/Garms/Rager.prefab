@@ -371,8 +371,8 @@ MonoBehaviour:
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 20
-  maxWave: 200
-  waveOverride: 0
+  maxWave: 41
+  waveOverride: 1
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 4644099757681807811}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enraged: 0
   enragedAudio: {fileID: 8300000, guid: 622a1910d00d626428bccea1e560de79, type: 3}
+  dashForce: 15
 --- !u!50 &1129926473235801549
 Rigidbody2D:
   serializedVersion: 4

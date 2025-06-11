@@ -76,7 +76,6 @@ public class Cannonball : MonoBehaviour
         {
             PlayParticles();
 
-            Debug.Log("destroying bb ullet");
             if (explode)
                 SpawnExplosion();
             Destroy(transform.parent.gameObject);

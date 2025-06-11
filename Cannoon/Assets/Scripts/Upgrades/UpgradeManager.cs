@@ -44,6 +44,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject explodeOnPierce;
     public GameObject doubleJump;
     public GameObject crown;
+    public GameObject damage;
 
     [Header("Audio")]
     public AudioSource upgradeAudio;
@@ -211,6 +212,9 @@ public class UpgradeManager : MonoBehaviour
             // jump
             if (player.GetComponent<PlayerMovement>().jumpForce > player.GetComponent<PlayerMovement>().jumpForceLimit)
                 availableUpgradeOrbs.Remove(jumpHeight);
+            // damage
+            if (cannonScript.maxBulletDamage >= 60)
+                availableUpgradeOrbs.Remove(damage);
         } 
         if (specialWave)
         {
@@ -229,7 +233,7 @@ public class UpgradeManager : MonoBehaviour
                 availableUpgradeOrbs.Remove(doubleJump);
             if (cannonScript.autofire)
                 availableUpgradeOrbs.Remove(autofireOrb);
-            if (cannonScript.crown)
+            if (cannonScript.crown.activeSelf)
                 availableUpgradeOrbs.Remove(crown);
             if (upgrades >= 5)
                 availableUpgradeOrbs.Remove(upgradeOrb);
