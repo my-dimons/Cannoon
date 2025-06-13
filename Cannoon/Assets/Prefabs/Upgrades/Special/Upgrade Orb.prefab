@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+1 Upgrade Selection
+  m_text: '<color=#F2BBFF>+1 Upgrade Selection
 
 '
   m_isRightToLeft: 0
@@ -412,6 +412,7 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
   spawnUpgradesIncrease: 1
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0

@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public bool onGround;
     public bool canDealDamage;
     public bool canTakeDamage;
+    public bool stunned; // used for stun upgrade
 
     public bool destroyBullet;
     [Header("Health")]
@@ -139,10 +140,10 @@ public class Enemy : MonoBehaviour
         // text color
         var damageColor = damage switch
         {
-            >= 300 => new Color(0.84f, 0.44f, 0.9f),
-            >= 100 => new Color(0.31f, 0.72f, 0.93f),
-            >= 50 => new Color(0.93f, 0.38f, 0.31f),
-            >= 35 => new Color(0.81f, 0.84f, 0.4f),
+            >= 140 => new Color(0.84f, 0.44f, 0.9f),
+            >= 80 => new Color(0.31f, 0.72f, 0.93f),
+            >= 45 => new Color(0.93f, 0.38f, 0.31f),
+            >= 30 => new Color(0.81f, 0.84f, 0.4f),
             _ => Color.white,
         };
         text.GetComponent<TextMeshPro>().color = damageColor;

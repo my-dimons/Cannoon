@@ -31,6 +31,9 @@ public class Cannon : MonoBehaviour
     public bool explodeOnPierce;
     public bool explodeOnBounce;
     public bool autofire;
+    public bool stunEnemies;
+    public float stunChance;
+    public float stunTime;
 
     [Header("Critical Hits")]
     public Color baseChargeColor;
@@ -329,7 +332,7 @@ public class Cannon : MonoBehaviour
         GameObject prefab = Instantiate(activeCannonball, spawnPos, cannonRotationObj.transform.rotation);
         GameObject prefabChild = prefab.transform.Find("collisions").gameObject;
         prefab.transform.localScale = new Vector3(prefab.transform.localScale.x * sizeMult, prefab.transform.localScale.y * sizeMult, 1f);
-        prefabChild.GetComponent<Cannonball>().SetStats(damage, bulletLifetime, bounces, pierces, explodingBullets, explodeOnPierce, explodeOnBounce);
+        prefabChild.GetComponent<Cannonball>().SetStats(damage, bulletLifetime, bounces, pierces, explodingBullets, explodeOnPierce, explodeOnBounce, stunEnemies, this.gameObject);
         prefab.GetComponent<Rigidbody2D>().AddForce(prefab.transform.right * force, ForceMode2D.Impulse);
 
         StartCoroutine(BulletShootingCooldown());

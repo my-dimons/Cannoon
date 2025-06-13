@@ -190,9 +190,12 @@ public class FollowEnemyAI : MonoBehaviour
         rb.velocity = Vector3.zero;
         enemyScript.frozen = true;
 
+        Debug.Log("Time: " + time);
+        Debug.Log("Freezing enemy");
         yield return new WaitForSeconds(time);
-
+        Debug.Log("unfreezing enemy");
         enemyScript.frozen = false;
+        enemyScript.stunned = false;
     }
     public void DashForward(float force)
     {

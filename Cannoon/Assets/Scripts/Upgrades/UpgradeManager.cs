@@ -37,6 +37,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject upgradeOrb;
     public GameObject explosionOrb;
     public GameObject autofireOrb;
+    public GameObject stunOrb;
     public GameObject difficultyIncreaseOrb;
     public GameObject easierEnemies;
     public GameObject jumpHeight;
@@ -236,6 +237,8 @@ public class UpgradeManager : MonoBehaviour
                 availableUpgradeOrbs.Remove(autofireOrb);
             if (cannonScript.crown.activeSelf)
                 availableUpgradeOrbs.Remove(crown);
+            if (cannonScript.stunEnemies)
+                availableUpgradeOrbs.Remove(stunOrb);
             if (upgrades >= 5)
                 availableUpgradeOrbs.Remove(upgradeOrb);
         }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fa9f9318002b2ff428dd44419544e53d
+guid: 027dacef2959c6f479a45435bff3e4fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Stun Enemies_0
+      name: Player Walking_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9846276d479b0a64a8dd855777db7678
-      internalID: 2142391468
+      spriteID: be5a12411c4cd4149b785326e4c8c2de
+      internalID: 921821549
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stun Enemies_1
+      name: Player Walking_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 24
         y: 0
-        width: 16
-        height: 16
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 128a7cf2683bdc44fa6ecfbe8129e5a4
-      internalID: -1310235752
+      spriteID: 72bbd6dd6c83215479378dc53d159812
+      internalID: 1186619109
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stun Enemies_2
+      name: Player Walking_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 48
         y: 0
-        width: 16
-        height: 16
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,8 +179,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b97136f49b6ac3f4186cd5a572ed409b
-      internalID: 901913028
+      spriteID: dd3820b4563f71b4989304a1194a2f7d
+      internalID: 1473621360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Walking_3
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0476242c331b0fa4c8ae4358c189ade5
+      internalID: -215982461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Walking_4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb7fa7841a929e841ade314c5a3247b8
+      internalID: -2113627030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player Walking_5
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2b92d9fac0b37247bbb9f23297de5ce
+      internalID: -925628888
       vertices: []
       indices: 
       edges: []
@@ -196,9 +259,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Stun Enemies_0: 2142391468
-      Stun Enemies_1: -1310235752
-      Stun Enemies_2: 901913028
+      Player Walking_0: 921821549
+      Player Walking_1: 1186619109
+      Player Walking_2: 1473621360
+      Player Walking_3: -215982461
+      Player Walking_4: -2113627030
+      Player Walking_5: -925628888
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

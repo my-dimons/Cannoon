@@ -8,6 +8,7 @@ public class Cannonball : MonoBehaviour
     public float damage;
     public float distanceFromShooter;
     public float bulletLife;
+    public GameObject cannon;
     public GameObject destroyingParticles;
     public Color particleColor;
 
@@ -18,6 +19,7 @@ public class Cannonball : MonoBehaviour
     public bool explode;
     public bool explodeOnPierce;
     public bool explodeOnBounce;
+    public bool stunEnemies;
     public GameObject bulletExplosion;
 
     [Header("Audio")]
@@ -59,7 +61,7 @@ public class Cannonball : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
-    public void SetStats(float newDamage, float life, int bounce, int pierce, bool explosion, bool pierceExplode, bool bounceExplode)
+    public void SetStats(float newDamage, float life, int bounce, int pierce, bool explosion, bool pierceExplode, bool bounceExplode, bool stun, GameObject cannonObj)
     {
         baseDamage = newDamage;
         bulletLife = life;
@@ -68,6 +70,8 @@ public class Cannonball : MonoBehaviour
         explode = explosion;
         explodeOnPierce = pierceExplode;
         explodeOnBounce = bounceExplode;
+        stunEnemies = stun;
+        cannon = cannonObj;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -84,12 +88,27 @@ public class Cannonball : MonoBehaviour
         // collides with enemy
         if (other.gameObject.CompareTag("Enemy") && other.GetComponent<Enemy>().canTakeDamage)
         {
+            GameObject enemy = other.gameObject;
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+
             PlayParticles();
+
+            // stun enemies
+            if (stunEnemies && !enemyScript.stunned)
+            {
+                Cannon cannonScript = cannon.GetComponent<Cannon>();
+                enemyScript.stunned = true;
+                float randomNum = Random.Range(0, 100);
+                if (cannonScript.stunChance >= randomNum)
+                {
+                    Debug.Log("Stunning Enemy");
+                    Debug.Log(cannonScript.stunTime);
+                    enemy.GetComponent<MonoBehaviour>().StartCoroutine(enemy.GetComponent<FollowEnemyAI>().FreezeEnemy(cannonScript.stunTime));
+                }
+            }
 
             if (pierces > 0)
             {
-                GameObject enemy = other.gameObject;
-                Enemy enemyScript = enemy.GetComponent<Enemy>();
                 damage /= pierceDamageDecrease;
 
                 enemyScript.TakeDamage(damage);
@@ -99,13 +118,12 @@ public class Cannonball : MonoBehaviour
             }
             else
             {
-                GameObject enemy = other.gameObject;
-                Enemy enemyScript = enemy.GetComponent<Enemy>();
                 enemyScript.TakeDamage(baseDamage);
                 if (explode)
                     SpawnExplosion();
                 Destroy(transform.parent.gameObject);
             }
+
         }
 
         // collides with ground
