@@ -111,6 +111,7 @@ public class UpgradeManager : MonoBehaviour
         bool specialWave = false;
         bool difficultWave = false;
         upgradeBars[baseUpgradeWaves - 1].gameObject.GetComponent<Animator>().SetBool("isFilled", true);
+        endlessModeScript.spawningEnemiesAmount += 1;
         UpdateUpgradeBars();
 
         if (difficultyIncreaseTicks <= difficultyIncreaseWaves)

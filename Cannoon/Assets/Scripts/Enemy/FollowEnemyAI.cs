@@ -90,7 +90,7 @@ public class FollowEnemyAI : MonoBehaviour
     private void ApplyDifficultyRating()
     {
         speed = baseSpeed;
-        currentJumpForce = Mathf.Clamp(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f), baseJumpForce, baseJumpForce * 1.2f);
+        currentJumpForce = Mathf.Clamp((float)(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f)), baseJumpForce, baseJumpForce * 1.2f);
     }
 
     // Update is called once per frame

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EndlessMode : MonoBehaviour
@@ -19,6 +20,7 @@ public class EndlessMode : MonoBehaviour
     [Tooltip("Current wave")]
     public int wave;
     public int healthRegen;
+    public int spawningEnemiesAmount;
     [Tooltip("How many enemies are remaining?")]
     public int enemiesLeft;
     [Tooltip("Z Offset of spawning enemies (To have enemies be behind the ground slightly)")]
@@ -29,9 +31,9 @@ public class EndlessMode : MonoBehaviour
 
     [Header("Difficulty Multiplier")]
     [Tooltip("Determines how hard the wave is")]
-    public float difficultyMultiplier;
+    public double difficultyMultiplier;
     [Tooltip("How much the difficulty multiplier increases each wave (Should probably be lower than 0.05)")]
-    public float difficultyMultiplierIncrease;
+    public double difficultyMultiplierIncrease;
     [Tooltip("If enabled, the difficulty multiplier will increase by the difficultyMultiplierIncrease every round")]
     public bool increasingDifficulty;
 
@@ -49,6 +51,8 @@ public class EndlessMode : MonoBehaviour
     // Enemies
     [Tooltip("Total array of possible spawning enemies in this wave")]
     public GameObject[] enemies;
+
+    public GameObject[] bosses;
 
     [Tooltip("Enemies that can currently spawn in this wave (Based on their min/max wave)")]
     public List<GameObject> possibleSpawningEnemies;
@@ -69,8 +73,7 @@ public class EndlessMode : MonoBehaviour
         {
             enemySpawnLocations.Add(child.gameObject);
         }
-        // Set difficulty multiplier increase based on this saves/games difficulty
-        difficultyMultiplierIncrease *= (float)gameManager.difficulty / 100;
+        difficultyMultiplier = gameManager.difficulty;
     }
 
     // Update is called once per frame
@@ -144,23 +147,20 @@ public class EndlessMode : MonoBehaviour
         possibleSpawningEnemies.Clear();
         List<GameObject> tempEnemySpawningLocations = new(enemySpawnLocations);
 
+        float amount = spawningEnemiesAmount;
+
         // gets all the possible spawnable enemies (by using each enemies min & max wave spawning range, unless it has wave override on)
-        for (int i = 0; i < enemies.Length; i++)
-            if (wave >= enemies[i].GetComponent<Enemy>().minWave && wave <= enemies[i].GetComponent<Enemy>().maxWave || enemies[i].GetComponent<Enemy>().waveOverride)
-                possibleSpawningEnemies.Add(enemies[i]);
+        bool bossWave = false;
+        // boss wave
+        if ((upgradeManager.upgradeTicks + 1f == upgradeManager.baseUpgradeWaves) && (upgradeManager.difficultyIncreaseWaves - 1 == upgradeManager.difficultyIncreaseTicks))
+        {
+            bossWave = true;
+            amount = 1;
+        }
+        possibleSpawningEnemies = PickEnemies(bossWave);
 
         // how many enemies to spawn (using difficulty rating)
-        float amount;
-        if (wave <= 20)
-            amount = wave / 3.5f;
-        else if (wave <= 60)
-            amount = wave / 4f;
-        else if (wave <= 120)
-            amount = wave / 5f;
-        else if (wave <= 250)
-            amount = wave / 8f;
-        else
-            amount = wave / 7.6f;
+
         amount = Random.Range(amount * minSpawningRandomness, amount * maxSpawningRandomness);
         amount = Mathf.RoundToInt(amount);
         amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);
@@ -195,6 +195,23 @@ public class EndlessMode : MonoBehaviour
         }
     }
 
+    List<GameObject> PickEnemies(bool boss)
+    {
+        List<GameObject> pickedEnemies = new();
+        if (boss)
+        {
+            // adds 1 random boss
+            pickedEnemies.Add(bosses[Random.Range(0, bosses.Length)]);
+        }
+        else
+        {
+            for (int i = 0; i < enemies.Length; i++)
+                if (wave >= enemies[i].GetComponent<Enemy>().minWave && wave <= enemies[i].GetComponent<Enemy>().maxWave || enemies[i].GetComponent<Enemy>().waveOverride)
+                    pickedEnemies.Add(enemies[i]);
+        }
+
+        return pickedEnemies;
+    }
     GameObject FindSpawnableEnemy()
     {
         int number = Random.Range(0, possibleSpawningEnemies.Count);

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cd05e40493dd8c24c9d0915c1d1137a0
+guid: bb1411c72453a2943b9903e3259527fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Transform_0
+      name: Increase Stats_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ffe986b12952c84b8f4f16c69807bb8
-      internalID: -380290201
+      spriteID: 9141afdb0b2b733448477500c00a6232
+      internalID: 892854525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_1
+      name: Increase Stats_1
       rect:
         serializedVersion: 2
         x: 64
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40d87037a4190e043b3a3043d7a52826
-      internalID: -1384360404
+      spriteID: b25776329c24b04458ed162741e3efad
+      internalID: -1360169925
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_2
+      name: Increase Stats_2
       rect:
         serializedVersion: 2
         x: 128
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a51a11892de33d247ab26dadbdb5571f
-      internalID: 212493280
+      spriteID: 01b38f841a0ad8842808ab957a5c060a
+      internalID: 338403220
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_3
+      name: Increase Stats_3
       rect:
         serializedVersion: 2
         x: 192
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 201dc92838f1a9446b777652f2363d0f
-      internalID: -1576632072
+      spriteID: 6deaa0fc9e4f0324ba8077dae790c99b
+      internalID: 1259550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_4
+      name: Increase Stats_4
       rect:
         serializedVersion: 2
         x: 256
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b8a96387db48c544a1b7b6262b5e0a9
-      internalID: -384054514
+      spriteID: 83a3e2fd58c9d41428c02014394fde48
+      internalID: -918262420
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_5
+      name: Increase Stats_5
       rect:
         serializedVersion: 2
         x: 320
@@ -242,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a11e59b17989f943aaaefc9b2f0e79c
-      internalID: 1543080416
+      spriteID: 90c26c3310d9507418367e8a33adcb72
+      internalID: 747062802
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_6
+      name: Increase Stats_6
       rect:
         serializedVersion: 2
         x: 384
@@ -263,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f87e465960a825247842b4d5ef98c4fb
-      internalID: 1232319920
+      spriteID: efd8b9f2aad1da84f84a1f4385f28a53
+      internalID: -1240636433
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_7
+      name: Increase Stats_7
       rect:
         serializedVersion: 2
         x: 448
@@ -284,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1518f4f47a6a11469e3df743d9321b0
-      internalID: -1710448891
+      spriteID: 93305e99422c4dc46b16962998aa4000
+      internalID: 1773666358
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_8
+      name: Increase Stats_8
       rect:
         serializedVersion: 2
         x: 512
@@ -305,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6983853ac928d841af3204fef24d12b
-      internalID: 164040254
+      spriteID: 76624602867488044b1bd28462c9c36f
+      internalID: -86819071
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_9
+      name: Increase Stats_9
       rect:
         serializedVersion: 2
         x: 576
@@ -326,14 +326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1694118e664a6747b9471a65021bf59
-      internalID: -527311540
+      spriteID: b1059ff718699b642adde295161aeb8a
+      internalID: 531337589
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_10
+      name: Increase Stats_10
       rect:
         serializedVersion: 2
         x: 640
@@ -347,14 +347,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 617d7bf2e0201b94a97d07127b075e22
-      internalID: 961052277
+      spriteID: 0ce9a9c9b3ede674ea8f126977ae1068
+      internalID: -820725590
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_11
+      name: Increase Stats_11
       rect:
         serializedVersion: 2
         x: 704
@@ -368,14 +368,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f20c4a6f0ddadf46876365623471fd7
-      internalID: -1581865114
+      spriteID: a6afc7d99d7cffc48a5f44b01ca75cdd
+      internalID: 2136272682
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_12
+      name: Increase Stats_12
       rect:
         serializedVersion: 2
         x: 768
@@ -389,14 +389,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 35bce1a277d194943969454162f34317
-      internalID: 671377
+      spriteID: a435901824cae3d4c8a152a5d003dd26
+      internalID: 1636449169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_13
+      name: Increase Stats_13
       rect:
         serializedVersion: 2
         x: 832
@@ -410,14 +410,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54ca180d623e6e848853e538d43f3653
-      internalID: 1808976538
+      spriteID: 71816bb47bbebfc40acb46305edfbf54
+      internalID: 1186384569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_14
+      name: Increase Stats_14
       rect:
         serializedVersion: 2
         x: 896
@@ -431,14 +431,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56779b1d98f192843b3f832ba268cfa4
-      internalID: 2034943189
+      spriteID: ce940144027a1734c99bc0a6a490c861
+      internalID: -1094681926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_15
+      name: Increase Stats_15
       rect:
         serializedVersion: 2
         x: 960
@@ -452,14 +452,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec9fe0bf6ee70fc48b0853a8b2e57ab9
-      internalID: -1893352733
+      spriteID: 42f940509539ac94c8d3d339bddf73e8
+      internalID: 66997946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_16
+      name: Increase Stats_16
       rect:
         serializedVersion: 2
         x: 1024
@@ -473,14 +473,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ff14d4036f9da0e4bacd2a0653459753
-      internalID: -771616297
+      spriteID: a19aaef1da50f4a44bea51eb2ffbe2a6
+      internalID: 1491313257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_17
+      name: Increase Stats_17
       rect:
         serializedVersion: 2
         x: 1088
@@ -494,14 +494,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24b9eb0f9926504428dc78b4bda52a2b
-      internalID: 588033530
+      spriteID: c1e285d9233d84b48a2cb0ebba739fef
+      internalID: -986679235
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_18
+      name: Increase Stats_18
       rect:
         serializedVersion: 2
         x: 1152
@@ -515,14 +515,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ccb5102de9e37745a127e1f67f69c84
-      internalID: -1878145184
+      spriteID: 36bf5c49a01791141b5d2cdbf944fd5a
+      internalID: -1742318681
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_19
+      name: Increase Stats_19
       rect:
         serializedVersion: 2
         x: 1216
@@ -536,14 +536,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f10e23da9bd363b4ebf323f4df6c5a31
-      internalID: 621774993
+      spriteID: 78e8db940140e404ebebb3b2d64e1d66
+      internalID: 1979626192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_20
+      name: Increase Stats_20
       rect:
         serializedVersion: 2
         x: 1280
@@ -557,14 +557,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46a2c3bcd5886544485e585c2cbd4393
-      internalID: -609749313
+      spriteID: b62a3617824b9194ab68111b7af5f652
+      internalID: -1748743286
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_21
+      name: Increase Stats_21
       rect:
         serializedVersion: 2
         x: 1344
@@ -578,14 +578,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa7b7e652ed7f3447a8b0025afbc9b72
-      internalID: -373879464
+      spriteID: 79308d094f11ec94bafa0471d03ebaea
+      internalID: -1877583083
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_22
+      name: Increase Stats_22
       rect:
         serializedVersion: 2
         x: 1408
@@ -599,14 +599,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef84a61fa7ba69f44937ca920dd8a866
-      internalID: 825698248
+      spriteID: 2fc7fc8de37a81c4c98387cdd7cef374
+      internalID: 1015071077
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_23
+      name: Increase Stats_23
       rect:
         serializedVersion: 2
         x: 1472
@@ -620,14 +620,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b1e6199e8814c6439bdf2cc8b0e9049
-      internalID: 609964492
+      spriteID: 1d2ab70722d03a54bb6cad48efe6e198
+      internalID: 992812182
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_24
+      name: Increase Stats_24
       rect:
         serializedVersion: 2
         x: 1536
@@ -641,14 +641,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e058a62eda4c4c247a4127dbab95b6a4
-      internalID: 203246754
+      spriteID: 660bbdd992f2a574c8876a573f7437bf
+      internalID: 6934040
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_25
+      name: Increase Stats_25
       rect:
         serializedVersion: 2
         x: 1600
@@ -662,14 +662,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5234f0f01d6b6514aa9204d01970bb14
-      internalID: -447684349
+      spriteID: 82c39a604089319408962ccf4a78678f
+      internalID: -762512440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_26
+      name: Increase Stats_26
       rect:
         serializedVersion: 2
         x: 1664
@@ -683,14 +683,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1e603984cfc58a4091a3f02d29df977
-      internalID: -198976235
+      spriteID: 057d7cbd41ea07648b47934154b4e557
+      internalID: 102045529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_27
+      name: Increase Stats_27
       rect:
         serializedVersion: 2
         x: 1728
@@ -704,14 +704,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1f1913bbc7f40a41bcc939ec94d7899
-      internalID: 542451556
+      spriteID: 09a6a4a10e0d9ff4db824f4fdaa3ad64
+      internalID: -2089631036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_28
+      name: Increase Stats_28
       rect:
         serializedVersion: 2
         x: 1792
@@ -725,14 +725,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31b330bcb85027341bf33b146792c3f6
-      internalID: -1871180625
+      spriteID: 072a7797ebdcd134d9e9da782d1d5123
+      internalID: -1724217731
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_29
+      name: Increase Stats_29
       rect:
         serializedVersion: 2
         x: 1856
@@ -746,14 +746,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5aba1ffb25172cf48a5a4b54671ad36a
-      internalID: -1827214395
+      spriteID: 19c00d6e1de68a84bb12ef761a864365
+      internalID: 1445895642
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_30
+      name: Increase Stats_30
       rect:
         serializedVersion: 2
         x: 1920
@@ -767,14 +767,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1d51639adf8c0744bc0a2b4ca056432
-      internalID: 1956054561
+      spriteID: eaf6494d36372114aba13e3bb7469928
+      internalID: 396777076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_31
+      name: Increase Stats_31
       rect:
         serializedVersion: 2
         x: 1984
@@ -788,14 +788,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c614bdfa6a7c6ff4e8b34e3c77151396
-      internalID: 1842072219
+      spriteID: 5c40eebea7e07be42bc41ae13e0763b9
+      internalID: -1289108918
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_32
+      name: Increase Stats_32
       rect:
         serializedVersion: 2
         x: 2048
@@ -809,14 +809,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a23777b581ca775449a3b5ae4228c8b6
-      internalID: -1410942198
+      spriteID: 6293331d2e620fc4b9716cf848ef81ba
+      internalID: 1526633567
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_33
+      name: Increase Stats_33
       rect:
         serializedVersion: 2
         x: 2112
@@ -830,14 +830,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22e41c2a25748bb4893152d224114c60
-      internalID: -1693511086
+      spriteID: cfbf1ef44b3c34d47abf0ee3ad0a352d
+      internalID: 437805033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_34
+      name: Increase Stats_34
       rect:
         serializedVersion: 2
         x: 2176
@@ -851,14 +851,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfc240a27c47a214a8e49dc077df2b93
-      internalID: -1478973898
+      spriteID: c45ad11c0c4f3cc46b3e10ba7dc39e2e
+      internalID: -417063739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_35
+      name: Increase Stats_35
       rect:
         serializedVersion: 2
         x: 2240
@@ -872,14 +872,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6a15212f86812448bd6e17e7b1d520f
-      internalID: 1214497866
+      spriteID: 4743030633befe040b1dc7b78d7cf12d
+      internalID: -196838329
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_36
+      name: Increase Stats_36
       rect:
         serializedVersion: 2
         x: 2304
@@ -893,14 +893,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ff9aa245d014044cb0da866723df999
-      internalID: -1992611525
+      spriteID: 45e26d840e9ab404f9013f9b9fe959c7
+      internalID: 1784772406
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_37
+      name: Increase Stats_37
       rect:
         serializedVersion: 2
         x: 2368
@@ -914,14 +914,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 338d02c6f47e6c140b29886679c8850f
-      internalID: -1186683713
+      spriteID: d4b9d4449fb9ad3438415d709045d872
+      internalID: 802989886
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_38
+      name: Increase Stats_38
       rect:
         serializedVersion: 2
         x: 2432
@@ -935,14 +935,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e3c6a94a2e6aab43af94f2680ed916f
-      internalID: 686803145
+      spriteID: f8a5905f75e29264db64ad0c8e21ea2a
+      internalID: 1231793805
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Transform_39
+      name: Increase Stats_39
       rect:
         serializedVersion: 2
         x: 2496
@@ -956,8 +956,281 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0076f31ef27ce83489c570297c1c981f
-      internalID: 86779768
+      spriteID: 78221ff3ed51642479fc9f434ce791ca
+      internalID: -40741862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_40
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1b4f580f534f0c4da655afa4ece8718
+      internalID: -1450697341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_41
+      rect:
+        serializedVersion: 2
+        x: 2624
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6921db7f41f916f4ab812a1e3fa0e81b
+      internalID: 55415467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_42
+      rect:
+        serializedVersion: 2
+        x: 2688
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfdead3f48197c94ab6963933ebc003a
+      internalID: 531884297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_43
+      rect:
+        serializedVersion: 2
+        x: 2752
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a85439a2cbd245b4c9f580b8d3e08e67
+      internalID: -763643185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_44
+      rect:
+        serializedVersion: 2
+        x: 2816
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4fbb2950ef233544b8002a68b40de93
+      internalID: 1627261408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_45
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bb6ba6135cb80049832423971f34527
+      internalID: -1585847872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_46
+      rect:
+        serializedVersion: 2
+        x: 2944
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6e5aae5ac8abb14b91fb4230e3ae9a9
+      internalID: -1922071726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_47
+      rect:
+        serializedVersion: 2
+        x: 3008
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caa9449783222f449b2935bde44c0142
+      internalID: 382038119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_48
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd4aed81f800f5744a38f7a0de4ed29f
+      internalID: -1842354423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_49
+      rect:
+        serializedVersion: 2
+        x: 3136
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 967e93c5068960d42afa0a0732444b0d
+      internalID: -876667052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_50
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f27e14d02e486734c9e14909dfa6354a
+      internalID: 1189912224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_51
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7a4aab4bb30aad43b16f8d8ea687a0c
+      internalID: 176326304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Increase Stats_52
+      rect:
+        serializedVersion: 2
+        x: 3328
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e103dc1a57c0f94ea72d602fb26208d
+      internalID: 2118424980
       vertices: []
       indices: 
       edges: []
@@ -973,46 +1246,59 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Transform_0: -380290201
-      Transform_1: -1384360404
-      Transform_10: 961052277
-      Transform_11: -1581865114
-      Transform_12: 671377
-      Transform_13: 1808976538
-      Transform_14: 2034943189
-      Transform_15: -1893352733
-      Transform_16: -771616297
-      Transform_17: 588033530
-      Transform_18: -1878145184
-      Transform_19: 621774993
-      Transform_2: 212493280
-      Transform_20: -609749313
-      Transform_21: -373879464
-      Transform_22: 825698248
-      Transform_23: 609964492
-      Transform_24: 203246754
-      Transform_25: -447684349
-      Transform_26: -198976235
-      Transform_27: 542451556
-      Transform_28: -1871180625
-      Transform_29: -1827214395
-      Transform_3: -1576632072
-      Transform_30: 1956054561
-      Transform_31: 1842072219
-      Transform_32: -1410942198
-      Transform_33: -1693511086
-      Transform_34: -1478973898
-      Transform_35: 1214497866
-      Transform_36: -1992611525
-      Transform_37: -1186683713
-      Transform_38: 686803145
-      Transform_39: 86779768
-      Transform_4: -384054514
-      Transform_5: 1543080416
-      Transform_6: 1232319920
-      Transform_7: -1710448891
-      Transform_8: 164040254
-      Transform_9: -527311540
+      Increase Stats_0: 892854525
+      Increase Stats_1: -1360169925
+      Increase Stats_10: -820725590
+      Increase Stats_11: 2136272682
+      Increase Stats_12: 1636449169
+      Increase Stats_13: 1186384569
+      Increase Stats_14: -1094681926
+      Increase Stats_15: 66997946
+      Increase Stats_16: 1491313257
+      Increase Stats_17: -986679235
+      Increase Stats_18: -1742318681
+      Increase Stats_19: 1979626192
+      Increase Stats_2: 338403220
+      Increase Stats_20: -1748743286
+      Increase Stats_21: -1877583083
+      Increase Stats_22: 1015071077
+      Increase Stats_23: 992812182
+      Increase Stats_24: 6934040
+      Increase Stats_25: -762512440
+      Increase Stats_26: 102045529
+      Increase Stats_27: -2089631036
+      Increase Stats_28: -1724217731
+      Increase Stats_29: 1445895642
+      Increase Stats_3: 1259550
+      Increase Stats_30: 396777076
+      Increase Stats_31: -1289108918
+      Increase Stats_32: 1526633567
+      Increase Stats_33: 437805033
+      Increase Stats_34: -417063739
+      Increase Stats_35: -196838329
+      Increase Stats_36: 1784772406
+      Increase Stats_37: 802989886
+      Increase Stats_38: 1231793805
+      Increase Stats_39: -40741862
+      Increase Stats_4: -918262420
+      Increase Stats_40: -1450697341
+      Increase Stats_41: 55415467
+      Increase Stats_42: 531884297
+      Increase Stats_43: -763643185
+      Increase Stats_44: 1627261408
+      Increase Stats_45: -1585847872
+      Increase Stats_46: -1922071726
+      Increase Stats_47: 382038119
+      Increase Stats_48: -1842354423
+      Increase Stats_49: -876667052
+      Increase Stats_5: 747062802
+      Increase Stats_50: 1189912224
+      Increase Stats_51: 176326304
+      Increase Stats_52: 2118424980
+      Increase Stats_6: -1240636433
+      Increase Stats_7: 1773666358
+      Increase Stats_8: -86819071
+      Increase Stats_9: 531337589
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

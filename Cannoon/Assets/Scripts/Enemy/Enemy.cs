@@ -60,11 +60,16 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Spawning()
     {
+        bool doDamage = true;
+        if (!canDealDamage)
+            doDamage = false;
+
         canTakeDamage = false;
         canDealDamage = false;
         yield return new WaitForSeconds(GetComponent<FollowEnemyAI>().spawningAnimation.length);
+        if (doDamage)
+            canDealDamage = true;
         canTakeDamage = true;
-        canDealDamage = true;
     }
 
     // Update is called once per frame
@@ -102,9 +107,9 @@ public class Enemy : MonoBehaviour
         // apply only when the enemy spawns
         if (start)
         {
-            health = baseHealth * endlessModeScript.difficultyMultiplier * gameManager.difficulty;
+            health = (float)(baseHealth * endlessModeScript.difficultyMultiplier) * gameManager.difficulty;
             maxHealth = health;
-            enemyAi.baseSpeed *= Mathf.Clamp(endlessModeScript.difficultyMultiplier / 1.75f, 1, enemyAi.baseSpeed * 1.4f);
+            enemyAi.baseSpeed *= Mathf.Clamp((float)(endlessModeScript.difficultyMultiplier / 1.75f), 1, enemyAi.baseSpeed * 1.4f);
             enemyAi.baseSpeed *= gameManager.difficulty;
         }
     }
@@ -132,25 +137,14 @@ public class Enemy : MonoBehaviour
         text.GetComponent<Rigidbody2D>().AddForce(force);
 
         // text color
-        Color damageColor;
-        switch (damage)
+        var damageColor = damage switch
         {
-            case >= 300:
-                damageColor = new Color(0.84f, 0.44f, 0.9f);
-                break;
-            case >= 100:
-                damageColor = new Color(0.31f, 0.72f, 0.93f);
-                break;
-            case >= 50:
-                damageColor = new Color(0.93f, 0.38f, 0.31f);
-                break;
-            case >= 35:
-                damageColor = new Color(0.81f, 0.84f, 0.4f);
-                break;
-            default:
-                damageColor = Color.white;
-                break;
-        }
+            >= 300 => new Color(0.84f, 0.44f, 0.9f),
+            >= 100 => new Color(0.31f, 0.72f, 0.93f),
+            >= 50 => new Color(0.93f, 0.38f, 0.31f),
+            >= 35 => new Color(0.81f, 0.84f, 0.4f),
+            _ => Color.white,
+        };
         text.GetComponent<TextMeshPro>().color = damageColor;
     }
 

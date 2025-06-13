@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fb8685ad9ef9a224e9299ee654856b1a
+guid: d109fceb74b2c0a428215f1e8ad9e640
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Death_0
+      name: Spike Ground Pound_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dfe69ab20bd48364db55753c4568c694
-      internalID: 260726428
+      spriteID: bba2b4d4a44ee0a45a4cd980207cd55f
+      internalID: -946713338
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_1
+      name: Spike Ground Pound_1
       rect:
         serializedVersion: 2
         x: 64
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a216e4e5181b794b9b1e520d2683526
-      internalID: -436482230
+      spriteID: b1cbbbe15e184dd4cb01fc6000f74304
+      internalID: -305561866
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_2
+      name: Spike Ground Pound_2
       rect:
         serializedVersion: 2
         x: 128
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2a93e750b0c7e9408ca6c2f449ff97f
-      internalID: -1030774093
+      spriteID: 27265b5896729844bb5210f12a087aa2
+      internalID: 2017378542
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_3
+      name: Spike Ground Pound_3
       rect:
         serializedVersion: 2
         x: 192
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cef5caef72d8a664690bb17806c215b1
-      internalID: -232880747
+      spriteID: b04e66a5b0c8e7243b1a9f8c8462a5cd
+      internalID: -532552429
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_4
+      name: Spike Ground Pound_4
       rect:
         serializedVersion: 2
         x: 256
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a8afcdbf54542134bad356484bb07121
-      internalID: -511084220
+      spriteID: c8f52e8a80cb6a349a991cc25845bc25
+      internalID: 556261068
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_5
+      name: Spike Ground Pound_5
       rect:
         serializedVersion: 2
         x: 320
@@ -242,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3be34b107a313604a805cf6ce06a8225
-      internalID: 1828469692
+      spriteID: de2982220aa085b4e9d8068587a96f60
+      internalID: 534628983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_6
+      name: Spike Ground Pound_6
       rect:
         serializedVersion: 2
         x: 384
@@ -263,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b18b24dde36c5104d9409ae849d54ee1
-      internalID: -1231595228
+      spriteID: 674517f1d635a1b46889c29da711b338
+      internalID: 1952423495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_7
+      name: Spike Ground Pound_7
       rect:
         serializedVersion: 2
         x: 448
@@ -284,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5282a6db0e81ddb4897ef8331ca1f487
-      internalID: -1116662832
+      spriteID: 30444ef7cd4962e4894060893ed5a0d5
+      internalID: -1740652648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_8
+      name: Spike Ground Pound_8
       rect:
         serializedVersion: 2
         x: 512
@@ -305,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b25350fcbe361794d986954d71cd2f5b
-      internalID: -726410686
+      spriteID: 33d7818a149655443b9847fab1815608
+      internalID: 1938036370
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_9
+      name: Spike Ground Pound_9
       rect:
         serializedVersion: 2
         x: 576
@@ -326,14 +326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: caed30f3baff86c4c91b345f7ac1ec72
-      internalID: 1788329196
+      spriteID: 04ff1ceba8a77db48aaf7d477b56c738
+      internalID: 18991189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_10
+      name: Spike Ground Pound_10
       rect:
         serializedVersion: 2
         x: 640
@@ -347,14 +347,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56baef1b408dc184596ff9d308532fa6
-      internalID: -639957404
+      spriteID: 3fa7d2157d55c3346ada326cc8757690
+      internalID: 1091113186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_11
+      name: Spike Ground Pound_11
       rect:
         serializedVersion: 2
         x: 704
@@ -368,14 +368,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3c51be91dd24284ab1164815429fe17
-      internalID: 64557538
+      spriteID: 1d71ac413952cd040b7ce62c53de6802
+      internalID: 648919547
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_12
+      name: Spike Ground Pound_12
       rect:
         serializedVersion: 2
         x: 768
@@ -389,14 +389,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e97854ce4dafd9499e628508a8b1e08
-      internalID: -1360477657
+      spriteID: 21833734c30574e4e9aecbd27d7c380e
+      internalID: 800013463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_13
+      name: Spike Ground Pound_13
       rect:
         serializedVersion: 2
         x: 832
@@ -410,14 +410,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8686fcd28bb5c30449211921561ff8e9
-      internalID: -2049209551
+      spriteID: c379314f5bd97d640a2aec073d861f2b
+      internalID: -201261870
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_14
+      name: Spike Ground Pound_14
       rect:
         serializedVersion: 2
         x: 896
@@ -431,14 +431,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc2cf3169026f584ba8d61bf40e7e529
-      internalID: -2075383067
+      spriteID: 3dbf7d2a55da23b4f9a51d67eb3d20f5
+      internalID: -1695950049
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_15
+      name: Spike Ground Pound_15
       rect:
         serializedVersion: 2
         x: 960
@@ -452,14 +452,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03984781292c43d47b56f378b07f880e
-      internalID: 141070562
+      spriteID: b35b8c561282011409b66f6d66b2e307
+      internalID: 1248006200
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Death_16
+      name: Spike Ground Pound_16
       rect:
         serializedVersion: 2
         x: 1024
@@ -473,155 +473,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ff33d0bef5143a40be1d2eed352d74f
-      internalID: -300275242
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death_17
-      rect:
-        serializedVersion: 2
-        x: 1088
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1696f82c28f67f44d9d27f7faa46abc0
-      internalID: 838110092
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death_18
-      rect:
-        serializedVersion: 2
-        x: 1152
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a7ff07867319f3a489072e97176681b4
-      internalID: 1771182196
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death_19
-      rect:
-        serializedVersion: 2
-        x: 1216
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e773a84b1ae83f647b5263a872caa82e
-      internalID: -550793957
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death_20
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0b51afdf0c4663543876bdfaee082339
-      internalID: -1330400199
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death_21
-      rect:
-        serializedVersion: 2
-        x: 1344
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fd6c37771ad235d42909366ba0724847
-      internalID: -1455217294
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death_22
-      rect:
-        serializedVersion: 2
-        x: 1408
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: beab17f3e6d59b744b07b16c86c64671
-      internalID: -1847215091
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Death_23
-      rect:
-        serializedVersion: 2
-        x: 1472
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 118841d20411fcf4bae6c89b0fb14db0
-      internalID: -1659407398
+      spriteID: d471b0de9ad3fd240bd55aa01c7722a6
+      internalID: 626879857
       vertices: []
       indices: 
       edges: []
@@ -637,30 +490,23 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Death_0: 260726428
-      Death_1: -436482230
-      Death_10: -639957404
-      Death_11: 64557538
-      Death_12: -1360477657
-      Death_13: -2049209551
-      Death_14: -2075383067
-      Death_15: 141070562
-      Death_16: -300275242
-      Death_17: 838110092
-      Death_18: 1771182196
-      Death_19: -550793957
-      Death_2: -1030774093
-      Death_20: -1330400199
-      Death_21: -1455217294
-      Death_22: -1847215091
-      Death_23: -1659407398
-      Death_3: -232880747
-      Death_4: -511084220
-      Death_5: 1828469692
-      Death_6: -1231595228
-      Death_7: -1116662832
-      Death_8: -726410686
-      Death_9: 1788329196
+      Spike Ground Pound_0: -946713338
+      Spike Ground Pound_1: -305561866
+      Spike Ground Pound_10: 1091113186
+      Spike Ground Pound_11: 648919547
+      Spike Ground Pound_12: 800013463
+      Spike Ground Pound_13: -201261870
+      Spike Ground Pound_14: -1695950049
+      Spike Ground Pound_15: 1248006200
+      Spike Ground Pound_16: 626879857
+      Spike Ground Pound_2: 2017378542
+      Spike Ground Pound_3: -532552429
+      Spike Ground Pound_4: 556261068
+      Spike Ground Pound_5: 534628983
+      Spike Ground Pound_6: 1952423495
+      Spike Ground Pound_7: -1740652648
+      Spike Ground Pound_8: 1938036370
+      Spike Ground Pound_9: 18991189
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

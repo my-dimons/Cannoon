@@ -144,8 +144,10 @@ public class GameManager : MonoBehaviour
         resumeButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
         creditsButton.GetComponent<Button>().onClick.AddListener(EnableCreditScreen);
         disableCreditsButton.GetComponent<Button>().onClick.AddListener(DisableCreditScreen);
+
         difficultyMenu = GameObject.Find("Difficulty Dropdown").gameObject;
         difficultyMenu.GetComponent<TMP_Dropdown>().onValueChanged.AddListener(delegate { ChangeDifficulty(difficultyMenu.GetComponent<TMP_Dropdown>()); });
+        ChangeDifficulty(difficultyMenu.GetComponent<TMP_Dropdown>());
 
         musicVolumeSlider.onValueChanged.AddListener((v) =>
         {
@@ -231,23 +233,17 @@ public class GameManager : MonoBehaviour
         creditScreenEnabled = false;
     }
 
-    public void ChangeDifficulty(TMP_Dropdown value)
+    public void ChangeDifficulty(TMP_Dropdown dropdown)
     {
-        float val = value.value;
-        switch (val)
+        float value = dropdown.value;
+        difficulty = value switch
         {
-            case 0:
-                difficulty = difficultyValues[0];
-                break;
-            case 1:
-                difficulty = difficultyValues[1];
-                break;
-            case 2:
-                difficulty = difficultyValues[2];
-                break;
-            default:
-                difficulty = 1;
-                break;
-        }
+            0 => difficultyValues[0],
+            1 => difficultyValues[1],
+            2 => difficultyValues[2],
+            3 => difficultyValues[3],
+            4 => difficultyValues[4],
+            _ => 1,
+        };
     }
 }

@@ -61,7 +61,7 @@ public class FlyingEnemyAI : MonoBehaviour
 
     private void ApplyDifficultyRating()
     {
-        currentSpeed = baseSpeed * endlessModeScript.difficultyMultiplier;
+        currentSpeed = (float)(baseSpeed * endlessModeScript.difficultyMultiplier);
     }
 
     // Update is called once per frame
