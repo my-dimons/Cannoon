@@ -26,6 +26,11 @@ public class BigGoob : MonoBehaviour
     public AnimationClip statIncreaseAnim;
     public AnimationClip transformAnim;
 
+    [Header("Random Jumping")]
+    public float minJumpTime;
+    public float maxJumpTime;
+    bool canRandomJump;
+
     [Header("Audio")]
     FollowEnemyAI enemyAi;
     Enemy enemy;
@@ -68,6 +73,12 @@ public class BigGoob : MonoBehaviour
 
             StartCoroutine(Cooldown(5));
         }
+
+        if (canRandomJump)
+        {
+            float time = Random.Range(minJumpTime, maxJumpTime);
+            StartCoroutine(RandomJump(time));
+        }
     }
     IEnumerator Cooldown(float additionalTime)
     {
@@ -75,6 +86,17 @@ public class BigGoob : MonoBehaviour
         float randomCooldown = Random.Range(attackCooldown - 2, attackCooldown + 2);
         yield return new WaitForSeconds(randomCooldown + additionalTime);
         canAttack = true;
+    }
+
+    IEnumerator RandomJump(float time)
+    {
+        canRandomJump = false;
+        yield return new WaitForSeconds(time);
+
+        Vector2 direction = ((Vector2)enemyAi.path.vectorPath[enemyAi.currentWaypoint] - GetComponent<Rigidbody2D>().position).normalized;
+        float forceX = direction.x * enemyAi.speed * Time.deltaTime;
+        enemyAi.Jump(forceX);
+        canRandomJump = true;
     }
 
     IEnumerator Transform()

@@ -16,6 +16,7 @@ public class FollowEnemyAI : MonoBehaviour
     [Tooltip("This enemys speed")]
     public float baseSpeed;
     public float speed;
+    public float maxSpeed;
     public bool facingRight;
     public bool canTurn;
 
@@ -33,8 +34,8 @@ public class FollowEnemyAI : MonoBehaviour
     [Header("Pathfinding")]
     public float nextWaypointDistance = 3f;
 
-    Path path;
-    int currentWaypoint = 0;
+    public Path path;
+    public int currentWaypoint = 0;
     bool reachedEndOfPath = false;
 
     // OTHER: Referenced in Start()
@@ -51,6 +52,8 @@ public class FollowEnemyAI : MonoBehaviour
         enemyScript = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
+
+        maxSpeed = baseSpeed * 2;
 
         StartCoroutine(FreezeEnemy(spawningAnimation.length));
         StartCoroutine(GetTarget());
@@ -82,6 +85,8 @@ public class FollowEnemyAI : MonoBehaviour
         GravityMultiplier();
         ApplyDifficultyRating();
 
+        // clamp speed
+        speed = Mathf.Clamp(speed, 0, maxSpeed);
         // walking animation
         animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
         animator.SetFloat("yVelocity", rb.velocity.y);
@@ -152,7 +157,7 @@ public class FollowEnemyAI : MonoBehaviour
     }
 
     // check front will check if there is a wall infront of an enemy (Normally when the player is not near the enemy to prevent the enemy from getting stuck on walls)
-    void Jump(float xForce)
+    public void Jump(float xForce)
     {
         if (enemyScript.canJump)
         {
