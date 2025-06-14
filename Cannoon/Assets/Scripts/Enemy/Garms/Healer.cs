@@ -39,6 +39,8 @@ public class Healer : MonoBehaviour
 
         yield return new WaitForSeconds(healAnimLength);
 
+        StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.75f));
+
         GetComponent<AudioSource>().PlayOneShot(healingSound, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
         Debug.Log("Healing All Enemies");
         foreach (Transform child in GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().enemyParentObject.transform)

@@ -44,6 +44,7 @@ public class FollowEnemyAI : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
 
+        enemyScript.canTurn = true;
 
         StartCoroutine(GetTarget());
         IEnumerator GetTarget()

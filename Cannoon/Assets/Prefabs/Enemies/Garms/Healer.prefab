@@ -237,8 +237,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 2409508100413565938}
-  facingRight: 0
-  canTurn: 1
   baseJumpForce: 600
   currentJumpForce: 0
   jumpCheckDistance: 1.5
@@ -279,10 +277,12 @@ MonoBehaviour:
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 41
   maxWave: 999
-  waveOverride: 0
+  waveOverride: 1
   baseSpeed: 750
   speed: 0
   maxSpeed: 0
+  facingRight: 0
+  canTurn: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 5343389458019422042}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}

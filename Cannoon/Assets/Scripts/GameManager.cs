@@ -245,5 +245,7 @@ public class GameManager : MonoBehaviour
             4 => difficultyValues[4],
             _ => 1,
         };
+
+        GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().difficultyMultiplier = difficulty;
     }
 }
