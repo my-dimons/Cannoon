@@ -9,16 +9,7 @@ public class FollowEnemyAI : MonoBehaviour
 {
     public Transform target;
     public Transform enemySprite;
-    public Animator animator;
-    public AnimationClip spawningAnimation;
 
-    [Header("Movement")]
-    [Tooltip("This enemys speed")]
-    public float baseSpeed;
-    public float speed;
-    public float maxSpeed;
-    public bool facingRight;
-    public bool canTurn;
 
     [Header("Jumping")]
     [Tooltip("How high this enemy will jump")]
@@ -48,14 +39,12 @@ public class FollowEnemyAI : MonoBehaviour
     void Start()
     {
         endlessModeScript = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
-        animator = enemySprite.GetComponent<Animator>();
         enemyScript = GetComponent<Enemy>();
+        enemyScript.animator = enemySprite.GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
 
-        maxSpeed = baseSpeed * 2;
 
-        StartCoroutine(FreezeEnemy(spawningAnimation.length));
         StartCoroutine(GetTarget());
         IEnumerator GetTarget()
         {
@@ -86,15 +75,14 @@ public class FollowEnemyAI : MonoBehaviour
         ApplyDifficultyRating();
 
         // clamp speed
-        speed = Mathf.Clamp(speed, 0, maxSpeed);
+        enemyScript.speed = Mathf.Clamp(enemyScript.speed, 0, enemyScript.maxSpeed);
         // walking animation
-        animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
-        animator.SetFloat("yVelocity", rb.velocity.y);
+        enemyScript.animator.SetFloat("xVelocity", Math.Abs(rb.velocity.x));
+        enemyScript.animator.SetFloat("yVelocity", rb.velocity.y);
     }
 
     private void ApplyDifficultyRating()
     {
-        speed = baseSpeed;
         currentJumpForce = Mathf.Clamp((float)(baseJumpForce * (endlessModeScript.difficultyMultiplier / 1.25f)), baseJumpForce, baseJumpForce * 1.2f);
     }
 
@@ -116,7 +104,7 @@ public class FollowEnemyAI : MonoBehaviour
 
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        float forceX = direction.x * speed * Time.deltaTime;
+        float forceX = direction.x * enemyScript.speed * Time.deltaTime;
 
         if (enemyScript.canMove && !enemyScript.frozen)
         {
@@ -142,15 +130,15 @@ public class FollowEnemyAI : MonoBehaviour
         }
 
         // flips the enemy to face the proper direction
-        if (target.transform.position.x >= transform.position.x && canTurn)
+        if (target.transform.position.x >= transform.position.x && enemyScript.canTurn)
         {
             enemySprite.localScale = new Vector3(-1f, 1f, 1f);
-            facingRight = true;
+            enemyScript.facingRight = true;
         }
-        else if (target.transform.position.x < transform.position.x && canTurn)
+        else if (target.transform.position.x < transform.position.x && enemyScript.canTurn)
         {
             enemySprite.localScale = new Vector3(1f, 1f, 1f);
-            facingRight = false;
+            enemyScript.facingRight = false;
         }
         else if (target.transform.position.x == transform.position.x)
             enemySprite.localScale = enemySprite.localScale;
@@ -185,21 +173,10 @@ public class FollowEnemyAI : MonoBehaviour
     }
 
     // freezes the enemy for a set amount of time, usually for the length of an animation clip
-    public IEnumerator FreezeEnemy(float time)
-    {
-        rb.velocity = Vector3.zero;
-        enemyScript.frozen = true;
 
-        Debug.Log("Time: " + time);
-        Debug.Log("Freezing enemy");
-        yield return new WaitForSeconds(time);
-        Debug.Log("unfreezing enemy");
-        enemyScript.frozen = false;
-        enemyScript.stunned = false;
-    }
     public void DashForward(float force)
     {
-        if (GetComponent<FollowEnemyAI>().facingRight)
+        if (enemyScript.facingRight)
             GetComponent<Rigidbody2D>().AddForce(new(force, 0), ForceMode2D.Impulse);
         else
             GetComponent<Rigidbody2D>().AddForce(new(-force, 0), ForceMode2D.Impulse);

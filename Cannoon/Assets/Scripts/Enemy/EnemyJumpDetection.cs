@@ -14,9 +14,9 @@ public class EnemyJumpDetection : MonoBehaviour
     public float landingTime;
     IEnumerator SlowEnemyOnLanding()
     {
-        enemyFollowAi.speed = enemyFollowAi.baseSpeed / landingSpeedDiviser;
+        enemyScript.speed = enemyScript.baseSpeed / landingSpeedDiviser;
         yield return new WaitForSeconds(landingTime);
-        enemyFollowAi.speed = enemyFollowAi.baseSpeed;
+        enemyScript.speed = enemyScript.baseSpeed;
     }
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class EnemyJumpDetection : MonoBehaviour
             {
                 StartCoroutine(SlowEnemyOnLanding());
                 enemyScript.onGround = true;
-                enemyFollowAi.animator.SetBool("isJumping", !enemyScript.onGround);
+                enemyScript.animator.SetBool("isJumping", !enemyScript.onGround);
             }
             // reset players jump when hitting the ground
             if (!enemyScript.canJump)
@@ -52,7 +52,7 @@ public class EnemyJumpDetection : MonoBehaviour
         {
             enemyScript.onGround = false;
             enemyScript.canJump = false;
-            enemyFollowAi.animator.SetBool("isJumping", !enemyScript.onGround);
+            enemyScript.animator.SetBool("isJumping", !enemyScript.onGround);
         }
     }
 }

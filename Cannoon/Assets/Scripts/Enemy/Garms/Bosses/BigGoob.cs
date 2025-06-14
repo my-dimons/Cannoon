@@ -39,7 +39,6 @@ public class BigGoob : MonoBehaviour
     {
         enemy = GetComponent<Enemy>();
         enemyAi = GetComponent<FollowEnemyAI>();
-
     }
 
     // Update is called once per frame
@@ -94,15 +93,15 @@ public class BigGoob : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         Vector2 direction = ((Vector2)enemyAi.path.vectorPath[enemyAi.currentWaypoint] - GetComponent<Rigidbody2D>().position).normalized;
-        float forceX = direction.x * enemyAi.speed * Time.deltaTime;
+        float forceX = direction.x * enemy.speed * Time.deltaTime;
         enemyAi.Jump(forceX);
         canRandomJump = true;
     }
 
     IEnumerator Transform()
     {
-        StartCoroutine(enemyAi.FreezeEnemy(transformAnim.length));
-        enemyAi.animator.SetBool("isTransformed", true);
+        StartCoroutine(enemy.FreezeEnemy(transformAnim.length));
+        enemy.animator.SetBool("isTransformed", true);
         transformed = true;
         ToggleDamage(false);
 
@@ -114,9 +113,9 @@ public class BigGoob : MonoBehaviour
 
     IEnumerator GroundSpikes()
     {
-        StartCoroutine(enemyAi.FreezeEnemy(groundSpikesAnim.length));
-        
-        enemyAi.animator.SetBool("isGroundPounding", true);
+        StartCoroutine(enemy.FreezeEnemy(groundSpikesAnim.length));
+
+        enemy.animator.SetBool("isGroundPounding", true);
         ToggleDamage(false);
 
         yield return new WaitForSeconds(groundPoundAnimDelay);
@@ -125,26 +124,26 @@ public class BigGoob : MonoBehaviour
 
         yield return new WaitForSeconds(groundSpikesAnim.length - groundPoundAnimDelay);
 
-        enemyAi.animator.SetBool("isGroundPounding", false);
+        enemy.animator.SetBool("isGroundPounding", false);
         ToggleDamage(true);
     }
 
     IEnumerator IncreaseStats()
     {
-        StartCoroutine(enemyAi.FreezeEnemy(statIncreaseAnim.length));
+        StartCoroutine(enemy.FreezeEnemy(statIncreaseAnim.length));
 
         ToggleDamage(false);
-        enemyAi.animator.SetBool("isStatIncreasing", true);
+        enemy.animator.SetBool("isStatIncreasing", true);
 
         yield return new WaitForSeconds(statIncreaseAnim.length);
 
         // apply stats
         attackCooldown += attackCooldown / 100 * cooldownPercent;
         enemy.health += enemy.maxHealth / 100 * healthPercent;
-        enemyAi.baseSpeed += enemyAi.baseSpeed / 100 * healthPercent;
-        enemyAi.speed = enemyAi.baseSpeed;
-        
-        enemyAi.animator.SetBool("isStatIncreasing", false);
+        enemy.baseSpeed += enemy.baseSpeed / 100 * healthPercent;
+        enemy.speed = enemy.baseSpeed;
+
+        enemy.animator.SetBool("isStatIncreasing", false);
         ToggleDamage(true);
     }
 

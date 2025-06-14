@@ -58,7 +58,9 @@ public class CameraScript : MonoBehaviour
             cursor.position,
             targetPos,
             ref currentVelocity,
-            1f / mouseSmoothSpeed
+            1f / mouseSmoothSpeed,
+            Mathf.Infinity,
+            Time.unscaledDeltaTime
         );
 
 
@@ -72,12 +74,12 @@ public class CameraScript : MonoBehaviour
             float targetTilt = Mathf.Clamp(movement.x, -1f, 1f) * maxTiltAngle;
 
             // Smoothly interpolate rotation
-            currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.deltaTime * mouseRotationSmooth);
+            currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.unscaledDeltaTime * mouseRotationSmooth);
         }
         else
         {
             // Slowly return to neutral rotation when not moving
-            currentTilt = Mathf.Lerp(currentTilt, 0f, Time.deltaTime * mouseRotationSmooth);
+            currentTilt = Mathf.Lerp(currentTilt, 0f, Time.unscaledDeltaTime * mouseRotationSmooth);
         }
 
         // Apply rotation (only around Z axis for 2D tilt)

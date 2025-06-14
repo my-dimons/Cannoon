@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     public GameObject player;
     public Transform target;
     public AnimationClip deathAnimation;
+    public Animator animator;
+    public AnimationClip spawningAnimation;
 
     [Header("Bools")]
     public bool frozen;
@@ -34,6 +36,13 @@ public class Enemy : MonoBehaviour
     [Tooltip("This enemy can be spawned no matter the wave")]
     public bool waveOverride;
 
+    [Header("Speed")]
+    public float baseSpeed;
+    public float speed;
+    public float maxSpeed;
+    public bool facingRight;
+    public bool canTurn;
+
     [Header("Damage")]
     public GameObject damageText;
 
@@ -52,7 +61,11 @@ public class Enemy : MonoBehaviour
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         player = GameObject.FindGameObjectWithTag("Player");
         enemyAi = GetComponent<FollowEnemyAI>();
+        animator = gameObject.transform.GetChild(0).GetComponent<Animator>();
         target = player.transform;
+
+        StartCoroutine(FreezeEnemy(spawningAnimation.length));
+        maxSpeed = baseSpeed * 2;
 
         ApplyDifficultyRating(true);
         canJump = true;
@@ -67,7 +80,11 @@ public class Enemy : MonoBehaviour
 
         canTakeDamage = false;
         canDealDamage = false;
-        yield return new WaitForSeconds(GetComponent<FollowEnemyAI>().spawningAnimation.length);
+        GetComponent<Rigidbody2D>().gravityScale = 0;
+        Debug.Log(canDealDamage);
+        yield return new WaitForSeconds(spawningAnimation.length);
+        GetComponent<Rigidbody2D>().gravityScale = 3;
+        Debug.Log("Spawned: " + spawningAnimation.length);
         if (doDamage)
             canDealDamage = true;
         canTakeDamage = true;
@@ -87,12 +104,12 @@ public class Enemy : MonoBehaviour
 
     private void Death()
     {
-        GetComponent<FollowEnemyAI>().animator.SetBool("isDying", true);
+        animator.SetBool("isDying", true);
         canDealDamage = false;
         canTakeDamage = false;
 
         StartCoroutine(DestroyEnemy(deathAnimation.length));
-        StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(deathAnimation.length));
+        StartCoroutine(GetComponent<Enemy>().FreezeEnemy(deathAnimation.length));
 
         IEnumerator DestroyEnemy(float time)
         {
@@ -110,9 +127,20 @@ public class Enemy : MonoBehaviour
         {
             health = (float)(baseHealth * endlessModeScript.difficultyMultiplier) * gameManager.difficulty;
             maxHealth = health;
-            enemyAi.baseSpeed *= Mathf.Clamp((float)(endlessModeScript.difficultyMultiplier / 1.75f), 1, enemyAi.baseSpeed * 1.4f);
-            enemyAi.baseSpeed *= gameManager.difficulty;
+            baseSpeed *= Mathf.Clamp((float)(endlessModeScript.difficultyMultiplier / 1.75f), 1, baseSpeed * 1.4f);
+            baseSpeed *= gameManager.difficulty;
+            speed = baseSpeed;
         }
+    }
+    public IEnumerator FreezeEnemy(float time)
+    {
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        frozen = true;
+
+        yield return new WaitForSeconds(time);
+
+        frozen = false;
+        stunned = false;
     }
 
     public void TakeDamage(float damage)
@@ -121,7 +149,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
 
         // flash white
-        StartCoroutine(GetComponent<FollowEnemyAI>().enemySprite.GetComponent<DamageFlash>().FlashWhite());
+        StartCoroutine(gameObject.transform.GetChild(0).GetComponent<DamageFlash>().FlashWhite());
         // SFX
         enemyAudio.PlayOneShot(hitSound, 1f * gameManager.soundVolume);
 

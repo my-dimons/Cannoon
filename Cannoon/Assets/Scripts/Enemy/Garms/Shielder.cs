@@ -13,7 +13,7 @@ public class Shielder : MonoBehaviour
     {
         StartCoroutine(Cooldown());
         StartCoroutine(SpawnAnim());
-        StartCoroutine(Shield(GetComponent<FollowEnemyAI>().spawningAnimation.length));
+        StartCoroutine(Shield(GetComponent<Enemy>().spawningAnimation.length));
     }
     IEnumerator Cooldown()
     {
@@ -25,9 +25,9 @@ public class Shielder : MonoBehaviour
     // fixes a small bug with the spawning anim (being interupted by any state transition)
     IEnumerator SpawnAnim()
     {
-        GetComponent<FollowEnemyAI>().animator.SetBool("lockState", true);
-        yield return new WaitForSeconds(GetComponent<FollowEnemyAI>().spawningAnimation.length);
-        GetComponent<FollowEnemyAI>().animator.SetBool("lockState", false);
+        GetComponent<Enemy>().animator.SetBool("lockState", true);
+        yield return new WaitForSeconds(GetComponent<Enemy>().spawningAnimation.length);
+        GetComponent<Enemy>().animator.SetBool("lockState", false);
     }
 
     // Update is called once per frame
@@ -43,22 +43,22 @@ public class Shielder : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
 
-        StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(shieldAnim.length + attackLength));
+        StartCoroutine(GetComponent<Enemy>().FreezeEnemy(shieldAnim.length + attackLength));
 
         Enemy enemy = GetComponent<Enemy>();
         GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         StartCoroutine(Cooldown());
 
-        GetComponent<FollowEnemyAI>().animator.SetBool("isShielded", true);
+        GetComponent<Enemy>().animator.SetBool("isShielded", true);
         enemy.canTakeDamage = false;
         enemy.destroyBullet = true;
 
         yield return new WaitForSeconds(shieldAnim.length);
-        GetComponent<FollowEnemyAI>().animator.SetBool("lockState", true);
+        GetComponent<Enemy>().animator.SetBool("lockState", true);
         yield return new WaitForSeconds(attackLength);
 
-        GetComponent<FollowEnemyAI>().animator.SetBool("isShielded", false);
-        GetComponent<FollowEnemyAI>().animator.SetBool("lockState", false);
+        GetComponent<Enemy>().animator.SetBool("isShielded", false);
+        GetComponent<Enemy>().animator.SetBool("lockState", false);
 
         enemy.canTakeDamage = true;
         enemy.destroyBullet = false;

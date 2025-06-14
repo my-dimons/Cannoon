@@ -23,7 +23,7 @@ public class Archer : MonoBehaviour
         if (canAttack)
         {
             StartCoroutine(ShootArrow());
-            StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(attackAnim.length));
+            StartCoroutine(GetComponent<Enemy>().FreezeEnemy(attackAnim.length));
         }
     }
 
@@ -36,13 +36,13 @@ public class Archer : MonoBehaviour
     IEnumerator ShootArrow()
     {
         StartCoroutine(Cooldown());
-        GetComponent<FollowEnemyAI>().animator.SetBool("isAttacking", true);
+        GetComponent<Enemy>().animator.SetBool("isAttacking", true);
 
         yield return new WaitForSeconds(attackTime);
 
         GetComponent<AudioSource>().PlayOneShot(shootingSound, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
-        GetComponent<FollowEnemyAI>().animator.SetBool("isAttacking", false);
-        if (GetComponent<FollowEnemyAI>().facingRight)
+        GetComponent<Enemy>().animator.SetBool("isAttacking", false);
+        if (GetComponent<Enemy>().facingRight)
         {
             GameObject spawnedArrow = Instantiate(arrow, new(transform.position.x - arrowSpawnPos.x, transform.position.y + arrowSpawnPos.y, transform.position.z), transform.rotation);
             spawnedArrow.GetComponent<Bullet>().SetStats(30, 1, 25);

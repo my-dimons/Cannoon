@@ -103,7 +103,7 @@ public class Cannonball : MonoBehaviour
                 {
                     Debug.Log("Stunning Enemy");
                     Debug.Log(cannonScript.stunTime);
-                    enemy.GetComponent<MonoBehaviour>().StartCoroutine(enemy.GetComponent<FollowEnemyAI>().FreezeEnemy(cannonScript.stunTime));
+                    enemy.GetComponent<MonoBehaviour>().StartCoroutine(enemy.GetComponent<Enemy>().FreezeEnemy(cannonScript.stunTime));
                 }
             }
 

@@ -29,6 +29,7 @@ public class TriggerStayContactDamage : MonoBehaviour
         // This object is an enemy
         else if (collision.gameObject.CompareTag("PlayerEnemyCollisions") && !notEnemy && !isPlayer)
         {
+            Debug.Log("Damaging Player (Can Deal Damage: " + enemyScript.canDealDamage + ")");
             if (enemyScript.canDealDamage)
                 enemyScript.player.GetComponent<PlayerHealth>().TakeDamage(damage);
         }

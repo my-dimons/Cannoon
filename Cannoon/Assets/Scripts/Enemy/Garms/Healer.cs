@@ -27,7 +27,7 @@ public class Healer : MonoBehaviour
     {
         if (canHeal)
         {
-            StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(healing.length));
+            StartCoroutine(GetComponent<Enemy>().FreezeEnemy(healing.length));
             StartCoroutine(HealAllEnemies());
             StartCoroutine(Cooldown());
         }
@@ -35,7 +35,7 @@ public class Healer : MonoBehaviour
 
     IEnumerator HealAllEnemies()
     {
-        GetComponent<FollowEnemyAI>().animator.SetBool("isHealing", true);
+        GetComponent<Enemy>().animator.SetBool("isHealing", true);
 
         yield return new WaitForSeconds(healAnimLength);
 
@@ -52,6 +52,6 @@ public class Healer : MonoBehaviour
             }
         }
 
-        GetComponent<FollowEnemyAI>().animator.SetBool("isHealing", false);
+        GetComponent<Enemy>().animator.SetBool("isHealing", false);
     }
 }

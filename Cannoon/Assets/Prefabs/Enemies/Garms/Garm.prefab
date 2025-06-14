@@ -236,10 +236,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 5314557678417610450}
-  animator: {fileID: 0}
-  spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
-  baseSpeed: 1600
-  speed: 0
   facingRight: 0
   canTurn: 1
   baseJumpForce: 600
@@ -250,6 +246,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   nextWaypointDistance: 3
+  currentWaypoint: 0
 --- !u!114 &8144556888214686507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,12 +262,15 @@ MonoBehaviour:
   player: {fileID: 0}
   target: {fileID: 0}
   deathAnimation: {fileID: 7400000, guid: 1dee10d8798324f49897fc84bd3d4f51, type: 2}
+  animator: {fileID: 0}
+  spawningAnimation: {fileID: 7400000, guid: 674ed38848ef9d6479d78e7b8ae6097a, type: 2}
   frozen: 0
   canJump: 0
   canMove: 1
   onGround: 0
   canDealDamage: 1
   canTakeDamage: 1
+  stunned: 0
   destroyBullet: 0
   maxHealth: 0
   baseHealth: 35
@@ -279,6 +279,9 @@ MonoBehaviour:
   minWave: 0
   maxWave: 20
   waveOverride: 0
+  baseSpeed: 1600
+  speed: 0
+  maxSpeed: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 6386185745361134167}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}

@@ -10,7 +10,7 @@ public class Booster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Cooldown(GetComponent<FollowEnemyAI>().spawningAnimation.length * 1.5f));
+        StartCoroutine(Cooldown(GetComponent<Enemy>().spawningAnimation.length * 1.5f));
     }
 
     IEnumerator Cooldown(float time)
@@ -32,8 +32,8 @@ public class Booster : MonoBehaviour
 
     IEnumerator AnimCooldown()
     {
-        GetComponent<FollowEnemyAI>().animator.SetBool("isDashing", true);
+        GetComponent<Enemy>().animator.SetBool("isDashing", true);
         yield return new WaitForSeconds(0.5f);
-        GetComponent<FollowEnemyAI>().animator.SetBool("isDashing", false);
+        GetComponent<Enemy>().animator.SetBool("isDashing", false);
     }
 }

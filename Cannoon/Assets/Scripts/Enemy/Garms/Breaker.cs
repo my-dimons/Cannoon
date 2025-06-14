@@ -38,11 +38,11 @@ public class Breaker : MonoBehaviour
     {
         enemyScript = GetComponent<Enemy>();
         enemyAiScript = GetComponent<FollowEnemyAI>();
-        animator = enemyAiScript.animator;
+        animator = enemyScript.animator;
         player = enemyScript.player;
      
         // a short cooldown when the enemy spawns so it cant attack instantly
-        StartCoroutine(AttackCooldown(enemyAiScript.spawningAnimation.length + attackingCooldown));
+        StartCoroutine(AttackCooldown(enemyScript.spawningAnimation.length + attackingCooldown));
     }
 
     IEnumerator AttackCooldown(float time)
@@ -89,22 +89,22 @@ public class Breaker : MonoBehaviour
 
 
         if ((Physics2D.Raycast(new Vector2(transform.position.x + groundSpikeSpawningPositionX - groundSpikes.GetComponent<BoxCollider2D>().size.x * 1.5f, transform.position.y), 
-            Vector2.down, depth, enemyAiScript.layerMask) && !enemyAiScript.facingRight) 
+            Vector2.down, depth, enemyAiScript.layerMask) && !enemyScript.facingRight) 
             || 
             (Physics2D.Raycast(new Vector2(transform.position.x - groundSpikeSpawningPositionX + groundSpikes.GetComponent<BoxCollider2D>().size.x * 1.5f, transform.position.y),
-            Vector2.down, depth, enemyAiScript.layerMask) && enemyAiScript.facingRight))
+            Vector2.down, depth, enemyAiScript.layerMask) && enemyScript.facingRight))
         {
             canAttack = false;
-            enemyAiScript.canTurn = false;
+            enemyScript.canTurn = false;
             isAttacking = true;
-            StartCoroutine(enemyAiScript.FreezeEnemy(attackingAnimation.length + groundSpikeAnimation.length));
+            StartCoroutine(enemyScript.FreezeEnemy(attackingAnimation.length + groundSpikeAnimation.length));
             animator.SetBool("isAttacking", true);
 
             yield return new WaitForSeconds(attackingAnimation.length - earlyTime);
 
             animator.SetBool("isAttacking", false);
 
-            if (enemyAiScript.facingRight)
+            if (enemyScript.facingRight)
                 spawningPosition = new Vector3(transform.position.x - groundSpikeSpawningPositionX, transform.position.y + spikeSpawningYPos, 0);
             else
                 spawningPosition = new Vector3(transform.position.x + groundSpikeSpawningPositionX, transform.position.y + spikeSpawningYPos, 0);
@@ -117,7 +117,7 @@ public class Breaker : MonoBehaviour
             enemyScript.enemyAudio.PlayOneShot(attackingSound, 1f * enemyScript.gameManager.soundVolume);
 
             isAttacking = false;
-            enemyAiScript.canTurn = true;
+            enemyScript.canTurn = true;
 
             yield return new WaitForSeconds(groundSpikeAnimation.length - earlyTime);
 
@@ -133,10 +133,10 @@ public class Breaker : MonoBehaviour
         Vector3 spawningPosition;
         canAttack = false;
         isAttacking = true;
-        enemyAiScript.canTurn = false;
-        StartCoroutine(enemyAiScript.FreezeEnemy(attackingAnimation.length));
+        enemyScript.canTurn = false;
+        StartCoroutine(enemyScript.FreezeEnemy(attackingAnimation.length));
         animator.SetBool("isThrowing", true);
-        if (enemyAiScript.facingRight)
+        if (enemyScript.facingRight)
         {
             spawningPosition = new Vector3(
                 transform.position.x - spikeSpawningPosition.x,
@@ -157,7 +157,7 @@ public class Breaker : MonoBehaviour
         yield return new WaitForSeconds(throwingAnimation.length / 2);
 
         animator.SetBool("isThrowing", false);
-        if (enemyAiScript.facingRight)
+        if (enemyScript.facingRight)
             spawnedSpike.GetComponent<Bullet>().speed = 25;
         else
             spawnedSpike.GetComponent<Bullet>().speed = -25;
@@ -165,7 +165,7 @@ public class Breaker : MonoBehaviour
         yield return new WaitForSeconds(throwingAnimation.length / 2);
 
         isAttacking = false;
-        enemyAiScript.canTurn = true;
+        enemyScript.canTurn = true;
 
         StartCoroutine(AttackCooldown(attackingCooldown));
     }

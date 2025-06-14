@@ -20,17 +20,17 @@ public class Grunt : MonoBehaviour
 
     IEnumerator Attack(float cooldown)
     {
-        StartCoroutine(GetComponent<FollowEnemyAI>().FreezeEnemy(attackAnimation.length));
+        StartCoroutine(GetComponent<Enemy>().FreezeEnemy(attackAnimation.length));
         enemyScript.enemyAudio.PlayOneShot(attackSound, 1f * enemyScript.gameManager.soundVolume);
         animator.SetBool("isAttacking", true);
-        enemyAiScript.canTurn = false;
+        enemyScript.canTurn = false;
         canAttack = false;
 
         // stop animation
         yield return new WaitForSeconds(attackAnimation.length);
 
         animator.SetBool("isAttacking", false);
-        enemyAiScript.canTurn = true;
+        enemyScript.canTurn = true;
 
         // can attack
         yield return new WaitForSeconds(cooldown);
@@ -42,12 +42,12 @@ public class Grunt : MonoBehaviour
     {
         enemyScript = GetComponent<Enemy>();
         enemyAiScript = GetComponent<FollowEnemyAI>();
-        animator = GetComponent<FollowEnemyAI>().animator;
+        animator = GetComponent<Enemy>().animator;
 
         StartCoroutine(StartAttackCooldown());
         IEnumerator StartAttackCooldown()
         {
-            yield return new WaitForSeconds(enemyAiScript.spawningAnimation.length);
+            yield return new WaitForSeconds(enemyScript.spawningAnimation.length);
             canAttack = true;
         }
     }

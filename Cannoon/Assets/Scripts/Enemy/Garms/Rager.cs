@@ -26,7 +26,7 @@ public class Rager : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(enragedAudio, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
             GetComponent<Enemy>().canMove = true;
             GetComponent<Enemy>().canDealDamage = true;
-            GetComponent<FollowEnemyAI>().animator.SetBool("rage", true);
+            GetComponent<Enemy>().animator.SetBool("rage", true);
         }
     }
 

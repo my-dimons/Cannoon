@@ -1,16 +1,15 @@
 using Pathfinding;
 using System.Collections;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
-public class FlyingEnemyAI : MonoBehaviour
+public class FlyingEnemyAI : MonoBehaviour // really just flybound ai, but im too lazy to change the name
 {
     public Transform target;
     public Transform enemySprite;
 
-    public float baseSpeed;
-    public float currentSpeed;
-
     public float nextWaypointDistance = 3f;
+    public float hoveringHeight;
 
     Path path;
     int currentWaypoint = 0;
@@ -35,14 +34,14 @@ public class FlyingEnemyAI : MonoBehaviour
             yield return new WaitForSeconds(.01f);
 
             target = this.gameObject.GetComponent<Enemy>().target;
-            InvokeRepeating("UpdatePath", 0f, .25f);
+            InvokeRepeating("UpdatePath", 0f, .4f);
         }
     }
 
     private void UpdatePath()
     {
         if (seeker.IsDone())
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+            seeker.StartPath(new(rb.position.x, rb.position.y + 1, 0), new(target.position.x, target.position.y + hoveringHeight, 0), OnPathComplete);
     }
 
     void OnPathComplete(Path p)
@@ -56,13 +55,9 @@ public class FlyingEnemyAI : MonoBehaviour
 
     private void Update()
     {
-        ApplyDifficultyRating();
+
     }
 
-    private void ApplyDifficultyRating()
-    {
-        currentSpeed = (float)(baseSpeed * endlessModeScript.difficultyMultiplier);
-    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -84,7 +79,8 @@ public class FlyingEnemyAI : MonoBehaviour
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
 
         // Move towards the next waypoint (player)
-        rb.AddForce(direction * currentSpeed, ForceMode2D.Impulse);
+        if (enemyScript.canMove && !enemyScript.frozen)
+            rb.AddForce(direction * enemyScript.speed, ForceMode2D.Impulse);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
@@ -93,10 +89,7 @@ public class FlyingEnemyAI : MonoBehaviour
             currentWaypoint++;
         }
 
-        // Rotate enemyh towards player
-        Vector2 diff = target.position - enemySprite.transform.position;
-        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        enemySprite.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        FlipSprite();
     }
 
     public void SetTarget(Transform enemyTarget)
@@ -114,4 +107,20 @@ public class FlyingEnemyAI : MonoBehaviour
         }
     }
 
+    void FlipSprite()
+    {
+        // flips the enemy to face the proper direction
+        if (target.transform.position.x >= transform.position.x && enemyScript.canTurn)
+        {
+            enemySprite.localScale = new Vector3(-1f, 1f, 1f);
+            enemyScript.facingRight = true;
+        }
+        else if (target.transform.position.x < transform.position.x && enemyScript.canTurn)
+        {
+            enemySprite.localScale = new Vector3(1f, 1f, 1f);
+            enemyScript.facingRight = false;
+        }
+        else if (target.transform.position.x == transform.position.x)
+            enemySprite.localScale = enemySprite.localScale;
+    }
 }
