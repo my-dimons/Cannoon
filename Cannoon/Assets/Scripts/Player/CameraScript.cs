@@ -12,6 +12,7 @@ public class CameraScript : MonoBehaviour
     [Header("Mouse Cursor")]
     public GameObject cursorCanvas;
     public GameObject mouseCursor;
+    public Camera uiCamera;
     public float mouseSmoothSpeed;
     public float mouseRotationSmooth;
     public float maxTiltAngle;
@@ -49,8 +50,17 @@ public class CameraScript : MonoBehaviour
     // thanks chat gpt!
     void MouseFollow()
     {
-        Vector3 targetPos = Input.mousePosition;
         RectTransform cursor = mouseCursor.GetComponent<RectTransform>();
+
+        // Convert screen position to world position on canvas
+        Vector3 screenPos = Input.mousePosition;
+        Vector3 targetPos;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            cursor.parent as RectTransform,  
+            screenPos,
+            uiCamera,                        
+            out targetPos
+        );
 
         // Smoothly move the cursor
         cursor.position = Vector3.SmoothDamp(
@@ -62,26 +72,19 @@ public class CameraScript : MonoBehaviour
             Time.unscaledDeltaTime
         );
 
-
         // Get the movement direction
         Vector3 movement = currentVelocity;
 
-        // Only rotate if there's movement
         if (movement.sqrMagnitude > 0.01f)
         {
-            // Angle to tilt based on horizontal movement only
             float targetTilt = Mathf.Clamp(movement.x, -1f, 1f) * maxTiltAngle;
-
-            // Smoothly interpolate rotation
             currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.unscaledDeltaTime * mouseRotationSmooth);
         }
         else
         {
-            // Slowly return to neutral rotation when not moving
             currentTilt = Mathf.Lerp(currentTilt, 0f, Time.unscaledDeltaTime * mouseRotationSmooth);
         }
 
-        // Apply rotation (only around Z axis for 2D tilt)
         cursor.rotation = Quaternion.Euler(0f, 0f, -currentTilt);
     }
 }

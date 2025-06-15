@@ -237,8 +237,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 6294309445213757003}
-  facingRight: 0
-  canTurn: 1
   baseJumpForce: 700
   currentJumpForce: 0
   jumpCheckDistance: 2.3
@@ -283,6 +281,8 @@ MonoBehaviour:
   baseSpeed: 1800
   speed: 0
   maxSpeed: 0
+  facingRight: 0
+  canTurn: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 5259599617120767338}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}
@@ -305,9 +305,9 @@ MonoBehaviour:
   groundSpikes: {fileID: 5609015798895454073, guid: 14cae4de6b316774b9713b45d2aea436, type: 3}
   groundSpikesYSpawnPos: 5.2
   groundPoundAnimDelay: 1.9
-  healthPercent: 20
+  healthPercent: 16
   speedPercent: 5
-  cooldownPercent: -4
+  cooldownPercent: 4
   groundSpikesAnim: {fileID: 7400000, guid: 2d62945783bb3104dbf905f622ebe036, type: 2}
   statIncreaseAnim: {fileID: 7400000, guid: 6a59f84f4c23bc14ebe3c5c6125fcf2a, type: 2}
   transformAnim: {fileID: 7400000, guid: 5765ebe1acd4c9342885feb5373f6e07, type: 2}

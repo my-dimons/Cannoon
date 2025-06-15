@@ -41,7 +41,7 @@ public class PlayerJumpDetection : MonoBehaviour
                 StartCoroutine(SlowPlayerOnLanding());
 
                 playerScript.playerAudio.pitch = Random.Range(0.75f, 1.25f);
-                playerScript.playerAudio.PlayOneShot(playerScript.hittingGround, 0.25f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
+                playerScript.playerAudio.PlayOneShot(playerScript.hittingGround, 0.7f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
                 // particles
                 GameObject groundPoundParticle = Instantiate(groundPoundParticles, transform.position - groundPoundParticlesSpawningPos, groundPoundParticles.transform.rotation);
                 groundPoundParticle.GetComponent<ParticleSystem>().Play();
