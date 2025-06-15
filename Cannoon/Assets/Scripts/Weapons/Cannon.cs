@@ -192,6 +192,7 @@ public class Cannon : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && overheated && !EventSystem.current.IsPointerOverGameObject())
         {
             StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.5f));
+            cannonAudio.PlayOneShot(declineShot, 0.75f * gameManager.soundVolume);
         }
 
         // Start timer and make charge meter appear

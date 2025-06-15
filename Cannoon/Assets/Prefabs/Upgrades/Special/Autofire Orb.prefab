@@ -400,7 +400,7 @@ MonoBehaviour:
   jumpHeightIncrease: 0
   speedIncrease: 0
   damageIncrease: 0
-  chargeSpeedIncrease: 0.4
+  chargeSpeedIncrease: -0.4
   chargeLimitIncrease: -0.1
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0

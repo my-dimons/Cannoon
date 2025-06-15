@@ -330,8 +330,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 5954937058574645290}
-  facingRight: 0
-  canTurn: 1
   baseJumpForce: 600
   currentJumpForce: 0
   jumpCheckDistance: 1.5
@@ -376,6 +374,8 @@ MonoBehaviour:
   baseSpeed: 2800
   speed: 0
   maxSpeed: 0
+  facingRight: 0
+  canTurn: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 4644099757681807811}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}
