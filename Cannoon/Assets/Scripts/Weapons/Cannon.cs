@@ -35,6 +35,16 @@ public class Cannon : MonoBehaviour
     public float stunChance;
     public float stunTime;
 
+    [Header("Overheat")]
+    public bool overheat;
+    public float overheatDecline;
+    public float overheatValue;
+    public float overheatDeclineShootingTime;
+    public GameObject overheatUi;
+    public Color overheatColor;
+    public Color overheatedColor;
+    public GameObject overheatParticles;
+
     [Header("Critical Hits")]
     public Color baseChargeColor;
     public Color criticalChargeColor;
@@ -92,6 +102,7 @@ public class Cannon : MonoBehaviour
     public AudioClip normalChargedSound;
     public AudioClip critChargedSound;
     public AudioClip shootingSound;
+    public AudioClip declineShot;
 
 
     GameManager gameManager;
@@ -135,7 +146,29 @@ public class Cannon : MonoBehaviour
                 Shooting();
             }
 
-            maxBulletDamage = Mathf.Clamp(maxBulletDamage, 0.1f, Mathf.Infinity);
+            if (overheat)
+            {
+                if (overheatUi.activeSelf == false)
+                    overheatUi.SetActive(true);
+
+                overheatValue -= overheatDecline * Time.deltaTime;
+                overheatValue = Mathf.Clamp01(overheatValue);
+                overheatUi.GetComponent<Image>().fillAmount = overheatValue;
+
+                if (canShoot && overheatValue >= 0.98f)
+                    StartCoroutine(PauseShooting(overheatDeclineShootingTime));
+            }
+
+            maxBulletDamage = Mathf.Clamp(maxBulletDamage, 1, Mathf.Infinity);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        // set overheat particle rotation
+        if (overheat)
+        {
+            overheatParticles.transform.rotation = Quaternion.identity;
         }
     }
 
@@ -160,6 +193,12 @@ public class Cannon : MonoBehaviour
             ChargingShot();
         }
 
+        if (!canShoot && chargeTime > 0)
+        {
+            timerActive = false;
+            Shoot();
+        }
+
         void ChargingShot()
         {
             // TIMER
@@ -171,7 +210,6 @@ public class Cannon : MonoBehaviour
                 Shoot();
                 return;
             }
-
             float time = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
 
             // CHARGE METER FILL
@@ -239,6 +277,7 @@ public class Cannon : MonoBehaviour
                     chargeAudio.PlayOneShot(normalChargedSound, 1f * gameManager.soundVolume);
                 }
 
+
                 chargeParticleSystem.GetComponent<ParticleSystem>().Play();
                 playedParticles = true;
             }
@@ -246,6 +285,7 @@ public class Cannon : MonoBehaviour
 
         void Shoot()
         {
+
             charging = false;
             float time = Mathf.InverseLerp(minCharge, maxCharge, chargeTime);
 
@@ -254,6 +294,12 @@ public class Cannon : MonoBehaviour
 
             // charge meter
             cannonChargeCanvas.SetActive(false);
+
+            // overheat
+            if (overheat)
+            {
+                overheatValue += 0.08f;
+            }
 
             // animation
             animator.SetBool("isLoading", false);
@@ -381,5 +427,29 @@ public class Cannon : MonoBehaviour
         mousePos.y -= objectPos.y;
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
         cannonRotationObj.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
+
+    public void EnableOverheat()
+    {
+        overheat = true;
+        overheatValue = 0;
+
+        overheatUi.SetActive(true);
+        overheatUi.GetComponent<Image>().color = overheatColor;
+    }
+
+    IEnumerator PauseShooting(float time)
+    {
+        canShoot = false;
+        cannonAudio.PlayOneShot(declineShot, 1f * gameManager.soundVolume);
+        overheatParticles.GetComponent<ParticleSystem>().Play();
+
+        overheatUi.GetComponent<Image>().color = overheatedColor;
+
+        yield return new WaitForSeconds(time);
+        overheatParticles.GetComponent<ParticleSystem>().Stop();
+        canShoot = true;
+
+        overheatUi.GetComponent<Image>().color = overheatColor;
     }
 }

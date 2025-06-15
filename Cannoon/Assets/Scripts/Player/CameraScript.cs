@@ -19,10 +19,9 @@ public class CameraScript : MonoBehaviour
     private Vector3 currentVelocity;
     private float currentTilt;
 
-    GameObject activeMouseCursor;
     private void Start()
     {
-        activeMouseCursor = Instantiate(mouseCursor, cursorCanvas.transform);
+        //activeMouseCursor = Instantiate(mouseCursor, cursorCanvas.transform);
         pos = transform.localPosition;
         Cursor.visible = false;
     }
@@ -51,7 +50,7 @@ public class CameraScript : MonoBehaviour
     void MouseFollow()
     {
         Vector3 targetPos = Input.mousePosition;
-        RectTransform cursor = activeMouseCursor.GetComponent<RectTransform>();
+        RectTransform cursor = mouseCursor.GetComponent<RectTransform>();
 
         // Smoothly move the cursor
         cursor.position = Vector3.SmoothDamp(

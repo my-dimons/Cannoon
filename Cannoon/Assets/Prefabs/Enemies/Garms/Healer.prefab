@@ -277,7 +277,7 @@ MonoBehaviour:
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 41
   maxWave: 999
-  waveOverride: 1
+  waveOverride: 0
   baseSpeed: 750
   speed: 0
   maxSpeed: 0

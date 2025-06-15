@@ -67,10 +67,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Unlocks Autofire
 
-    <color=#5dfc3a>- 0.3s Charge Time
+    <color=#5dfc3a>- 0.4s Charge Time
 
     <color=#5dfc3a>-
-    Minimum Charge Time'
+    Minimum Charge Time
+
+    <color=#fc2d2d> Unlocks Overheat'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}
@@ -398,8 +400,8 @@ MonoBehaviour:
   jumpHeightIncrease: 0
   speedIncrease: 0
   damageIncrease: 0
-  chargeSpeedIncrease: -0.3
-  chargeLimitIncrease: -0.07
+  chargeSpeedIncrease: 0.4
+  chargeLimitIncrease: -0.1
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
@@ -415,6 +417,8 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
+  overheat: 1
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0
