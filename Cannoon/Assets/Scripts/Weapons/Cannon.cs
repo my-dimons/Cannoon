@@ -38,10 +38,12 @@ public class Cannon : MonoBehaviour
     [Header("Overheat")]
     public bool overheat;
     public float overheatDecline;
+    bool overheated;
     public float overheatValue;
     public float overheatDeclineShootingTime;
     public GameObject overheatUi;
     public Color overheatColor;
+    public Color overheatWarningColor;
     public Color overheatedColor;
     public GameObject overheatParticles;
 
@@ -153,10 +155,21 @@ public class Cannon : MonoBehaviour
 
                 overheatValue -= overheatDecline * Time.deltaTime;
                 overheatValue = Mathf.Clamp01(overheatValue);
-                overheatUi.GetComponent<Image>().fillAmount = overheatValue;
 
                 if (canShoot && overheatValue >= 0.98f)
                     StartCoroutine(PauseShooting(overheatDeclineShootingTime));
+
+                if (!overheated)
+                {
+                    if (overheatValue <= 0.7f)
+                        overheatUi.GetComponent<Image>().color = overheatColor;
+                    else
+                        overheatUi.GetComponent<Image>().color = overheatWarningColor;
+                }
+
+                overheatUi.GetComponent<Image>().fillAmount = overheatValue;
+
+
             }
 
             maxBulletDamage = Mathf.Clamp(maxBulletDamage, 1, Mathf.Infinity);
@@ -175,20 +188,26 @@ public class Cannon : MonoBehaviour
     // Hold down left click to shoot, vars are explained at their defining
     private void Shooting()
     {
+        // screenshake if cant shoot
+        if (Input.GetMouseButtonDown(0) && overheated && !EventSystem.current.IsPointerOverGameObject())
+        {
+            StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.5f));
+        }
+
         // Start timer and make charge meter appear
-        if (Input.GetMouseButton(0) && canShoot && !charging && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButton(0) && canShoot && !charging && !EventSystem.current.IsPointerOverGameObject() && !overheated)
         {
             StartShooting();
         }
 
         // Stop timer and shoot bullet (bullet stats depend on hold time), and make charge meter disappear
-        else if (Input.GetMouseButtonUp(0) && canShoot && charging)
+        else if (Input.GetMouseButtonUp(0) && canShoot && charging && !overheated)
         {
             Shoot();
         }
 
         // Advances timer, fills the charge meter, and applies shooting effects
-        if (timerActive && canShoot && charging)
+        if (timerActive && canShoot && charging && !overheated)
         {
             ChargingShot();
         }
@@ -441,6 +460,8 @@ public class Cannon : MonoBehaviour
     IEnumerator PauseShooting(float time)
     {
         canShoot = false;
+        overheated = true;
+
         cannonAudio.PlayOneShot(declineShot, 1f * gameManager.soundVolume);
         overheatParticles.GetComponent<ParticleSystem>().Play();
 
@@ -448,8 +469,8 @@ public class Cannon : MonoBehaviour
 
         yield return new WaitForSeconds(time);
         overheatParticles.GetComponent<ParticleSystem>().Stop();
-        canShoot = true;
 
-        overheatUi.GetComponent<Image>().color = overheatColor;
+        canShoot = true;
+        overheated = false;
     }
 }
