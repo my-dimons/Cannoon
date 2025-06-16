@@ -38,7 +38,7 @@ public class UpgradeStats : MonoBehaviour
     public bool explodeOnPierce;
     public bool doubleJump;
     public bool stunEnemies;
-    public bool overheat;
+    public float overheatDecline;
     public int spawnUpgradesIncrease;
 
     [Header("Difficulty Increase")]
@@ -109,8 +109,7 @@ public class UpgradeStats : MonoBehaviour
             playerMovementScript.doubleJump = doubleJump;
         if (!cannonScript.stunEnemies)
             cannonScript.stunEnemies = stunEnemies;
-        if (!cannonScript.overheat)
-            cannonScript.overheat = overheat;
+        cannonScript.overheatDecline += overheatDecline;
 
         // difficulty upgrade
         endlessModeScript.difficultyMultiplierIncrease += endlessModeScript.difficultyMultiplierIncrease / 100 * increaseDifficultyIncreasePercent;

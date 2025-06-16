@@ -72,7 +72,7 @@ MonoBehaviour:
     <color=#5dfc3a>-
     Minimum Charge Time
 
-    <color=#fc2d2d> Unlocks Overheat'
+    <color=#5dfc3a> Better Overheat'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}
@@ -418,7 +418,7 @@ MonoBehaviour:
   explodeOnPierce: 0
   doubleJump: 0
   stunEnemies: 0
-  overheat: 1
+  overheatDecline: 0.08
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0
