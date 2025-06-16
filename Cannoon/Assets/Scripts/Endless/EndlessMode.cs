@@ -27,7 +27,6 @@ public class EndlessMode : MonoBehaviour
     public float enemyZOffset;
 
     public float minSpawningRandomness;
-    public float maxSpawningRandomness;
 
     [Header("Difficulty Multiplier")]
     [Tooltip("Determines how hard the wave is")]
@@ -161,7 +160,7 @@ public class EndlessMode : MonoBehaviour
 
         // how many enemies to spawn (using difficulty rating)
 
-        amount = Random.Range(amount * minSpawningRandomness, amount * maxSpawningRandomness);
+        amount = Random.Range(amount * minSpawningRandomness, amount);
         amount = Mathf.RoundToInt(amount);
         amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);
         Debug.Log("Spawning " + amount + " Enemies");

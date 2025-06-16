@@ -54,12 +54,11 @@ public class CameraScript : MonoBehaviour
 
         // Convert screen position to world position on canvas
         Vector3 screenPos = Input.mousePosition;
-        Vector3 targetPos;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(
-            cursor.parent as RectTransform,  
+            cursor.parent as RectTransform,
             screenPos,
-            uiCamera,                        
-            out targetPos
+            uiCamera,
+            out Vector3 targetPos
         );
 
         // Smoothly move the cursor

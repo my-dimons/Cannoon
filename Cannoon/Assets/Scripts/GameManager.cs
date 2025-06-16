@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip deathSfx;
     public AudioClip[] musicTracks;
+    public AudioClip[] bossTracks;
+    public bool playingBossTracks;
     public AudioClip musicCurrentlyPlaying;
     public float musicTransitionTime;
     public bool playingMusic;
@@ -94,7 +96,10 @@ public class GameManager : MonoBehaviour
 
         if (!playingMusic)
         {
-            StartCoroutine(PlayMusicTrack());
+            if (!playingBossTracks)
+                StartCoroutine(PlayMusicTrack());
+            if (playingBossTracks)
+                StartCoroutine(PlayBossMusicTrack());
         }
     }
     private void Awake()
@@ -145,7 +150,7 @@ public class GameManager : MonoBehaviour
         creditsButton.GetComponent<Button>().onClick.AddListener(EnableCreditScreen);
         disableCreditsButton.GetComponent<Button>().onClick.AddListener(DisableCreditScreen);
 
-        difficultyMenu = GameObject.Find("Difficulty Dropdown").gameObject;
+        difficultyMenu = GameObject.Find("Difficulty Dropdown");
         difficultyMenu.GetComponent<TMP_Dropdown>().onValueChanged.AddListener(delegate { ChangeDifficulty(difficultyMenu.GetComponent<TMP_Dropdown>()); });
         ChangeDifficulty(difficultyMenu.GetComponent<TMP_Dropdown>());
 
@@ -162,15 +167,34 @@ public class GameManager : MonoBehaviour
         SfxVolumeSlider.value = Instance.soundVolume;
     }
 
-    IEnumerator PlayMusicTrack()
+    public IEnumerator PlayMusicTrack()
     {
-        Debug.Log("Playing music");
+        Debug.Log("Playing background music");
         musicSource.Stop();
         playingMusic = true;
         int track = UnityEngine.Random.Range(0, musicTracks.Length);
         musicSource.PlayOneShot(musicTracks[track]);
         musicCurrentlyPlaying = musicTracks[track];
+
         yield return new WaitForSeconds(musicTracks[track].length);
+
+        musicSource.Stop();
+        musicCurrentlyPlaying = null;
+        yield return new WaitForSeconds(musicTransitionTime);
+        playingMusic = false;
+    }
+
+    public IEnumerator PlayBossMusicTrack()
+    {
+        Debug.Log("Playing boss music");
+        musicSource.Stop();
+        playingMusic = true;
+        int track = UnityEngine.Random.Range(0, bossTracks.Length);
+        musicSource.PlayOneShot(bossTracks[track]);
+        musicCurrentlyPlaying = bossTracks[track];
+
+        yield return new WaitForSeconds(bossTracks[track].length);
+
         musicSource.Stop();
         musicCurrentlyPlaying = null;
         yield return new WaitForSeconds(musicTransitionTime);

@@ -34,7 +34,7 @@ public class FlyingEnemyAI : MonoBehaviour // really just flybound ai, but im to
             yield return new WaitForSeconds(.01f);
 
             target = this.gameObject.GetComponent<Enemy>().target;
-            InvokeRepeating("UpdatePath", 0f, .4f);
+            InvokeRepeating(nameof(UpdatePath), 0f, .4f);
         }
     }
 
@@ -51,11 +51,6 @@ public class FlyingEnemyAI : MonoBehaviour // really just flybound ai, but im to
             path = p;
             currentWaypoint = 0;
         }
-    }
-
-    private void Update()
-    {
-
     }
 
 

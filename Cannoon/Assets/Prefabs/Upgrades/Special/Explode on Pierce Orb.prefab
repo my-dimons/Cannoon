@@ -308,9 +308,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3ea42a388d6494cb41d2db19fd6816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialUpgrade: 0
+  specialUpgrade: 1
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
-  particleColor: {r: 1, g: 1, b: 1, a: 1}
+  particleColor: {r: 0.92941177, g: 0.68235296, b: 0.95686275, a: 1}
 --- !u!114 &7682517991247456548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +412,8 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 1
   doubleJump: 0
+  stunEnemies: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0

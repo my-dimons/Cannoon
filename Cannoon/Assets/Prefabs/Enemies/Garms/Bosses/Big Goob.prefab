@@ -272,7 +272,7 @@ MonoBehaviour:
   stunned: 0
   destroyBullet: 0
   maxHealth: 0
-  baseHealth: 4500
+  baseHealth: 8000
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 0

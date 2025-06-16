@@ -156,7 +156,7 @@ public class Cannon : MonoBehaviour
                 overheatValue -= overheatDecline * Time.deltaTime;
                 overheatValue = Mathf.Clamp01(overheatValue);
 
-                if (canShoot && overheatValue >= 0.98f)
+                if (canShoot && overheatValue >= 0.95f)
                     StartCoroutine(PauseShooting(overheatDeclineShootingTime));
 
                 if (!overheated)
@@ -283,7 +283,7 @@ public class Cannon : MonoBehaviour
                     main.startColor = criticalChargeColor;
 
                     // sound
-                    chargeAudio.PlayOneShot(critChargedSound, 1f * gameManager.soundVolume);
+                    chargeAudio.PlayOneShot(critChargedSound, 0.6f * gameManager.soundVolume);
                 }
                 // NOT critical hit :(
                 else
@@ -294,7 +294,7 @@ public class Cannon : MonoBehaviour
                     main.startColor = baseChargeColor;
 
                     // sound
-                    chargeAudio.PlayOneShot(normalChargedSound, 1f * gameManager.soundVolume);
+                    chargeAudio.PlayOneShot(normalChargedSound, 0.6f * gameManager.soundVolume);
                 }
 
 
@@ -346,7 +346,7 @@ public class Cannon : MonoBehaviour
             // sound
             float audioVolume = Mathf.Lerp(0, 1, Mathf.InverseLerp(minCharge, maxCharge, chargeTime));
             cannonAudio.pitch = Random.Range(0.85f, 1.15f);
-            cannonAudio.PlayOneShot(shootingSound, audioVolume / 1.25f * gameManager.soundVolume);
+            cannonAudio.PlayOneShot(shootingSound, audioVolume / 2.5f * gameManager.soundVolume);
 
             // reset shooting effects
             Camera.main.fieldOfView = baseFov;

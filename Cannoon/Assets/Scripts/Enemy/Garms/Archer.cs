@@ -40,7 +40,7 @@ public class Archer : MonoBehaviour
 
         yield return new WaitForSeconds(attackTime);
 
-        GetComponent<AudioSource>().PlayOneShot(shootingSound, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 1f);
+        GetComponent<AudioSource>().PlayOneShot(shootingSound, GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume * 0.7f);
         GetComponent<Enemy>().animator.SetBool("isAttacking", false);
         if (GetComponent<Enemy>().facingRight)
         {

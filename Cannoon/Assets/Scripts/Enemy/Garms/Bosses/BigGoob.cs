@@ -34,16 +34,25 @@ public class BigGoob : MonoBehaviour
     [Header("Audio")]
     FollowEnemyAI enemyAi;
     Enemy enemy;
+    GameObject gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        canRandomJump = true;
         enemy = GetComponent<Enemy>();
         enemyAi = GetComponent<FollowEnemyAI>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (enemy.health <= 0)
+        {
+            gameManager.GetComponent<GameManager>().playingBossTracks = false;
+            gameManager.GetComponent<MonoBehaviour>().StartCoroutine(gameManager.GetComponent<GameManager>().PlayMusicTrack());
+        }
+
         if (enemy.health <= enemy.maxHealth - 20 && !transformed)
         {
             StartCoroutine(Transform());
@@ -75,6 +84,7 @@ public class BigGoob : MonoBehaviour
 
         if (canRandomJump)
         {
+            Debug.Log("Big Goob Jumping");
             float time = Random.Range(minJumpTime, maxJumpTime);
             StartCoroutine(RandomJump(time));
         }
@@ -107,6 +117,8 @@ public class BigGoob : MonoBehaviour
 
         yield return new WaitForSeconds(transformAnim.length);
 
+        gameManager.GetComponent<GameManager>().playingBossTracks = true;
+        StartCoroutine(gameManager.GetComponent<GameManager>().PlayBossMusicTrack());
         ToggleDamage(true);
         StartCoroutine(Cooldown(0));
     }
