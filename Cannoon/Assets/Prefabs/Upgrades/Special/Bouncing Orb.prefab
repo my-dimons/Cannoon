@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: 0
+  damageIncrease: 1
   chargeSpeedIncrease: 0
   chargeLimitIncrease: 0
   sizeMultIncrease: 0
@@ -276,6 +276,8 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0
@@ -463,6 +465,9 @@ MonoBehaviour:
   m_text: '+1 Bounce
 
     <color=#5dfc3a> + Bullet Speed
+
+    <color=#5dfc3a> + 1
+    Damage
 
 '
   m_isRightToLeft: 0

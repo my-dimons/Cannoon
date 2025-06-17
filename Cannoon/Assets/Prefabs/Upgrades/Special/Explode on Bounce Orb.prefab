@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: -4
+  damageIncrease: -2
   chargeSpeedIncrease: 0
   chargeLimitIncrease: 0
   sizeMultIncrease: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Bullets Explode on Bounce
 
-    <color=#fc2d2d>- 4 Damage
+    <color=#fc2d2d>- 2 Damage
 
 '
   m_isRightToLeft: 0

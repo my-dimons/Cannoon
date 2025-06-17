@@ -39,7 +39,7 @@ public class CameraScript : MonoBehaviour
 
         while (elapsedTime < duration && !GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().dead)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             float strength = curve.Evaluate(elapsedTime / duration);
             transform.localPosition = pos + Random.insideUnitSphere * strength;
             yield return null;

@@ -65,7 +65,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=#FFF152>CROWN!
+  m_text: '<color=#FFF152>CROWN!
+
+    <color=#5dfc3a> + 8 Damage
+
+    <color=#5dfc3a>
+    + Crit Damage
+
+    <color=#5dfc3a> + Bullet Size
+
+    <color=#5dfc3a> + 1 Bounce
+    + Pierce
+
+    <color=#5dfc3a> + 0.5s of Immunity'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}
@@ -393,19 +405,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: 0
+  damageIncrease: 8
   chargeSpeedIncrease: 0
   chargeLimitIncrease: 0
-  sizeMultIncrease: 0
+  sizeMultIncrease: 0.25
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
-  criticalDamageMultIncrease: 0
+  criticalDamageMultIncrease: 0.4
   waveDifficultyIncrease: 0
   health: 0
   regen: 0
-  bounces: 0
-  pierces: 0
-  immunityIncrease: 0
+  bounces: 1
+  pierces: 1
+  immunityIncrease: 0.5
   unlockAutofire: 0
   explodingBullets: 0
   explodeOnBounce: 0
@@ -823,7 +835,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 16
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1208,7 +1220,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 45}
-    m_Scale: {x: 1.6, y: 1, z: 1}
+    m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0

@@ -67,14 +67,11 @@ public class BigGoob : MonoBehaviour
             {
                 case 0:
                     StartCoroutine(GroundSpikes());
-                    Debug.Log("grd spk");
                     break;
                 case 1:
-                    Debug.Log("inc stat");
                     StartCoroutine(IncreaseStats());
                     break;
                 default:
-                    Debug.Log("def");
                     StartCoroutine(GroundSpikes());
                     break;
             }
@@ -82,7 +79,7 @@ public class BigGoob : MonoBehaviour
             StartCoroutine(Cooldown(5));
         }
 
-        if (canRandomJump)
+        if (canRandomJump && canAttack && enemy.canJump && enemy.onGround)
         {
             Debug.Log("Big Goob Jumping");
             float time = Random.Range(minJumpTime, maxJumpTime);
@@ -151,7 +148,8 @@ public class BigGoob : MonoBehaviour
 
         // apply stats
         attackCooldown += attackCooldown / 100 * cooldownPercent;
-        enemy.health += enemy.maxHealth / 100 * healthPercent;
+        enemy.health += Mathf.Clamp(enemy.maxHealth / 100 * healthPercent, 200, enemy.baseHealth);
+
         enemy.baseSpeed += enemy.baseSpeed / 100 * healthPercent;
         enemy.speed = enemy.baseSpeed;
 

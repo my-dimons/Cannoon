@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         {
             int i = Random.Range(0, runningSounds.Length);
             playerAudio.pitch = Random.Range(0.75f, 1.25f);
-            playerAudio.PlayOneShot(runningSounds[i], 1.75f * gameManager.soundVolume);
+            playerAudio.PlayOneShot(runningSounds[i], 1.4f * gameManager.soundVolume);
         }
     }
 

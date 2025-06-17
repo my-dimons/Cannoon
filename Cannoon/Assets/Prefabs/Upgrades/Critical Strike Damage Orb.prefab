@@ -264,7 +264,7 @@ MonoBehaviour:
   sizeMultIncrease: 0
   bulletSpeedIncrease: 0
   criticalChanceIncrease: 0
-  criticalDamageMultIncrease: 0.1
+  criticalDamageMultIncrease: 0.2
   waveDifficultyIncrease: 0
   health: 0
   regen: 0
@@ -276,6 +276,8 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0

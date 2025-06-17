@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: -3
+  damageIncrease: 0
   chargeSpeedIncrease: -0.2
   chargeLimitIncrease: 0
   sizeMultIncrease: 0
@@ -276,6 +276,8 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0
@@ -460,9 +462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- 0.2s Charge Time
-
-    <color=#fc2d2d>- 3 Damage'
+  m_text: '- 0.2s Charge Time'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}

@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: 2
+  damageIncrease: 4
   chargeSpeedIncrease: 0.1
   chargeLimitIncrease: 0
   sizeMultIncrease: 0.1
@@ -277,7 +277,7 @@ MonoBehaviour:
   explodeOnPierce: 0
   doubleJump: 0
   stunEnemies: 0
-  overheat: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Bigger bullets
 
-    <color=#5dfc3a> + 2 Damage
+    <color=#5dfc3a> + 4 Damage
 
     <color=#fc2d2d> +
     0.1s Charge Time'

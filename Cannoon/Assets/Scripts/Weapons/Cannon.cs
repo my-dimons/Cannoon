@@ -323,7 +323,7 @@ public class Cannon : MonoBehaviour
 
             // animation
             animator.SetBool("isLoading", false);
-            StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(Mathf.Lerp(0, 0.5f, time)));
+            StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(Mathf.Lerp(0, 0.8f, time)));
 
 
             // bullet stats

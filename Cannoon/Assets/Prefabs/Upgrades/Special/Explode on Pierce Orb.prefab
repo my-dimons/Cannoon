@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Bullets Explode on Pierce
 
-    <color=#fc2d2d>- 4 Damage'
+    <color=#fc2d2d>- 2 Damage'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: -4
+  damageIncrease: -2
   chargeSpeedIncrease: 0
   chargeLimitIncrease: 0
   sizeMultIncrease: 0

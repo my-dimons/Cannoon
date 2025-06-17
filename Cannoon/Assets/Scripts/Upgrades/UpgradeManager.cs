@@ -31,7 +31,6 @@ public class UpgradeManager : MonoBehaviour
     [Header("Specific Upgrade Orbs")]
     public GameObject chargeUpgradeOrb;
     public GameObject healthUpgradeOrb;
-    public GameObject regenUpgradeOrb;
     public GameObject criticalChanceOrb;
     public GameObject criticalDamageOrb;
     public GameObject upgradeOrb;
@@ -138,6 +137,7 @@ public class UpgradeManager : MonoBehaviour
             specialUpgradeTicks = 0;
         }
 
+        StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.6f));
         StartCoroutine(SelectAndSpawnUpgrades(specialWave, difficultWave));
     }
 
@@ -202,9 +202,6 @@ public class UpgradeManager : MonoBehaviour
             // max health
             if (player.GetComponent<PlayerHealth>().numOfHearts >= player.GetComponent<PlayerHealth>().hearts.Length)
                 availableUpgradeOrbs.Remove(healthUpgradeOrb);
-            // max regen
-            if (endlessModeScript.healthRegen >= player.GetComponent<PlayerHealth>().hearts.Length - 1)
-                availableUpgradeOrbs.Remove(regenUpgradeOrb);
             // charge time
             if (cannonScript.maxCharge <= cannonScript.chargeLimit)
                 availableUpgradeOrbs.Remove(chargeUpgradeOrb);
@@ -251,17 +248,23 @@ public class UpgradeManager : MonoBehaviour
         upgradeAudio.PlayOneShot(selectionSound, 1f * gameManager.soundVolume); 
         for (int i = 0; i < spawnedUpgradeOrbs.Count; i++)
             Destroy(spawnedUpgradeOrbs[i]);
-
+        StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.6f));
         if (reRoll)
         {
             StartCoroutine(SelectAndSpawnUpgrades(specialReRoll, false));
         } else
         {
-            pauseWaves = false;
+            StartCoroutine(StartWaves());
 
             player.GetComponent<PlayerHealth>().Heal(endlessModeScript.healthRegen);
 
             spawnedUpgradeOrbs.Clear();
         }
+    }
+
+    IEnumerator StartWaves()
+    {
+        yield return new WaitForSeconds(1.5f);
+        pauseWaves = false;
     }
 }

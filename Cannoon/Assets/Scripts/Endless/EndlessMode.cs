@@ -63,6 +63,10 @@ public class EndlessMode : MonoBehaviour
     [Tooltip("Needs an empty game object (Or else it throws an error")]
     public List<GameObject> enemySpawnLocations;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip countdownSfx;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,11 +117,15 @@ public class EndlessMode : MonoBehaviour
 
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;
+        audioSource.pitch = Random.Range(0.7f, 1.3f);
+        audioSource.PlayOneShot(countdownSfx, 0.8f * gameManager.soundVolume);
         waveCountdownText.text = secondsUntilNextWave.ToString();
         secondsUntilNextWave--;
         for (int i = 0; i < timeBetweenWaves + 1; i++)
         {
             yield return new WaitForSeconds(1);
+            audioSource.pitch = Random.Range(0.7f, 1.3f);
+            audioSource.PlayOneShot(countdownSfx, 0.8f * gameManager.soundVolume);
             waveCountdownText.text = secondsUntilNextWave.ToString();
             secondsUntilNextWave--;
         }
@@ -160,7 +168,7 @@ public class EndlessMode : MonoBehaviour
 
         // how many enemies to spawn (using difficulty rating)
 
-        amount = Random.Range(amount * minSpawningRandomness, amount);
+        amount = Random.Range(amount * minSpawningRandomness * gameManager.difficulty, amount * gameManager.difficulty);
         amount = Mathf.RoundToInt(amount);
         amount = Mathf.Clamp(amount, 1, tempEnemySpawningLocations.Count);
         Debug.Log("Spawning " + amount + " Enemies");

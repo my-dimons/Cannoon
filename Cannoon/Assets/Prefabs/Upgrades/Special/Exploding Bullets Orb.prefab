@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Exploding Bullets
 
-    <color=#fc2d2d>- 5 Damage
+    <color=#fc2d2d>- 2 Damage
 
     <color=#5dfc3a>+
     Splash Damage'
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpHeightIncrease: 0
   speedIncrease: 0
-  damageIncrease: -5
+  damageIncrease: -2
   chargeSpeedIncrease: 0
   chargeLimitIncrease: 0
   sizeMultIncrease: 0
@@ -415,6 +415,8 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0
