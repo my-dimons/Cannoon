@@ -40,6 +40,7 @@ public class Cannon : MonoBehaviour
     public float overheatDecline;
     bool overheated;
     public float overheatValue;
+    float overheatIncrease = 0.08f;
     public float overheatDeclineShootingTime;
     public GameObject overheatUi;
     public Color overheatColor;
@@ -51,7 +52,7 @@ public class Cannon : MonoBehaviour
     public Color baseChargeColor;
     public Color criticalChargeColor;
     public float criticalStrikeChance;
-    [HideInInspector] public float baseCritDamageMult = 1;
+    public float baseCritDamageMult;
     float critDamageMult;
     float critPowerMult = 1;
     public float baseSizeMult = 1;
@@ -153,6 +154,8 @@ public class Cannon : MonoBehaviour
                 if (overheatUi.activeSelf == false)
                     overheatUi.SetActive(true);
 
+                overheatIncrease = 0.08f * maxBulletDamage / 45;
+                overheatIncrease = Mathf.Clamp(overheatIncrease, 0.08f, 0.14f);
                 overheatValue -= overheatDecline * Time.deltaTime;
                 overheatValue = Mathf.Clamp01(overheatValue);
 
@@ -273,7 +276,7 @@ public class Cannon : MonoBehaviour
                 if (gambling < criticalStrikeChance)
                 {
                     // stats
-                    critDamageMult = baseCritDamageMult * 1.25f;
+                    critDamageMult = baseCritDamageMult * 1.4f;
                     critPowerMult *= 1.25f;
                     sizeMult = baseSizeMult * 1.3f;
 
@@ -318,7 +321,7 @@ public class Cannon : MonoBehaviour
             // overheat
             if (overheat)
             {
-                overheatValue += 0.08f;
+                overheatValue += overheatIncrease;
             }
 
             // animation
@@ -339,7 +342,7 @@ public class Cannon : MonoBehaviour
             ShootBullet(force, damage + extraDamage, sizeMult);
 
             // crit stats
-            critDamageMult = baseCritDamageMult;
+            critDamageMult = 1;
             sizeMult = baseSizeMult;
             critPowerMult = 1;
 

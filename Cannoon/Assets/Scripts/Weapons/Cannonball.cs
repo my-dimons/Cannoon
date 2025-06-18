@@ -165,7 +165,7 @@ public class Cannonball : MonoBehaviour
             GameObject explosion = Instantiate(bulletExplosion, transform.position, bulletExplosion.transform.rotation);
 
             explosion.GetComponent<AudioSource>().PlayOneShot(explosionSfx, 0.5f * GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().soundVolume);
-            explosion.transform.GetChild(0).GetComponent<TriggerEnterContactDamage>().damage = baseDamage / 2;
+            explosion.transform.GetChild(0).GetComponent<TriggerEnterContactDamage>().damage = baseDamage / 2.7f;
             explosion.transform.localScale = new(bulletExplosion.transform.localScale.x * transform.parent.localScale.x, bulletExplosion.transform.localScale.y * transform.parent.localScale.y, 1);
         }
     }

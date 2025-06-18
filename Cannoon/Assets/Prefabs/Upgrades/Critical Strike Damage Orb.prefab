@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   specialUpgrade: 0
   particles: {fileID: 8601279909288604790, guid: fc4a2351074d6a64097890828de5270f, type: 3}
-  particleColor: {r: 1, g: 1, b: 1, a: 1}
+  particleColor: {r: 0.9490196, g: 0.78039217, b: 0.2784314, a: 1}
 --- !u!114 &6111883302686151207
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -40,6 +40,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject difficultyIncreaseOrb;
     public GameObject easierEnemies;
     public GameObject jumpHeight;
+    public GameObject speedUpgrade;
     public GameObject explodeOnBounce;
     public GameObject explodeOnPierce;
     public GameObject doubleJump;
@@ -137,7 +138,7 @@ public class UpgradeManager : MonoBehaviour
             specialUpgradeTicks = 0;
         }
 
-        StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.6f));
+        StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.4f));
         StartCoroutine(SelectAndSpawnUpgrades(specialWave, difficultWave));
     }
 
@@ -200,7 +201,7 @@ public class UpgradeManager : MonoBehaviour
             if (cannonScript.criticalStrikeChance < 40)
                 availableUpgradeOrbs.Remove(criticalDamageOrb);
             // max health
-            if (player.GetComponent<PlayerHealth>().numOfHearts >= player.GetComponent<PlayerHealth>().hearts.Length)
+            if (player.GetComponent<PlayerHealth>().numOfHearts >= 4)
                 availableUpgradeOrbs.Remove(healthUpgradeOrb);
             // charge time
             if (cannonScript.maxCharge <= cannonScript.chargeLimit)
@@ -214,6 +215,9 @@ public class UpgradeManager : MonoBehaviour
             // damage
             if (cannonScript.maxBulletDamage >= 60)
                 availableUpgradeOrbs.Remove(damage);
+            // speed
+            if (player.GetComponent<PlayerMovement>().baseSpeed > 34)
+                availableUpgradeOrbs.Remove(speedUpgrade);
         } 
         if (specialWave)
         {
@@ -248,7 +252,7 @@ public class UpgradeManager : MonoBehaviour
         upgradeAudio.PlayOneShot(selectionSound, 1f * gameManager.soundVolume); 
         for (int i = 0; i < spawnedUpgradeOrbs.Count; i++)
             Destroy(spawnedUpgradeOrbs[i]);
-        StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.6f));
+        StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.4f));
         if (reRoll)
         {
             StartCoroutine(SelectAndSpawnUpgrades(specialReRoll, false));

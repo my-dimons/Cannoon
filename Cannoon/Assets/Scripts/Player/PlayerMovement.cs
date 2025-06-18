@@ -172,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
         {
             canDoubleJump = false;
             playerAudio.PlayOneShot(doubleJumpSfx, 1f *  gameManager.soundVolume);
+            StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.25f));
             Instantiate(doubleJumpParticles, this.gameObject.transform.Find("Collisions").Find("Jump Detection").transform.position, Quaternion.identity);
         }
 

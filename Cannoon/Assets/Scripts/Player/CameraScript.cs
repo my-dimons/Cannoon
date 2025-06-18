@@ -1,5 +1,8 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class CameraScript : MonoBehaviour
 {
@@ -10,9 +13,11 @@ public class CameraScript : MonoBehaviour
     public Camera[] applyFov;
 
     [Header("Mouse Cursor")]
-    public GameObject cursorCanvas;
-    public GameObject mouseCursor;
-    public Camera uiCamera;
+    public GameObject crosshairCanvas;
+    public GameObject crosshair;
+    public Sprite[] crosshairs;
+    public TMP_Dropdown crosshairDropdown;
+    public Camera[] uiCamera;
     public float mouseSmoothSpeed;
     public float mouseRotationSmooth;
     public float maxTiltAngle;
@@ -22,7 +27,6 @@ public class CameraScript : MonoBehaviour
 
     private void Start()
     {
-        //activeMouseCursor = Instantiate(mouseCursor, cursorCanvas.transform);
         pos = transform.localPosition;
         Cursor.visible = false;
     }
@@ -50,14 +54,14 @@ public class CameraScript : MonoBehaviour
     // thanks chat gpt!
     void MouseFollow()
     {
-        RectTransform cursor = mouseCursor.GetComponent<RectTransform>();
+        RectTransform cursor = crosshair.GetComponent<RectTransform>();
 
         // Convert screen position to world position on canvas
         Vector3 screenPos = Input.mousePosition;
         RectTransformUtility.ScreenPointToWorldPointInRectangle(
             cursor.parent as RectTransform,
             screenPos,
-            uiCamera,
+            uiCamera[1],
             out Vector3 targetPos
         );
 

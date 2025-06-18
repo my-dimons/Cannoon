@@ -1053,13 +1053,22 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1
-          value: 0.6461525
+          time: 0.79504395
+          value: 0.83874893
           inSlope: -0.2930621
           outSlope: -0.2930621
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.10499686
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -4936,7 +4945,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5004,7 +5013,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5941,14 +5950,23 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.99053955
-          value: 0.6307678
-          inSlope: -0.83374006
-          outSlope: -0.83374006
+          time: 0.7609253
+          value: 0.8529892
+          inSlope: -0.63721794
+          outSlope: -0.63721794
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.11177419
+          inWeight: 0.12803003
           outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -9786,5 +9804,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1d679ce57e2394a83972e1fae6d643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 1
+  destroyTime: 3
   beingDestroyed: 0

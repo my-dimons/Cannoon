@@ -65,7 +65,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increases Difficulty
+  m_text: 'Increases Difficulty
+
+    <color=#5dfc3a> +1 Health'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: -5418941099525846629, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
@@ -400,7 +402,7 @@ MonoBehaviour:
   criticalChanceIncrease: 0
   criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
-  health: 0
+  health: 1
   regen: 0
   bounces: 0
   pierces: 0
@@ -410,10 +412,12 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 1
   difficultyUpgradeTicksDivisor: 1.75
-  increaseDifficultyIncreasePercent: 75
+  increaseDifficultyIncreasePercent: 65
   enableCrown: 0
   reRoll: 0
   specialReRoll: 0

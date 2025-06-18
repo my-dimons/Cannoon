@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Difficulty")]
     public float difficulty;
-    GameObject difficultyMenu;
     public float[] difficultyValues;
 
     public static GameManager Instance;
@@ -150,9 +149,12 @@ public class GameManager : MonoBehaviour
         creditsButton.GetComponent<Button>().onClick.AddListener(EnableCreditScreen);
         disableCreditsButton.GetComponent<Button>().onClick.AddListener(DisableCreditScreen);
 
-        difficultyMenu = GameObject.Find("Difficulty Dropdown");
-        difficultyMenu.GetComponent<TMP_Dropdown>().onValueChanged.AddListener(delegate { ChangeDifficulty(difficultyMenu.GetComponent<TMP_Dropdown>()); });
-        ChangeDifficulty(difficultyMenu.GetComponent<TMP_Dropdown>());
+        // difficulty dropdown
+        GameObject.Find("Difficulty Dropdown").GetComponent<TMP_Dropdown>().onValueChanged.AddListener(delegate { ChangeDifficulty(GameObject.Find("Difficulty Dropdown").GetComponent<TMP_Dropdown>()); });
+        // crosshair dropdown
+        GameObject.Find("Crosshair Dropdown").GetComponent<TMP_Dropdown>().onValueChanged.AddListener(delegate { ChangeCrosshair(GameObject.Find("Crosshair Dropdown").GetComponent<TMP_Dropdown>()); });
+
+        ChangeDifficulty(GameObject.Find("Difficulty Dropdown").GetComponent<TMP_Dropdown>());
 
         musicVolumeSlider.onValueChanged.AddListener((v) =>
         {
@@ -271,5 +273,22 @@ public class GameManager : MonoBehaviour
         };
 
         GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().difficultyMultiplier = difficulty;
+    }
+    void ChangeCrosshair(TMP_Dropdown dropdown)
+    {
+        float value = dropdown.value;
+        CameraScript cameraScript = Camera.main.GetComponent<CameraScript>();
+        Sprite newCrosshair = value switch
+        {
+            0 => cameraScript.crosshairs[0],
+            1 => cameraScript.crosshairs[1],
+            2 => cameraScript.crosshairs[2],
+            3 => cameraScript.crosshairs[3],
+            4 => cameraScript.crosshairs[4],
+            5 => cameraScript.crosshairs[5],
+            _ => cameraScript.crosshairs[0],
+        };
+
+        cameraScript.crosshair.GetComponent<Image>().sprite = newCrosshair;
     }
 }

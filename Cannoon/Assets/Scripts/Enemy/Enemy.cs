@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public AnimationClip deathAnimation;
     public Animator animator;
     public AnimationClip spawningAnimation;
+    readonly float spawningBuffer = 0.5f;
 
     [Header("Bools")]
     public bool frozen;
@@ -65,7 +66,7 @@ public class Enemy : MonoBehaviour
         target = player.transform;
 
         StartCoroutine(FreezeEnemy(spawningAnimation.length));
-        maxSpeed = baseSpeed * 2;
+        maxSpeed = baseSpeed * 1.65f;
 
         ApplyDifficultyRating(true);
         canJump = true;
@@ -81,10 +82,8 @@ public class Enemy : MonoBehaviour
         canTakeDamage = false;
         canDealDamage = false;
         GetComponent<Rigidbody2D>().gravityScale = 0;
-        Debug.Log(canDealDamage);
-        yield return new WaitForSeconds(spawningAnimation.length);
+        yield return new WaitForSeconds(spawningAnimation.length + spawningBuffer);
         GetComponent<Rigidbody2D>().gravityScale = 3;
-        Debug.Log("Spawned: " + spawningAnimation.length);
         if (doDamage)
             canDealDamage = true;
         canTakeDamage = true;
