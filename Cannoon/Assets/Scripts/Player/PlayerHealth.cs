@@ -120,9 +120,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public void Heal(float healingAmount)
     {
-        if (health != numOfHearts)
-            for (int i = 0; i < healingAmount; i++)
-                Instantiate(healParticles, transform.position, transform.rotation);
+        Instantiate(healParticles, transform.position, transform.rotation);
         health += healingAmount;
         health = Mathf.Clamp(health, 0, numOfHearts);
     }

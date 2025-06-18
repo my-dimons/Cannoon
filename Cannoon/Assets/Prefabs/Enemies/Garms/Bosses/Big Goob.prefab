@@ -272,7 +272,7 @@ MonoBehaviour:
   stunned: 0
   destroyBullet: 0
   maxHealth: 0
-  baseHealth: 15000
+  baseHealth: 10000
   health: 0
   healingParticles: {fileID: 2199591097069962904, guid: ceea410986679df4b88447efff591b06, type: 3}
   minWave: 0
@@ -315,8 +315,8 @@ MonoBehaviour:
   groundSpikes: {fileID: 5609015798895454073, guid: 14cae4de6b316774b9713b45d2aea436, type: 3}
   groundSpikesYSpawnPos: 5.2
   groundPoundAnimDelay: 1.95
-  healthPercent: 16
-  speedPercent: 8
+  healthPercent: 15
+  speedPercent: 12
   cooldownPercent: -1
   groundSpikesAnim: {fileID: 7400000, guid: 2d62945783bb3104dbf905f622ebe036, type: 2}
   statIncreaseAnim: {fileID: 7400000, guid: 6a59f84f4c23bc14ebe3c5c6125fcf2a, type: 2}

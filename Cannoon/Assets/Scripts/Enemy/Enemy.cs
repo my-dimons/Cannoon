@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     public AnimationClip deathAnimation;
     public Animator animator;
     public AnimationClip spawningAnimation;
-    readonly float spawningBuffer = 0.5f;
+    readonly float spawningBuffer = 0.2f;
 
     [Header("Bools")]
     public bool frozen;
