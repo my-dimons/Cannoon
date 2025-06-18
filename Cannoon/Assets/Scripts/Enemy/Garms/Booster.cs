@@ -7,6 +7,10 @@ public class Booster : MonoBehaviour
     public float cooldown;
     bool canDash;
     public float dashForce;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip dashSfx;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +29,7 @@ public class Booster : MonoBehaviour
         if (canDash)
         {
             GetComponent<FollowEnemyAI>().DashForward(dashForce);
+            audioSource.PlayOneShot(dashSfx, 0.8f * GetComponent<Enemy>().gameManager.soundVolume);
             StartCoroutine(Cooldown(cooldown));
             StartCoroutine(AnimCooldown());
         }

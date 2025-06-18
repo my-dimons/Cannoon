@@ -7,7 +7,9 @@ using UnityEngine.Animations;
 
 public class BigGoob : MonoBehaviour
 {
+    public bool bigGoob;
     public bool transformed;
+    bool attacking;
     public float attackCooldown;
     public bool canAttack;
 
@@ -32,6 +34,10 @@ public class BigGoob : MonoBehaviour
     bool canRandomJump;
 
     [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip increaseStatsSfx;
+    public AudioClip groundPoundSfx;
+    public AudioClip transformSfx;
     FollowEnemyAI enemyAi;
     Enemy enemy;
     GameObject gameManager;
@@ -39,6 +45,7 @@ public class BigGoob : MonoBehaviour
     void Start()
     {
         canRandomJump = true;
+        bigGoob = false;
         enemy = GetComponent<Enemy>();
         enemyAi = GetComponent<FollowEnemyAI>();
         gameManager = GameObject.FindGameObjectWithTag("GameController");
@@ -51,6 +58,8 @@ public class BigGoob : MonoBehaviour
         {
             gameManager.GetComponent<GameManager>().playingBossTracks = false;
             gameManager.GetComponent<MonoBehaviour>().StartCoroutine(gameManager.GetComponent<GameManager>().PlayMusicTrack());
+            StopCoroutine(gameManager.GetComponent<GameManager>().PlayBossMusicTrack());
+            audioSource.Stop();
         }
 
         if (enemy.health <= enemy.maxHealth - 20 && !transformed)
@@ -58,7 +67,7 @@ public class BigGoob : MonoBehaviour
             StartCoroutine(Transform());
         }
 
-        if (canAttack && enemy.onGround)
+        if (canAttack && enemy.onGround && bigGoob)
         {
             // select random attack
             int attack = Random.Range(0, 2);
@@ -79,7 +88,7 @@ public class BigGoob : MonoBehaviour
             StartCoroutine(Cooldown(5));
         }
 
-        if (canRandomJump && canAttack && enemy.canJump && enemy.onGround)
+        if (canRandomJump && enemy.onGround && bigGoob && canAttack)
         {
             Debug.Log("Big Goob Jumping");
             float time = Random.Range(minJumpTime, maxJumpTime);
@@ -97,11 +106,12 @@ public class BigGoob : MonoBehaviour
     IEnumerator RandomJump(float time)
     {
         canRandomJump = false;
-        yield return new WaitForSeconds(time);
-
         Vector2 direction = ((Vector2)enemyAi.path.vectorPath[enemyAi.currentWaypoint] - GetComponent<Rigidbody2D>().position).normalized;
         float forceX = direction.x * enemy.speed * Time.deltaTime;
         enemyAi.Jump(forceX);
+
+        yield return new WaitForSeconds(time);
+
         canRandomJump = true;
     }
 
@@ -110,12 +120,15 @@ public class BigGoob : MonoBehaviour
         StartCoroutine(enemy.FreezeEnemy(transformAnim.length));
         enemy.animator.SetBool("isTransformed", true);
         transformed = true;
+        audioSource.PlayOneShot(transformSfx, 0.85f * gameManager.GetComponent<GameManager>().soundVolume);
         ToggleDamage(false);
 
         yield return new WaitForSeconds(transformAnim.length);
 
         gameManager.GetComponent<GameManager>().playingBossTracks = true;
         StartCoroutine(gameManager.GetComponent<GameManager>().PlayBossMusicTrack());
+        StopCoroutine(gameManager.GetComponent <GameManager>().PlayMusicTrack());
+        bigGoob = true;
         ToggleDamage(true);
         StartCoroutine(Cooldown(0));
     }
@@ -125,14 +138,17 @@ public class BigGoob : MonoBehaviour
         StartCoroutine(enemy.FreezeEnemy(groundSpikesAnim.length));
 
         enemy.animator.SetBool("isGroundPounding", true);
+        attacking = true;
         ToggleDamage(false);
-
+        audioSource.PlayOneShot(groundPoundSfx, 0.85f * gameManager.GetComponent<GameManager>().soundVolume);
         yield return new WaitForSeconds(groundPoundAnimDelay);
 
-        Instantiate(groundSpikes, new Vector3(transform.position.x, transform.position.y + groundSpikesYSpawnPos, 0), Quaternion.identity);
+        GameObject spikes = Instantiate(groundSpikes, new Vector3(transform.position.x, transform.position.y + groundSpikesYSpawnPos, 0), Quaternion.identity);
+        spikes.GetComponent<AudioSource>().volume = gameManager.GetComponent<GameManager>().soundVolume;
 
         yield return new WaitForSeconds(groundSpikesAnim.length - groundPoundAnimDelay);
 
+        attacking = false;
         enemy.animator.SetBool("isGroundPounding", false);
         ToggleDamage(true);
     }
@@ -140,12 +156,13 @@ public class BigGoob : MonoBehaviour
     IEnumerator IncreaseStats()
     {
         StartCoroutine(enemy.FreezeEnemy(statIncreaseAnim.length));
-
+        attacking = true;
         ToggleDamage(false);
         enemy.animator.SetBool("isStatIncreasing", true);
-
+        audioSource.PlayOneShot(increaseStatsSfx, 0.85f * gameManager.GetComponent<GameManager>().soundVolume);
         yield return new WaitForSeconds(statIncreaseAnim.length);
 
+        attacking = false;
         // apply stats
         attackCooldown += attackCooldown / 100 * cooldownPercent;
         enemy.health += Mathf.Clamp(enemy.maxHealth / 100 * healthPercent, 200, enemy.baseHealth);

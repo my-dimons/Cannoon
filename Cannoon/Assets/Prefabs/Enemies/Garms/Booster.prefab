@@ -403,6 +403,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 4
   dashForce: 24
+  audioSource: {fileID: 5529968124669570254}
+  dashSfx: {fileID: 8300000, guid: 50c8eefcf3b571d489d2fda5c74222ff, type: 3}
 --- !u!50 &5698047591616404936
 Rigidbody2D:
   serializedVersion: 4

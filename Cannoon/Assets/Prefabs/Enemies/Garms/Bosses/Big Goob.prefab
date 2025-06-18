@@ -308,20 +308,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b79a183f89c6440affd8ee13b980a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bigGoob: 0
   transformed: 0
   attackCooldown: 15
   canAttack: 0
   groundSpikes: {fileID: 5609015798895454073, guid: 14cae4de6b316774b9713b45d2aea436, type: 3}
   groundSpikesYSpawnPos: 5.2
-  groundPoundAnimDelay: 1.9
+  groundPoundAnimDelay: 1.95
   healthPercent: 16
   speedPercent: 8
   cooldownPercent: -1
   groundSpikesAnim: {fileID: 7400000, guid: 2d62945783bb3104dbf905f622ebe036, type: 2}
   statIncreaseAnim: {fileID: 7400000, guid: 6a59f84f4c23bc14ebe3c5c6125fcf2a, type: 2}
   transformAnim: {fileID: 7400000, guid: 5765ebe1acd4c9342885feb5373f6e07, type: 2}
-  minJumpTime: 4
-  maxJumpTime: 7
+  minJumpTime: 5
+  maxJumpTime: 12
+  audioSource: {fileID: 5259599617120767338}
+  increaseStatsSfx: {fileID: 8300000, guid: 1bc67ed4fdd9f0d498d7421a3a28f536, type: 3}
+  groundPoundSfx: {fileID: 8300000, guid: 564ef1db1222e2d4a8ecdadd52def64f, type: 3}
+  transformSfx: {fileID: 8300000, guid: 22c40a54017851e45b77d6f591993c24, type: 3}
 --- !u!50 &7825271380787264983
 Rigidbody2D:
   serializedVersion: 4
