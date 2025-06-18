@@ -50,6 +50,9 @@ public class Enemy : MonoBehaviour
     [Header("Sounds")]
     public AudioSource enemyAudio;
     public AudioClip hitSound;
+    public AudioClip[] mumbling;
+    public float minMumbleTime;
+    public float maxMumbleTime;
 
     //OTHER: Referenced in start
     [HideInInspector] public GameManager gameManager;
@@ -71,6 +74,8 @@ public class Enemy : MonoBehaviour
         ApplyDifficultyRating(true);
         canJump = true;
         StartCoroutine(Spawning());
+
+        Invoke("Mumble", Random.Range(minMumbleTime, maxMumbleTime));
     }
 
     IEnumerator Spawning()
@@ -186,5 +191,14 @@ public class Enemy : MonoBehaviour
     {
         gameManager.currentKills += kills;
         gameManager.globalKills += kills;
+    }
+
+    void Mumble()
+    {
+        int rand = Random.Range(0, mumbling.Length);
+        enemyAudio.PlayOneShot(mumbling[rand], 0.8f * gameManager.soundVolume);
+
+        // repeat
+        Invoke("Mumble", Random.Range(minMumbleTime, maxMumbleTime));
     }
 }

@@ -114,7 +114,7 @@ public class Breaker : MonoBehaviour
             spawnedSpike.transform.GetChild(0).transform.localScale = enemyAiScript.enemySprite.localScale;
 
             // SFX
-            enemyScript.enemyAudio.PlayOneShot(attackingSound, 1f * enemyScript.gameManager.soundVolume);
+            enemyScript.enemyAudio.PlayOneShot(attackingSound, 0.7f * enemyScript.gameManager.soundVolume);
 
             isAttacking = false;
             enemyScript.canTurn = true;
@@ -151,7 +151,7 @@ public class Breaker : MonoBehaviour
         }
 
         GameObject spawnedSpike = Instantiate(spike, spawningPosition, spike.transform.rotation);
-        enemyScript.enemyAudio.PlayOneShot(throwingSound, 1f * enemyScript.gameManager.soundVolume);
+        enemyScript.enemyAudio.PlayOneShot(throwingSound, 0.7f * enemyScript.gameManager.soundVolume);
         spawnedSpike.GetComponent<Bullet>().sprite.transform.localScale = enemyAiScript.enemySprite.localScale;
 
         yield return new WaitForSeconds(throwingAnimation.length / 2);

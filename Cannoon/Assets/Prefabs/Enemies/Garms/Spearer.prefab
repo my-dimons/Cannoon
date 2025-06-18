@@ -54,8 +54,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySprite: {fileID: 4492330286623331680}
-  facingRight: 0
-  canTurn: 1
   baseJumpForce: 600
   currentJumpForce: 0
   jumpCheckDistance: 1.5
@@ -117,9 +115,20 @@ MonoBehaviour:
   baseSpeed: 1450
   speed: 0
   maxSpeed: 0
+  facingRight: 0
+  canTurn: 0
   damageText: {fileID: 9058679578896275739, guid: ecee832e22b097d4f94aef0581b01684, type: 3}
   enemyAudio: {fileID: 939650003057295348}
   hitSound: {fileID: 8300000, guid: 87539e10f69944d4eb3710a788ba03a4, type: 3}
+  mumbling:
+  - {fileID: 8300000, guid: 801e8835dd0ac004cb71d5bffb972315, type: 3}
+  - {fileID: 8300000, guid: 49fdc4d7b0c16d6479cb683a710f9f88, type: 3}
+  - {fileID: 8300000, guid: 06123a0a52fa482419d10ba83db09f47, type: 3}
+  - {fileID: 8300000, guid: 721473e6088aaf54cad6fa7d377ad0a0, type: 3}
+  - {fileID: 8300000, guid: 4fe53c9a427ef684cb6067c03cfaa181, type: 3}
+  - {fileID: 8300000, guid: f9b5d703bddbc784b9c066255c960f5e, type: 3}
+  minMumbleTime: 4
+  maxMumbleTime: 20
   gameManager: {fileID: 0}
 --- !u!50 &4658452010861624777
 Rigidbody2D:
@@ -277,7 +286,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.304
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -292,7 +301,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.044444446
       inSlope: 0
       outSlope: 0
       tangentMode: 0
