@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Text.RegularExpressions;
 
 // most game stats, difficulty, and the current level
 public class GameManager : MonoBehaviour
@@ -316,7 +315,7 @@ public class GameManager : MonoBehaviour
         cameraScript.crosshair.GetComponent<Image>().sprite = newCrosshair;
     }
 
-    void CopyScore()
+    public void CopyScore()
     {
         // difficulty text formatting
         TMP_Dropdown modeText = GameObject.Find("Difficulty Dropdown").GetComponent<TMP_Dropdown>();
@@ -341,7 +340,8 @@ public class GameManager : MonoBehaviour
                 colorSquare = colorSquares[i];
         }
 
-            string text = "🌊 Wave: " + endlessMode.wave + " | 🕛 Time: " + timeText + " | 💀 Kills: " + currentKills + " | ⭐ Difficulty: " + cleaned + " " + colorSquare + cheat;
-        GUIUtility.systemCopyBuffer = text;
+        string text = "🌊 Wave: " + endlessMode.wave + " | 🕛 Time: " + timeText + " | 💀 Kills: " + currentKills + " | ⭐ Difficulty: " + cleaned + " " + colorSquare + cheat;
+
+        ClipboardHelper.Copy(text); // error, dont know why, it works tho
     }
 }
