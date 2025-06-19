@@ -26,8 +26,8 @@ TagManager:
   - Trigger
   - BouncingBullets
   - No Post Processing
-  - 
-  - 
+  - UI Post Processing
+  - Post Processing
   - 
   - 
   - 

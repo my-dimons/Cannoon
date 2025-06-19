@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -290,6 +290,7 @@ public class GameManager : MonoBehaviour
             2 => difficultyValues[2],
             3 => difficultyValues[3],
             4 => difficultyValues[4],
+            5 => difficultyValues[5],
             _ => 1,
         };
 
@@ -327,7 +328,18 @@ public class GameManager : MonoBehaviour
         TimeSpan time = TimeSpan.FromSeconds(Mathf.RoundToInt(timePlayed));
         string timeText = string.Format("{0:00}:{1:00}", time.Minutes, time.Seconds);
 
-        string text = "?? Wave: " + endlessMode.wave + " | ?? Time: " + timeText + " | ?? Kills: " + currentKills + " | ? Difficulty: " + cleaned;
+        string cheat = cheated ? " | 🚨 CHEATER CHEATER CANNON EATER 🚨" : "";
+
+        // color squares
+        string[] colorSquares = { "🟦", "🟩", "❎", "🟨", "🟧", "🟥" };
+        string colorSquare = "";
+        for (int i = 0; i < difficultyValues.Length; i++)
+        {
+            if (difficulty == difficultyValues[i])
+                colorSquare = colorSquares[i];
+        }
+
+            string text = "🌊 Wave: " + endlessMode.wave + " | 🕛 Time: " + timeText + " | 💀 Kills: " + currentKills + " | ⭐ Difficulty: " + cleaned + " " + colorSquare + cheat;
         GUIUtility.systemCopyBuffer = text;
     }
 }
