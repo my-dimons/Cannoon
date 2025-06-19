@@ -83,7 +83,6 @@ public class Cannonball : MonoBehaviour
             if (explode)
                 SpawnExplosion();
             Destroy(transform.parent.gameObject);
-            
         }
         // collides with enemy
         if (other.gameObject.CompareTag("Enemy") && other.GetComponent<Enemy>().canTakeDamage)
@@ -109,9 +108,9 @@ public class Cannonball : MonoBehaviour
 
             if (pierces > 0)
             {
+                enemyScript.TakeDamage(damage);
                 damage /= pierceDamageDecrease;
 
-                enemyScript.TakeDamage(damage);
                 pierces--;
                 if (explodeOnPierce && explode)
                     SpawnExplosion();

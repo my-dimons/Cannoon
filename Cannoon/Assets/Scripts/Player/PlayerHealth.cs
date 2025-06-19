@@ -58,9 +58,13 @@ public class PlayerHealth : MonoBehaviour
     {
         UpdateHearts();
 
-        // FULL HEAL (TEMPERARY)
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        // FULL HEAL (DEV CHEATS)
+        if (Input.GetKeyDown(KeyCode.Equals) && Input.GetKey(KeyCode.LeftShift))
+        {
+            StartCoroutine(Camera.main.GetComponent<CameraScript>().Screenshake(0.4f));
+            gameManager.cheated = true;
             Heal(numOfHearts);
+        }
 
         // Ways to die
 

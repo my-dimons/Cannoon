@@ -26,6 +26,7 @@ public class UpgradeStats : MonoBehaviour
 
     [Header("Health")]
     public int health;
+    public bool addToHealthUpgrade;
     public int regen;
 
     [Header("Special")]
@@ -90,6 +91,8 @@ public class UpgradeStats : MonoBehaviour
 
         // health
         playerHealthScript.numOfHearts += health;
+        if (addToHealthUpgrade)
+            upgradeManager.healUpgrades += health;
         endlessModeScript.healthRegen += regen;
 
         // special

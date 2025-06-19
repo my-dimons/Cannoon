@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UI;
 
 public class BigGoob : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class BigGoob : MonoBehaviour
     FollowEnemyAI enemyAi;
     Enemy enemy;
     GameObject gameManager;
+    GameObject bossBar;
+    GameObject bossBarFill;
+    bool bossBarEnabled;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,13 +53,18 @@ public class BigGoob : MonoBehaviour
         enemy = GetComponent<Enemy>();
         enemyAi = GetComponent<FollowEnemyAI>();
         gameManager = GameObject.FindGameObjectWithTag("GameController");
+        bossBar = GameObject.Find("Boss Bar");
+        bossBarFill = bossBar.transform.Find("Bar").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (bossBarEnabled)
+            FillBossBar();
         if (enemy.health <= 0)
         {
+            DisableBossBar();
             gameManager.GetComponent<GameManager>().playingBossTracks = false;
             gameManager.GetComponent<MonoBehaviour>().StartCoroutine(gameManager.GetComponent<GameManager>().PlayMusicTrack());
             StopCoroutine(gameManager.GetComponent<GameManager>().PlayBossMusicTrack());
@@ -130,6 +139,7 @@ public class BigGoob : MonoBehaviour
         StopCoroutine(gameManager.GetComponent <GameManager>().PlayMusicTrack());
         bigGoob = true;
         ToggleDamage(true);
+        EnableBossBar();
         StartCoroutine(Cooldown(0));
     }
 
@@ -178,5 +188,23 @@ public class BigGoob : MonoBehaviour
     {
         enemy.canTakeDamage = b;
         enemy.canDealDamage = b;
+    }
+
+    void EnableBossBar()
+    {
+        bossBar.GetComponent<RectTransform>().localPosition = Vector2.zero;
+        bossBarEnabled = true;
+    }
+
+    void FillBossBar()
+    {
+        float healthPercent = Mathf.Clamp01(enemy.health / enemy.maxHealth);
+        bossBarFill.GetComponent<Image>().fillAmount = healthPercent;
+    }
+
+    void DisableBossBar()
+    {
+        bossBar.GetComponent<RectTransform>().localPosition = new(0, 2000);
+        bossBarEnabled = false;
     }
 }

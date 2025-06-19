@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 // most game stats, difficulty, and the current level
 public class GameManager : MonoBehaviour
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Players total deaths")]
     public int globalDeaths;
     public float timePlayed;
+    public bool cheated;
 
     [Header("Settings")]
     [Range(0f, 1f)]
@@ -55,6 +58,9 @@ public class GameManager : MonoBehaviour
     public static GameObject deathTimeText;
     public static GameObject deathKillsText;
     public static GameObject deathWaveHighscore;
+    public static GameObject difficultyModeText;
+    public static GameObject cheatedText;
+    public static GameObject copyButton;
 
     public bool pauseMenuEnabled;
     public bool creditScreenEnabled;
@@ -85,7 +91,7 @@ public class GameManager : MonoBehaviour
         timePlayed += Time.deltaTime;
         musicSource.volume = musicVolume;
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !creditScreenEnabled)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab)) && !creditScreenEnabled)
         {
             if (!pauseMenuEnabled)
                 PauseGame();
@@ -118,6 +124,9 @@ public class GameManager : MonoBehaviour
         deathTimeText = deathScreen.transform.Find("Time").gameObject;
         deathKillsText = deathScreen.transform.Find("Kills").gameObject;
         deathWaveHighscore = deathScreen.transform.Find("Wave Highscore").gameObject;
+        difficultyModeText = deathScreen.transform.Find("Difficulty").gameObject;
+        cheatedText = deathScreen.transform.Find("Cheated").gameObject;
+        copyButton = deathScreen.transform.Find("Copy Button").gameObject;
 
         // credit screen vars
         creditScreen = GameObject.Find("Credit Screen");
@@ -138,6 +147,7 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         StartCoroutine(PlayMusicTrack());
+        cheated = false;
         currentKills = 0;
         timePlayed = 0;
 
@@ -145,6 +155,7 @@ public class GameManager : MonoBehaviour
         quitButton.GetComponent<Button>().onClick.AddListener(Quit);
         deathQuitButton.GetComponent<Button>().onClick.AddListener(Quit);
         deathRespawnButton.GetComponent<Button>().onClick.AddListener(Respawn);
+        copyButton.GetComponent<Button>().onClick.AddListener(CopyScore);
         resumeButton.GetComponent<Button>().onClick.AddListener(ResumeGame);
         creditsButton.GetComponent<Button>().onClick.AddListener(EnableCreditScreen);
         disableCreditsButton.GetComponent<Button>().onClick.AddListener(DisableCreditScreen);
@@ -227,6 +238,16 @@ public class GameManager : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave > waveHighscore)
             waveHighscore = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>().wave;
 
+        if (!cheated)
+            cheatedText.SetActive(false);
+
+        TMP_Dropdown modeText = GameObject.Find("Difficulty Dropdown").GetComponent<TMP_Dropdown>();
+
+        string original = modeText.options[modeText.value].text;
+        string cleaned = Regex.Replace(original, @"  +", " ");  // replace 2+ spaces with 1 space
+
+        difficultyModeText.GetComponent<TextMeshProUGUI>().text = "Difficulty: " + cleaned;
+
         // audio
         audioSource.PlayOneShot(deathSfx, 1 * soundVolume);
         musicSource.Stop();
@@ -290,5 +311,23 @@ public class GameManager : MonoBehaviour
         };
 
         cameraScript.crosshair.GetComponent<Image>().sprite = newCrosshair;
+    }
+
+    void CopyScore()
+    {
+        // difficulty text formatting
+        TMP_Dropdown modeText = GameObject.Find("Difficulty Dropdown").GetComponent<TMP_Dropdown>();
+        string original = modeText.options[modeText.value].text;
+        string noTags = Regex.Replace(original, @"<.*?>", "");
+        string cleaned = Regex.Replace(noTags, @" {2,}", " ");  // replace 2+ spaces with 1 space
+
+        EndlessMode endlessMode = GameObject.FindGameObjectWithTag("EndlessModeGameManager").GetComponent<EndlessMode>();
+
+        // time text
+        TimeSpan time = TimeSpan.FromSeconds(Mathf.RoundToInt(timePlayed));
+        string timeText = string.Format("{0:00}:{1:00}", time.Minutes, time.Seconds);
+
+        string text = "?? Wave: " + endlessMode.wave + " | ?? Time: " + timeText + " | ?? Kills: " + currentKills + " | ? Difficulty: " + cleaned;
+        GUIUtility.systemCopyBuffer = text;
     }
 }

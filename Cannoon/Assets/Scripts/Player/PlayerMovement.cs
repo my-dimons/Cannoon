@@ -106,10 +106,11 @@ public class PlayerMovement : MonoBehaviour
 
             // Jumping
             // double jump
-            if (Input.GetKeyDown(KeyCode.Space) && doubleJump && canDoubleJump && !canJump)
+            bool jumpKey = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow);
+            if (jumpKey && doubleJump && canDoubleJump && !canJump)
                 Jump(true);
             // normal jump
-            else if (Input.GetKeyDown(KeyCode.Space) && canJump)
+            else if (jumpKey && canJump)
                 Jump(false);
         }
 

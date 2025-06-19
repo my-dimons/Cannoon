@@ -47,6 +47,10 @@ public class UpgradeManager : MonoBehaviour
     public GameObject crown;
     public GameObject damage;
 
+    [Header("Health Upgrade")]
+    public int maxHealUpgrades;
+    public int healUpgrades;
+
     [Header("Audio")]
     public AudioSource upgradeAudio;
     public AudioClip upgradesSpawningSound;
@@ -201,7 +205,7 @@ public class UpgradeManager : MonoBehaviour
             if (cannonScript.criticalStrikeChance < 40)
                 availableUpgradeOrbs.Remove(criticalDamageOrb);
             // max health
-            if (player.GetComponent<PlayerHealth>().numOfHearts >= 4)
+            if (healUpgrades >= maxHealUpgrades)
                 availableUpgradeOrbs.Remove(healthUpgradeOrb);
             // charge time
             if (cannonScript.maxCharge <= cannonScript.chargeLimit)
