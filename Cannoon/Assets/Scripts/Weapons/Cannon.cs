@@ -276,7 +276,7 @@ public class Cannon : MonoBehaviour
                 if (gambling < criticalStrikeChance)
                 {
                     // stats
-                    critDamageMult = baseCritDamageMult * 1.3f;
+                    critDamageMult = baseCritDamageMult * 1.25f;
                     critPowerMult *= 1.25f;
                     sizeMult = baseSizeMult * 1.3f;
 

@@ -293,8 +293,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 721473e6088aaf54cad6fa7d377ad0a0, type: 3}
   - {fileID: 8300000, guid: 4fe53c9a427ef684cb6067c03cfaa181, type: 3}
   - {fileID: 8300000, guid: f9b5d703bddbc784b9c066255c960f5e, type: 3}
-  minMumbleTime: 4
-  maxMumbleTime: 20
+  minMumbleTime: 1
+  maxMumbleTime: 16
   gameManager: {fileID: 0}
 --- !u!114 &5010212296109601636
 MonoBehaviour:

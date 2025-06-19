@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public AudioClip musicCurrentlyPlaying;
     public float musicTransitionTime;
     public bool playingMusic;
+    public bool canPlayMusic;
 
     [Header("Pause Menu")]
     public static GameObject pauseMenu;
@@ -99,11 +100,11 @@ public class GameManager : MonoBehaviour
                 ResumeGame();
         }
 
-        if (!playingMusic)
+        if (!playingMusic && canPlayMusic)
         {
             if (!playingBossTracks)
                 StartCoroutine(PlayMusicTrack());
-            if (playingBossTracks)
+            else
                 StartCoroutine(PlayBossMusicTrack());
         }
     }
@@ -146,6 +147,7 @@ public class GameManager : MonoBehaviour
    
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        canPlayMusic = true;
         StartCoroutine(PlayMusicTrack());
         cheated = false;
         currentKills = 0;

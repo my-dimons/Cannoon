@@ -149,36 +149,39 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        // deal damage
-        health -= damage;
-
-        // flash white
-        StartCoroutine(gameObject.transform.GetChild(0).GetComponent<DamageFlash>().FlashWhite());
-        // SFX
-        enemyAudio.PlayOneShot(hitSound, 1f * gameManager.soundVolume);
-
-        // damage text
-        Vector3 spawnPos = new (
-            transform.position.x + Random.Range(-1f, 1f),
-            transform.position.y + Random.Range(0.1f, 1f),
-            0);
-        Vector2 force = new (
-            Random.Range(-100, 100),
-            Random.Range(300, 500));
-        GameObject text = Instantiate(damageText, spawnPos, Quaternion.identity);
-        text.GetComponent<TextMeshPro>().text = Mathf.RoundToInt(damage).ToString();
-        text.GetComponent<Rigidbody2D>().AddForce(force);
-
-        // text color
-        var damageColor = damage switch
+        if (canTakeDamage)
         {
-            >= 140 => new Color(0.84f, 0.44f, 0.9f),
-            >= 80 => new Color(0.31f, 0.72f, 0.93f),
-            >= 45 => new Color(0.93f, 0.38f, 0.31f),
-            >= 30 => new Color(0.81f, 0.84f, 0.4f),
-            _ => Color.white,
-        };
-        text.GetComponent<TextMeshPro>().color = damageColor;
+            // deal damage
+            health -= damage;
+
+            // flash white
+            StartCoroutine(gameObject.transform.GetChild(0).GetComponent<DamageFlash>().FlashWhite());
+            // SFX
+            enemyAudio.PlayOneShot(hitSound, 1f * gameManager.soundVolume);
+
+            // damage text
+            Vector3 spawnPos = new(
+                transform.position.x + Random.Range(-1f, 1f),
+                transform.position.y + Random.Range(0.1f, 1f),
+                0);
+            Vector2 force = new(
+                Random.Range(-100, 100),
+                Random.Range(300, 500));
+            GameObject text = Instantiate(damageText, spawnPos, Quaternion.identity);
+            text.GetComponent<TextMeshPro>().text = Mathf.RoundToInt(damage).ToString();
+            text.GetComponent<Rigidbody2D>().AddForce(force);
+
+            // text color
+            var damageColor = damage switch
+            {
+                >= 140 => new Color(0.84f, 0.44f, 0.9f),
+                >= 80 => new Color(0.31f, 0.72f, 0.93f),
+                >= 45 => new Color(0.93f, 0.38f, 0.31f),
+                >= 30 => new Color(0.81f, 0.84f, 0.4f),
+                _ => Color.white,
+            };
+            text.GetComponent<TextMeshPro>().color = damageColor;
+        }
     }
 
     public void Heal(float heal)
@@ -196,7 +199,7 @@ public class Enemy : MonoBehaviour
     void Mumble()
     {
         int rand = Random.Range(0, mumbling.Length);
-        enemyAudio.PlayOneShot(mumbling[rand], 0.8f * gameManager.soundVolume);
+        enemyAudio.PlayOneShot(mumbling[rand], 1f * gameManager.soundVolume);
 
         // repeat
         Invoke("Mumble", Random.Range(minMumbleTime, maxMumbleTime));

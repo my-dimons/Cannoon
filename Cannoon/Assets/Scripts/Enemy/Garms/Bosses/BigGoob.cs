@@ -135,8 +135,9 @@ public class BigGoob : MonoBehaviour
         yield return new WaitForSeconds(transformAnim.length);
 
         gameManager.GetComponent<GameManager>().playingBossTracks = true;
+        gameManager.GetComponent<GameManager>().canPlayMusic = true;
+        StopCoroutine(gameManager.GetComponent<GameManager>().PlayMusicTrack());
         StartCoroutine(gameManager.GetComponent<GameManager>().PlayBossMusicTrack());
-        StopCoroutine(gameManager.GetComponent <GameManager>().PlayMusicTrack());
         bigGoob = true;
         ToggleDamage(true);
         EnableBossBar();

@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7877240c0691b3a4cb46d546da429921, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeightIncrease: -2
+  jumpHeightIncrease: 0
   speedIncrease: 0
   damageIncrease: 0
   chargeSpeedIncrease: 0
@@ -267,6 +267,7 @@ MonoBehaviour:
   criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
   health: 0
+  addToHealthUpgrade: 0
   regen: 0
   bounces: 0
   pierces: 0
@@ -463,8 +464,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Unlocks Double Jump
-
-    <color=#fc2d2d>- Jump Height
 
 '
   m_isRightToLeft: 0

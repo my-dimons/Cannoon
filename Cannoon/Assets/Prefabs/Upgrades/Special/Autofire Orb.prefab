@@ -408,6 +408,7 @@ MonoBehaviour:
   criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
   health: 0
+  addToHealthUpgrade: 0
   regen: 0
   bounces: 0
   pierces: 0
@@ -418,7 +419,7 @@ MonoBehaviour:
   explodeOnPierce: 0
   doubleJump: 0
   stunEnemies: 0
-  overheatDecline: 0.12
+  overheatDecline: 0.08
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0

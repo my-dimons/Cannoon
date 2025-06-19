@@ -267,6 +267,7 @@ MonoBehaviour:
   criticalDamageMultIncrease: 0
   waveDifficultyIncrease: 0
   health: 0
+  addToHealthUpgrade: 0
   regen: 0
   bounces: 0
   pierces: 0
@@ -276,6 +277,8 @@ MonoBehaviour:
   explodeOnBounce: 0
   explodeOnPierce: 0
   doubleJump: 0
+  stunEnemies: 0
+  overheatDecline: 0
   spawnUpgradesIncrease: 0
   increaseUpgradeBar: 0
   difficultyUpgradeTicksDivisor: 0
@@ -460,9 +463,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '+ 33% Crit Chance
-
-    <color=#fc2d2d> - Crit Damage'
+  m_text: + 33% Crit Chance
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9253a2d5d6c8ab644a5baf5c55b65cad, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b235fee2083f6a64a86008aa57054c1e, type: 2}

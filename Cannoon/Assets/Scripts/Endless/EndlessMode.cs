@@ -165,6 +165,7 @@ public class EndlessMode : MonoBehaviour
             amount = 1;
             gameManager.musicSource.Stop();
             StopCoroutine(gameManager.PlayMusicTrack());
+            gameManager.canPlayMusic = false;
         }
         possibleSpawningEnemies = PickEnemies(bossWave);
 
