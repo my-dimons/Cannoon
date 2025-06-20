@@ -19,6 +19,7 @@ public class EndlessMode : MonoBehaviour
     [Header("Waves")]
     [Tooltip("Current wave")]
     public int wave;
+    int winWaves;
     public int healthRegen;
     public int spawningEnemiesAmount;
     [Tooltip("How many enemies are remaining?")]
@@ -111,9 +112,16 @@ public class EndlessMode : MonoBehaviour
     {
         advancingToNextWave = true;
         upgradeManager.appliedUpgradeTick = false;
+        if (wave == winWaves)
+        {
+            int increase = upgradeManager.baseUpgradeWaves * upgradeManager.difficultyIncreaseWaves + winWaves;
+            winWaves = increase;
+        }
+
         advancingWaveTexts.SetActive(true);
-        currentWaveText.text = "Wave  " + wave;
+        currentWaveText.text = "Wave  " + wave + "/" + winWaves;
         // trigger player invincibility
+
 
         // seconds until next wave countdown
         int secondsUntilNextWave = timeBetweenWaves;

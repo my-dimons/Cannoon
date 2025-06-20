@@ -13,7 +13,6 @@ public class Shielder : MonoBehaviour
     {
         StartCoroutine(Cooldown());
         StartCoroutine(SpawnAnim());
-        StartCoroutine(Shield(GetComponent<Enemy>().spawningAnimation.length));
     }
     IEnumerator Cooldown()
     {

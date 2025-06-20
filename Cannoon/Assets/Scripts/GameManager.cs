@@ -332,7 +332,7 @@ public class GameManager : MonoBehaviour
         string cheat = cheated ? " | 🚨 CHEATER CHEATER CANNON EATER 🚨" : "";
 
         // color squares
-        string[] colorSquares = { "🟦", "🟩", "❎", "🟨", "🟧", "🟥" };
+        string[] colorSquares = {"🟦", "🟩", "🟨", "🟧", "🟥" };
         string colorSquare = "";
         for (int i = 0; i < difficultyValues.Length; i++)
         {
